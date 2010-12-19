@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="tmw_desert_spacing.png" trans="ffffff"/>
+  <tile id="0">
+   <properties>
+    <property name="Property A" value="Hello World"/>
+    <property name="Property B" value="666"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Testing Name 1" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC5NjYGCQG8WDBgMAJjDsCJABAAA=
+  </data>
+ </layer>
+ <layer name="Testing Name 2" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgoAxIArEUEEsTUKcIxEpArExAnSYQawGx9gDbNVAAAOTaOeKQAQAA
+  </data>
+ </layer>
+ <layer name="Testing Name 3" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgIB2IALEoEepkgFiWDPNHMgAA/kQK/ZABAAA=
+  </data>
+ </layer>
+ <layer name="Testing Name 4" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgYGCQZyAODCZ1jEDMBMTMBNRxAjEXEHMTUCcIxEJALEwl95GrDgAEknMlkAEAAA==
+  </data>
+ </layer>
+ <layer name="Testing Name 5" width="10" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWDCQAADA0iRpABAAA=
+  </data>
+ </layer>
+</map>
