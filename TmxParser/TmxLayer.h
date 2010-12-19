@@ -35,7 +35,7 @@ class TiXmlNode;
 
 namespace Tmx {
 	//-------------------------------------------------------------------------
-	// Type used for encoding the layer data.
+	// Type used for the encoding of the layer data.
 	//-------------------------------------------------------------------------
 	enum LayerEncodingType {
 		TMX_ENCODING_XML,
@@ -44,7 +44,7 @@ namespace Tmx {
 	};
 
 	//-------------------------------------------------------------------------
-	// Type used for the compressing the layer data.
+	// Type used for the compression of the layer data.
 	//-------------------------------------------------------------------------
 	enum LayerCompressionType {
 		TMX_COMPRESSION_NONE,
@@ -90,7 +90,7 @@ namespace Tmx {
 
 		// Get the type of compression that was used for parsing the layer data.
 		// See: LayerCompressionType
-		LayerCompressionType GetCompressoin() const { return compression; }
+		LayerCompressionType GetCompression() const { return compression; }
 
 	private:
 		void ParseXML(const TiXmlNode *dataNode);
