@@ -25,14 +25,14 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include "TmxMap.h"
-#include "TmxTileset.h"
-#include "TmxTile.h"
-#include "TmxImage.h"
-#include "TmxLayer.h"
-#include "TmxObject.h"
-#include "TmxObjectGroup.h"
-#include "TmxPropertySet.h"
+#include "../TmxParser/TmxMap.h"
+#include "../TmxParser/TmxTileset.h"
+#include "../TmxParser/TmxTile.h"
+#include "../TmxParser/TmxImage.h"
+#include "../TmxParser/TmxLayer.h"
+#include "../TmxParser/TmxObject.h"
+#include "../TmxParser/TmxObjectGroup.h"
+#include "../TmxParser/TmxPropertySet.h"
 
 int main() {
 	Tmx::Map *map = new Tmx::Map();
