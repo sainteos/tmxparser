@@ -36,7 +36,7 @@
 
 int main() {
 	Tmx::Map *map = new Tmx::Map();
-	map->ParseFile("example.tmx");
+	map->ParseFile("./example/example.tmx");
 
 	if (map->HasError()) {
 		printf("error code: %d\n", map->GetErrorCode());
@@ -123,6 +123,8 @@ int main() {
 			printf("Object Size: (%03d, %03d)\n", object->GetWidth(), object->GetHeight());
 		}
 	}
+
+	delete map;
 
 	system("PAUSE");
 

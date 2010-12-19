@@ -89,9 +89,7 @@ namespace Tmx {
 
 		// Get the directory of the file using substring.
 		if (lastSlash > 0) {
-			file_path = fileName.substr(
-				lastSlash,
-				fileName.size());
+			file_path = fileName.substr(0, lastSlash + 1);
 		} else {
 			file_path = "";
 		}
