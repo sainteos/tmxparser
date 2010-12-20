@@ -28,8 +28,8 @@
 #include "TmxObject.h"
 #include "tinyxml/tinyxml.h"
 
-namespace Tmx {
-		
+namespace Tmx 
+{
 	Object::Object() 
 		:	name(),
 			type(),
@@ -37,11 +37,14 @@ namespace Tmx {
 			y(0),
 			width(0),
 			height(0),
-			properties() {}
+			properties() 
+	{}
 
-	Object::~Object() {}
+	Object::~Object() 
+	{}
 
-	void Object::Parse(const TiXmlNode *objectNode) {
+	void Object::Parse(const TiXmlNode *objectNode) 
+	{
 		const TiXmlElement *objectElem = objectNode->ToElement();
 
 		// Read the attributes of the object.
@@ -58,7 +61,8 @@ namespace Tmx {
 
 		// Read the properties of the object.
 		const TiXmlNode *propertiesNode = objectNode->FirstChild("properties");
-		if (propertiesNode) {
+		if (propertiesNode) 
+		{
 			properties.Parse(propertiesNode);
 		}
 	}

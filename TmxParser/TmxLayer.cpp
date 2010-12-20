@@ -30,8 +30,8 @@
 #include "tinyxml/tinyxml.h"
 #include "zlib/zlib.h"
 
-namespace Tmx {
-
+namespace Tmx 
+{
 	Layer::Layer() 
 		:	name(), 
 			width(0), 
@@ -46,15 +46,18 @@ namespace Tmx {
 		tile_map = NULL;
 	}
 
-	Layer::~Layer() {
+	Layer::~Layer() 
+	{
 		// If the tile map is allocated, delete it from the memory.
-		if (tile_map) {
+		if (tile_map)
+		{
 			delete [] tile_map;
 			tile_map = NULL;
 		}
 	}
 
-	void Layer::Parse(const TiXmlNode *layerNode) {
+	void Layer::Parse(const TiXmlNode *layerNode) 
+	{
 		const TiXmlElement *layerElem = layerNode->ToElement();
 	
 		// Read the attributes.
@@ -64,18 +67,21 @@ namespace Tmx {
 		layerElem->Attribute("height", &height);
 
 		const char *opacityStr = layerElem->Attribute("opacity");
-		if (opacityStr) {
+		if (opacityStr) 
+		{
 			opacity = (float)atof(opacityStr);
 		}
 
 		const char *visibleStr = layerElem->Attribute("visible");
-		if (visibleStr) {
+		if (visibleStr) 
+		{
 			visible = atoi(visibleStr) != 0; // to prevent visual c++ from complaining..
 		}
 
 		// Read the properties.
 		const TiXmlNode *propertiesNode = layerNode->FirstChild("properties");
-		if (propertiesNode) {
+		if (propertiesNode) 
+		{
 			properties.Parse(propertiesNode);
 		}
 
@@ -89,25 +95,33 @@ namespace Tmx {
 		const char *compressionStr = dataElem->Attribute("compression");
 
 		// Check for encoding.
-		if (encodingStr) {
-			if (!strcmp(encodingStr, "base64")) {
+		if (encodingStr) 
+		{
+			if (!strcmp(encodingStr, "base64")) 
+			{
 				encoding = TMX_ENCODING_BASE64;
-			} else if (!strcmp(encodingStr, "csv")) {
+			} else if (!strcmp(encodingStr, "csv")) 
+			{
 				encoding = TMX_ENCODING_CSV;
 			}
 		}
 
 		// Check for compression.
-		if (compressionStr) {
-			if (!strcmp(compressionStr, "gzip")) {
+		if (compressionStr) 
+		{
+			if (!strcmp(compressionStr, "gzip")) 
+			{
 				compression = TMX_COMPRESSION_GZIP;
-			} else if (!strcmp(compressionStr, "zlib")) {
+			} 
+			else if (!strcmp(compressionStr, "zlib")) 
+			{
 				compression = TMX_COMPRESSION_ZLIB;
 			}
 		}
 		
 		// Decode.
-		switch (encoding) {
+		switch (encoding) 
+		{
 		case TMX_ENCODING_XML:
 			ParseXML(dataNode);
 			break;
@@ -122,11 +136,13 @@ namespace Tmx {
 		}
 	}
 
-	void Layer::ParseXML(const TiXmlNode *dataNode) {
+	void Layer::ParseXML(const TiXmlNode *dataNode) 
+	{
 		const TiXmlNode *tileNode = dataNode->FirstChild("tile");
 		int tileCount = 0;
 
-		while (tileNode) {
+		while (tileNode) 
+		{
 			const TiXmlElement *tileElem = tileNode->ToElement();
 			
 			// Read the Global-ID of the tile directly into the array entry.
@@ -137,17 +153,21 @@ namespace Tmx {
 		}
 	}
 
-	void Layer::ParseBase64(const std::string &innerText) {
+	void Layer::ParseBase64(const std::string &innerText) 
+	{
 		const std::string &text = Util::DecodeBase64(innerText);
 
-		if (compression == TMX_COMPRESSION_ZLIB) {
+		if (compression == TMX_COMPRESSION_ZLIB) 
+		{
 			// Use zlib to uncompress into the map.
 			uLongf outlen = width * height * 4;
 			uncompress(
 				(Bytef*)tile_map, &outlen, 
 				(const Bytef*)text.c_str(), text.size());
 	
-		} else if (compression == TMX_COMPRESSION_GZIP) {
+		} 
+		else if (compression == TMX_COMPRESSION_GZIP) 
+		{
 			// Use the utility class for decompressing (which uses zlib)
 			char *out = Util::DecompressGZIP(
 				text.c_str(), 
@@ -161,14 +181,17 @@ namespace Tmx {
 			// by the Util::DecompressGZIP function.
 			free(out);
 
-		} else {
+		} 
+		else 
+		{
 			// Copy every into the tile_map variable since
 			// the decoded string is an array of 32-bit integers.
 			memcpy(tile_map, text.c_str(), text.size());
 		}
 	}
 
-	void Layer::ParseCSV(const std::string &innerText) {
+	void Layer::ParseCSV(const std::string &innerText) 
+	{
 		// Duplicate the string for use with C stdio.
 		char *csv = strdup(innerText.c_str());
 		
@@ -176,7 +199,8 @@ namespace Tmx {
 		char *pch = strtok(csv, ";");
 		int tileCount = 0;
 		
-		while (pch) {
+		while (pch) 
+		{
 			tile_map[tileCount] = atoi(pch);
 
 			++tileCount;

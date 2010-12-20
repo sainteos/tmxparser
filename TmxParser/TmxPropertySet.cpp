@@ -31,17 +31,21 @@
 using std::string;
 using std::map;
 
-namespace Tmx {
+namespace Tmx 
+{
 		
-	PropertySet::PropertySet() : properties()  {}
+	PropertySet::PropertySet() : properties()  
+	{}
 
-	void PropertySet::Parse(const TiXmlNode *propertiesNode) {
+	void PropertySet::Parse(const TiXmlNode *propertiesNode) 
+	{
 		// Iterate through all of the property nodes.
 		const TiXmlNode *propertyNode = propertiesNode->FirstChild("property");
 		string propertyName;
 		string propertyValue;
 
-		while (propertyNode) {
+		while (propertyNode) 
+		{
 			const TiXmlElement* propertyElem = propertyNode->ToElement();
 
 			// Read the attributes of the property and add it to the map
@@ -54,7 +58,8 @@ namespace Tmx {
 		}
 	}
 
-	const string &PropertySet::GetLiteralProperty(const string &name) const {
+	const string &PropertySet::GetLiteralProperty(const string &name) const 
+	{
 		// Find the property in the map.
 		map< string, string >::const_iterator iter;
 		iter = properties.find(name);
@@ -62,7 +67,8 @@ namespace Tmx {
 		return iter->second;
 	}
 
-	int PropertySet::GetNumericProperty(const string &name) const {
+	int PropertySet::GetNumericProperty(const string &name) const 
+	{
 		return atoi(GetLiteralProperty(name).c_str());
 	}
 

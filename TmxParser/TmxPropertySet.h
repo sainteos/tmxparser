@@ -25,19 +25,20 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_TMXPROPERTYSET_H_
-#define TMXPARSER_TMXPROPERTYSET_H_
+#pragma once
 
 #include <map>
 #include <string>
 
 class TiXmlNode;
 
-namespace Tmx {
+namespace Tmx 
+{
 	//-----------------------------------------------------------------------------
 	// This class contains a map of properties.
 	//-----------------------------------------------------------------------------
-	class PropertySet {
+	class PropertySet 
+	{
 	public:
 		PropertySet();
 
@@ -65,5 +66,3 @@ namespace Tmx {
 
 	};
 };
-
-#endif

@@ -28,8 +28,8 @@
 #include "TmxImage.h"
 #include "tinyxml/tinyxml.h"
 
-namespace Tmx {
-	
+namespace Tmx 
+{	
 	Image::Image() 
 		:	source(),
 			width(),
@@ -40,7 +40,8 @@ namespace Tmx {
 	Image::~Image() 
 	{}
 
-	void Image::Parse(const TiXmlNode *imageNode) {
+	void Image::Parse(const TiXmlNode *imageNode) 
+	{
 		const TiXmlElement* imageElem = imageNode->ToElement();
 		
 		// Read all the attribute into member variables.
@@ -50,9 +51,9 @@ namespace Tmx {
 		imageElem->Attribute("height", &height);
 
 		const char *trans = imageElem->Attribute("trans");
-		if (trans) {
+		if (trans) 
+		{
 			transparent_color = trans;
 		}
 	}
-
 };

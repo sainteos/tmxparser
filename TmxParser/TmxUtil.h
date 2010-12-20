@@ -25,13 +25,14 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_TMXUTIL_H_
-#define TMXPARSER_TMXUTIL_H_
+#pragma once
 
 #include <string>
 
-namespace Tmx {
-	class Util {
+namespace Tmx 
+{
+	class Util 
+	{
 	public:
 		// Decode a base-64 encoded string.
 		static std::string DecodeBase64(const std::string &str);
@@ -40,5 +41,3 @@ namespace Tmx {
 		static char* DecompressGZIP(const char *data, int dataSize, int expectedSize);
 	};
 };
-
-#endif

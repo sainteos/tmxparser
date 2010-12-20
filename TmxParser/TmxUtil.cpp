@@ -30,12 +30,13 @@
 #include "zlib/zlib.h"
 
 namespace Tmx {
-
-	std::string Util::DecodeBase64(const std::string &str) {
+	std::string Util::DecodeBase64(const std::string &str) 
+	{
 		return base64_decode(str);
 	}
 
-	char *Util::DecompressGZIP(const char *data, int dataSize, int expectedSize) {
+	char *Util::DecompressGZIP(const char *data, int dataSize, int expectedSize) 
+	{
 		int bufferSize = expectedSize;
 		int ret;
 		z_stream strm;
@@ -51,15 +52,18 @@ namespace Tmx {
 
 		ret = inflateInit2(&strm, 15 + 32);
 
-		if (ret != Z_OK) {
+		if (ret != Z_OK) 
+		{
 			free(out);
 			return NULL;
 		}
 
-		do {
+		do 
+		{
 			ret = inflate(&strm, Z_SYNC_FLUSH);
 
-			switch (ret) {
+			switch (ret) 
+			{
 				case Z_NEED_DICT:
 				case Z_STREAM_ERROR:
 					ret = Z_DATA_ERROR;
@@ -70,10 +74,12 @@ namespace Tmx {
 					return NULL;
 			}
 
-			if (ret != Z_STREAM_END) {
+			if (ret != Z_STREAM_END) 
+			{
 				out = (char *) realloc(out, bufferSize * 2);
 
-				if (!out) {
+				if (!out) 
+				{
 					inflateEnd(&strm);
 					free(out);
 					return NULL;
@@ -86,7 +92,8 @@ namespace Tmx {
 		}
 		while (ret != Z_STREAM_END);
 
-		if (strm.avail_in != 0) {
+		if (strm.avail_in != 0) 
+		{
 			free(out);
 			return NULL;
 		}
@@ -96,5 +103,4 @@ namespace Tmx {
 
 		return out;
 	}
-
 };

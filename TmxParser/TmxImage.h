@@ -25,18 +25,19 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_TMXIMAGE_H_
-#define TMXPARSER_TMXIMAGE_H_
+#pragma once
 
 #include <string>
 
 class TiXmlNode;
 
-namespace Tmx {
+namespace Tmx 
+{
 	//-------------------------------------------------------------------------
 	// An image within a tileset.
 	//-------------------------------------------------------------------------
-	class Image {
+	class Image 
+	{
 	public:
 		Image();
 		~Image();
@@ -64,5 +65,3 @@ namespace Tmx {
 		std::string transparent_color;
 	};
 };
-
-#endif

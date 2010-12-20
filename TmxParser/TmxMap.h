@@ -25,15 +25,15 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_TMXMAP_H_
-#define TMXPARSER_TMXMAP_H_
+#pragma once
 
 #include <vector>
 #include <string>
 
 #include "TmxPropertySet.h"
 
-namespace Tmx {
+namespace Tmx 
+{
 	class Layer;
 	class ObjectGroup;
 	class Tileset;
@@ -41,7 +41,8 @@ namespace Tmx {
 	//-------------------------------------------------------------------------
 	// Error in handling of the Map class.
 	//-------------------------------------------------------------------------
-	enum MapError {
+	enum MapError 
+	{
 		// A file could not be opened. (usually due to permission problems)
 		TMX_COULDNT_OPEN = 0x01,
 
@@ -53,7 +54,8 @@ namespace Tmx {
 	//-------------------------------------------------------------------------
 	// The way the map is viewed.
 	//-------------------------------------------------------------------------
-	enum MapOrientation {
+	enum MapOrientation 
+	{
 		// This map is an orthogonal map.
 		TMX_MO_ORTHOGONAL = 0x01,
 
@@ -66,7 +68,8 @@ namespace Tmx {
 	// It has all of the information in regard to the TMX file.
 	// This class has a property set.
 	//-------------------------------------------------------------------------
-	class Map {
+	class Map 
+	{
 	public:
 		Map();
 		~Map();
@@ -82,7 +85,7 @@ namespace Tmx {
 		const std::string &GetFilename() { return file_name; }
 
 		// Get a path to the directory of the map file if any.
-		const std::string &GetPath() const { return file_path; }
+		const std::string &GetFilepath() const { return file_path; }
 
 		// Get the version of the map.
 		double GetVersion() const { return version; }
@@ -167,5 +170,3 @@ namespace Tmx {
 		PropertySet properties;
 	};
 };
-
-#endif

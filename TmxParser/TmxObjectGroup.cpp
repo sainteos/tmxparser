@@ -29,26 +29,31 @@
 #include "TmxObject.h"
 #include "tinyxml/tinyxml.h"
 
-namespace Tmx {
-
+namespace Tmx 
+{
 	ObjectGroup::ObjectGroup()
 		:	name(),
 			width(0),
-			height(0) {}
+			height(0) 
+	{}
 
-	ObjectGroup::~ObjectGroup() {}
+	ObjectGroup::~ObjectGroup() 
+	{}
 
-	void ObjectGroup::Parse(const TiXmlNode *objectGroupNode) {
+	void ObjectGroup::Parse(const TiXmlNode *objectGroupNode) 
+	{
 		const TiXmlElement *objectGroupElem = objectGroupNode->ToElement();
 
 		// Read the object group attributes.
 		name = objectGroupElem->Attribute("name");
+		
 		objectGroupElem->Attribute("width", &width);
 		objectGroupElem->Attribute("height", &height);
 
 		// Iterate through all of the object elements.
 		const TiXmlNode *objectNode = objectGroupNode->FirstChild("object");
-		while (objectNode) {
+		while (objectNode) 
+		{
 			// Allocate a new object and parse it.
 			Object *object = new Object();
 			object->Parse(objectNode);

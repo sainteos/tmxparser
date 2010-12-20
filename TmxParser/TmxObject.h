@@ -25,19 +25,20 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_TMXOBJECT_H_
-#define TMXPARSER_TMXOBJECT_H_
+#pragma once
 
 #include <string>
 #include "TmxPropertySet.h"
 
 class TiXmlNode;
 
-namespace Tmx {
+namespace Tmx 
+{
 	//-------------------------------------------------------------------------
 	// Class used for representing a single object from the objectgroup.
 	//-------------------------------------------------------------------------
-	class Object {
+	class Object 
+	{
 	public:
 		Object();
 		~Object();
@@ -78,5 +79,3 @@ namespace Tmx {
 		PropertySet properties;
 	};
 };
-
-#endif

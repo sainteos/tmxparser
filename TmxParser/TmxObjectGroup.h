@@ -25,22 +25,23 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_OBJECTGROUP_H_
-#define TMXPARSER_OBJECTGROUP_H_
+#pragma once
 
 #include <string>
 #include <vector>
 
 class TiXmlNode;
 
-namespace Tmx {
+namespace Tmx 
+{
 	class Object;
 	
 	//-------------------------------------------------------------------------
 	// A class used for holding a list of objects.
 	// This class doesn't have a property set.
 	//-------------------------------------------------------------------------
-	class ObjectGroup {
+	class ObjectGroup 
+	{
 	public:
 		ObjectGroup();
 		~ObjectGroup();
@@ -77,5 +78,3 @@ namespace Tmx {
 		std::vector< Object* > objects;
 	};
 };
-
-#endif

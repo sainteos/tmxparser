@@ -28,12 +28,16 @@
 #include "TmxTile.h"
 #include "tinyxml/tinyxml.h"
 
-namespace Tmx {
-	Tile::Tile() : properties() {}
+namespace Tmx 
+{
+	Tile::Tile() : properties()
+	{}
 
-	Tile::~Tile() {}
+	Tile::~Tile() 
+	{}
 
-	void Tile::Parse(const TiXmlNode *tileNode) {
+	void Tile::Parse(const TiXmlNode *tileNode) 
+	{
 		const TiXmlElement *tileElem = tileNode->ToElement();
 
 		// Parse the attributes.
@@ -42,7 +46,8 @@ namespace Tmx {
 		// Parse the properties if any.
 		const TiXmlNode *propertiesNode = tileNode->FirstChild("properties");
 		
-		if (propertiesNode) {
+		if (propertiesNode) 
+		{
 			properties.Parse(propertiesNode);
 		}
 	}

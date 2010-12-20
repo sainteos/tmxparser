@@ -25,19 +25,20 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_TMXLAYER_H_
-#define TMXPARSER_TMXLAYER_H_
+#pragma once
 
 #include <string>
 #include "TmxPropertySet.h"
 
 class TiXmlNode;
 
-namespace Tmx {
+namespace Tmx 
+{
 	//-------------------------------------------------------------------------
 	// Type used for the encoding of the layer data.
 	//-------------------------------------------------------------------------
-	enum LayerEncodingType {
+	enum LayerEncodingType 
+	{
 		TMX_ENCODING_XML,
 		TMX_ENCODING_BASE64,
 		TMX_ENCODING_CSV
@@ -46,7 +47,8 @@ namespace Tmx {
 	//-------------------------------------------------------------------------
 	// Type used for the compression of the layer data.
 	//-------------------------------------------------------------------------
-	enum LayerCompressionType {
+	enum LayerCompressionType 
+	{
 		TMX_COMPRESSION_NONE,
 		TMX_COMPRESSION_ZLIB,
 		TMX_COMPRESSION_GZIP
@@ -56,7 +58,8 @@ namespace Tmx {
 	// Used for storing information about the tile ids for every layer.
 	// This class also have a property set.
 	//-------------------------------------------------------------------------
-	class Layer {
+	class Layer 
+	{
 	public:
 		Layer();
 		~Layer();
@@ -113,5 +116,3 @@ namespace Tmx {
 		LayerCompressionType compression;
 	};
 };
-
-#endif

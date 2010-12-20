@@ -25,15 +25,15 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_TMXTILESET_H_
-#define TMXPARSER_TMXTILESET_H_
+#pragma once
 
 #include <string>
 #include <vector>
 
 class TiXmlNode;
 
-namespace Tmx {
+namespace Tmx 
+{
 	class Image;
 	class Tile;
 
@@ -42,7 +42,8 @@ namespace Tmx {
 	// A tileset is a collection of tiles, of whom each may contain properties.
 	// The tileset class itself does not have properties.
 	//-------------------------------------------------------------------------
-	class Tileset {
+	class Tileset 
+	{
 	public:
 		Tileset();
 		~Tileset();
@@ -93,5 +94,3 @@ namespace Tmx {
 		std::vector< Tile* > tiles;
 	};
 };
-
-#endif

@@ -25,12 +25,12 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#ifndef TMXPARSER_TMXTILE_H_
-#define TMXPARSER_TMXTILE_H_
+#pragma once
 
 #include "TmxPropertySet.h"
 
-namespace Tmx {
+namespace Tmx 
+{
 	//-------------------------------------------------------------------------
 	// Class to contain information about every tile in the tileset/tiles 
 	// element.
@@ -38,7 +38,8 @@ namespace Tmx {
 	// the tile element.
 	// This class also contains a property set.
 	//-------------------------------------------------------------------------
-	class Tile {
+	class Tile 
+	{
 	public:
 		Tile();
 		~Tile();
@@ -58,5 +59,3 @@ namespace Tmx {
 		PropertySet properties;
 	};
 };
-
-#endif
