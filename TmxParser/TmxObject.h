@@ -64,6 +64,9 @@ namespace Tmx
 		// Get the height of the object, in pixels.
 		int GetHeight() const { return height; }
 
+		// Get the Global ID of the tile associated with this object.
+		int GetGid() const { return gid; }
+
 		// Get the property set.
 		const PropertySet &GetProperties() const { return properties; }
 
@@ -75,6 +78,7 @@ namespace Tmx
 		int y;
 		int width;
 		int height;
+		int gid;
 
 		PropertySet properties;
 	};

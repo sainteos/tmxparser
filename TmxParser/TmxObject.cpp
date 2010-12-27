@@ -37,6 +37,7 @@ namespace Tmx
 			y(0),
 			width(0),
 			height(0),
+			gid(0),
 			properties() 
 	{}
 
@@ -58,6 +59,7 @@ namespace Tmx
 		objectElem->Attribute("y", &y);
 		objectElem->Attribute("width", &width);
 		objectElem->Attribute("height", &height);
+		objectElem->Attribute("gid", &gid);
 
 		// Read the properties of the object.
 		const TiXmlNode *propertiesNode = objectNode->FirstChild("properties");
