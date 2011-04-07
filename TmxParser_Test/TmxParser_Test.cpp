@@ -33,6 +33,7 @@
 #include "../TmxParser/TmxObject.h"
 #include "../TmxParser/TmxObjectGroup.h"
 #include "../TmxParser/TmxPropertySet.h"
+#include <cstdio>
 
 int main() {
 	Tmx::Map *map = new Tmx::Map();
