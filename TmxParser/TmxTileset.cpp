@@ -36,13 +36,13 @@ using std::string;
 namespace Tmx 
 {
 	Tileset::Tileset() 
-		:	first_gid(0),
-			tile_width(0),
-			tile_height(0),
-			margin(0),
-			spacing(0),
-			name(),
-			tiles()
+		: first_gid(0)
+		, tile_width(0)
+		, tile_height(0)
+		, margin(0)
+		, spacing(0)
+		, name()
+		, tiles()
 	{
 		image = NULL;
 	}

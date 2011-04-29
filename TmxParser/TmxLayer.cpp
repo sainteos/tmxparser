@@ -33,14 +33,14 @@
 namespace Tmx 
 {
 	Layer::Layer() 
-		:	name(), 
-			width(0), 
-			height(0), 
-			opacity(1.0f),
-			visible(true),
-			properties(),
-			encoding(TMX_ENCODING_XML),
-			compression(TMX_COMPRESSION_NONE)
+		: name() 
+		, width(0) 
+		, height(0) 
+		, opacity(1.0f)
+		, visible(true)
+		, properties()
+		, encoding(TMX_ENCODING_XML)
+		, compression(TMX_COMPRESSION_NONE)
 	{
 		// Set the map to null to specify that it is not yet allocated.
 		tile_map = NULL;

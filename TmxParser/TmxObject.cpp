@@ -31,14 +31,14 @@
 namespace Tmx 
 {
 	Object::Object() 
-		:	name(),
-			type(),
-			x(0),
-			y(0),
-			width(0),
-			height(0),
-			gid(0),
-			properties() 
+		: name()
+		, type()
+		, x(0)
+		, y(0)
+		, width(0)
+		, height(0)
+		, gid(0)
+		, properties() 
 	{}
 
 	Object::~Object() 

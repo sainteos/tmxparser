@@ -32,9 +32,9 @@
 namespace Tmx 
 {
 	ObjectGroup::ObjectGroup()
-		:	name(),
-			width(0),
-			height(0) 
+		: name()
+		, width(0)
+		, height(0)
 	{}
 
 	ObjectGroup::~ObjectGroup() 

@@ -38,20 +38,20 @@ using std::string;
 namespace Tmx 
 {
 	Map::Map() 
-		:	file_name(), 
-			file_path(),
-			version(0.0),
-			orientation(TMX_MO_ORTHOGONAL),
-			width(0), 
-			height(0), 
-			tile_width(0),
-			tile_height(0),
-			has_error(false),
-			error_code(0),
-			error_text(),
-			layers(),
-			object_groups(),
-			tilesets() 
+		: file_name()
+		, file_path()
+		, version(0.0)
+		, orientation(TMX_MO_ORTHOGONAL)
+		, width(0)
+		, height(0)
+		, tile_width(0)
+		, tile_height(0)
+		, has_error(false)
+		, error_code(0)
+		, error_text()
+		, layers()
+		, object_groups()
+		, tilesets() 
 	{}
 
 	Map::~Map() 

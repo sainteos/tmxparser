@@ -31,10 +31,10 @@
 namespace Tmx 
 {	
 	Image::Image() 
-		:	source(),
-			width(),
-			height(),
-			transparent_color()
+		: source()
+		, width()
+		, height()
+		, transparent_color()
 	{}
 
 	Image::~Image() 
