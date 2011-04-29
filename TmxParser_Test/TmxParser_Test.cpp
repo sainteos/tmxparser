@@ -25,14 +25,7 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include "../TmxParser/TmxMap.h"
-#include "../TmxParser/TmxTileset.h"
-#include "../TmxParser/TmxTile.h"
-#include "../TmxParser/TmxImage.h"
-#include "../TmxParser/TmxLayer.h"
-#include "../TmxParser/TmxObject.h"
-#include "../TmxParser/TmxObjectGroup.h"
-#include "../TmxParser/TmxPropertySet.h"
+#include "../TmxParser/Tmx.h"
 #include <cstdio>
 
 int main() {
