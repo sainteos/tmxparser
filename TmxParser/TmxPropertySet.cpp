@@ -49,8 +49,8 @@ namespace Tmx
 			const TiXmlElement* propertyElem = propertyNode->ToElement();
 
 			// Read the attributes of the property and add it to the map
-			propertyName = propertyElem->Attribute("name");
-			propertyValue = propertyElem->Attribute("value");
+			propertyName = string(propertyElem->Attribute("name"));
+			propertyValue = string(propertyElem->Attribute("value"));
 			properties[propertyName] = propertyValue;
 			
 			propertyNode = propertiesNode->IterateChildren(
@@ -58,13 +58,15 @@ namespace Tmx
 		}
 	}
 
-	const string &PropertySet::GetLiteralProperty(const string &name) const 
+	string PropertySet::GetLiteralProperty(const string &name) const 
 	{
 		// Find the property in the map.
-		map< string, string >::const_iterator iter;
-		iter = properties.find(name);
+		map< string, string >::const_iterator iter = properties.find(name);
 
-		return iter->second;
+		if (iter == properties.cend())
+			return std::string("No such property!");
+
+		return std::string(iter->second);
 	}
 
 	int PropertySet::GetNumericProperty(const string &name) const 

@@ -1,12 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TmxParser", "TmxParser\TmxParser.vcproj", "{798FC53D-6DA5-4634-8C4E-1CA2368F27EA}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TmxParser", "TmxParser\TmxParser.vcxproj", "{798FC53D-6DA5-4634-8C4E-1CA2368F27EA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TmxParser_Test", "TmxParser_Test\TmxParser_Test.vcproj", "{DEE8416F-35BA-435C-BE6F-17AC1B86F044}"
-	ProjectSection(ProjectDependencies) = postProject
-		{798FC53D-6DA5-4634-8C4E-1CA2368F27EA} = {798FC53D-6DA5-4634-8C4E-1CA2368F27EA}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TmxParser_Test", "TmxParser_Test\TmxParser_Test.vcxproj", "{DEE8416F-35BA-435C-BE6F-17AC1B86F044}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
