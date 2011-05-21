@@ -49,7 +49,7 @@ namespace Tmx
 		int GetNumericProperty(const std::string &name) const;
 
 		// Get a literal property (string).
-		const std::string &GetLiteralProperty(const std::string &name) const;
+		std::string GetLiteralProperty(const std::string &name) const;
 
 		// Returns the amount of properties.
 		int GetSize() const { return properties.size(); }
