@@ -86,7 +86,7 @@ namespace Tmx
 		}
 
 		// Allocate memory for reading the tiles.
-		tile_map = new int[width * height];
+		tile_map = new MapTile[width * height];
 
 		const TiXmlNode *dataNode = layerNode->FirstChild("data");
 		const TiXmlElement *dataElem = dataNode->ToElement();
@@ -100,7 +100,8 @@ namespace Tmx
 			if (!strcmp(encodingStr, "base64")) 
 			{
 				encoding = TMX_ENCODING_BASE64;
-			} else if (!strcmp(encodingStr, "csv")) 
+			} 
+			else if (!strcmp(encodingStr, "csv")) 
 			{
 				encoding = TMX_ENCODING_CSV;
 			}
@@ -145,9 +146,14 @@ namespace Tmx
 		{
 			const TiXmlElement *tileElem = tileNode->ToElement();
 			
+			int gid = 0;
+
 			// Read the Global-ID of the tile directly into the array entry.
-			tileElem->Attribute("gid", &tile_map[tileCount]);
+			tileElem->Attribute("gid", &gid);
 			++tileCount;
+
+			// Convert the gid to a map tile.
+			tile_map[tileCount] = MapTile(gid);
 
 			tileNode = dataNode->IterateChildren("tile", tileNode);
 		}
@@ -157,37 +163,45 @@ namespace Tmx
 	{
 		const std::string &text = Util::DecodeBase64(innerText);
 
+		// Temporary array of gids to be converted to map tiles.
+		int *out = 0;
+
 		if (compression == TMX_COMPRESSION_ZLIB) 
 		{
-			// Use zlib to uncompress into the map.
+			// Use zlib to uncompress the layer into the temporary array of tiles.
 			uLongf outlen = width * height * 4;
+			out = new int[outlen];
 			uncompress(
-				(Bytef*)tile_map, &outlen, 
+				(Bytef*)out, &outlen, 
 				(const Bytef*)text.c_str(), text.size());
 	
 		} 
 		else if (compression == TMX_COMPRESSION_GZIP) 
 		{
 			// Use the utility class for decompressing (which uses zlib)
-			char *out = Util::DecompressGZIP(
+			out = (int*)Util::DecompressGZIP(
 				text.c_str(), 
 				text.size(), 
 				width * height * 4);
-
-			// Copy the decompressed buffer into the tile map
-			memcpy(tile_map, out, width * height * 4);
-
-			// Free the decompressed buffer memory since it was allocated
-			// by the Util::DecompressGZIP function.
-			free(out);
-
 		} 
 		else 
 		{
-			// Copy every into the tile_map variable since
+			// Copy every gid into the temporary array since
 			// the decoded string is an array of 32-bit integers.
-			memcpy(tile_map, text.c_str(), text.size());
+			memcpy(out, text.c_str(), text.size());
 		}
+
+		// Convert the gids to map tiles.
+		for (int x = 0; x < width; x++)
+		{
+			for (int y = 0; y < height; y++)
+			{
+				tile_map[y * width + x] = MapTile(out[y * width + x]);
+			}
+		}
+
+		// Free the temporary array from memory.
+		free(out);
 	}
 
 	void Layer::ParseCSV(const std::string &innerText) 
@@ -201,7 +215,7 @@ namespace Tmx
 		
 		while (pch) 
 		{
-			tile_map[tileCount] = atoi(pch);
+			tile_map[tileCount] = MapTile(atoi(pch));
 
 			++tileCount;
 			pch = strtok(NULL, ";");

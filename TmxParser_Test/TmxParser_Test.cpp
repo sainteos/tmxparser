@@ -84,10 +84,20 @@ int main() {
 		for (int x = 0; x < layer->GetWidth(); ++x) {
 			for (int y = 0; y < layer->GetHeight(); ++y) {
 				// Get a tile global id.
-				printf("%03d ", layer->GetTileGid(y, x));
+				printf("%03d", layer->GetTileGid(y, x));
 
 				// Find a tileset for that id.
-				const Tmx::Tileset *tileset = map->FindTileset(layer->GetTileGid(x,y));
+				const Tmx::Tileset *tileset = map->FindTileset(layer->GetTileGid(y,x));
+				if (layer->IsTileFlippedHorizontally(y, x)){
+					printf("h");
+				}else{
+					printf(" ");
+				}
+				if (layer->IsTileFlippedVertically(y, x)){
+					printf("v  ");
+				}else{
+					printf("   ");
+				}
 			}
 
 			printf("\n");

@@ -29,6 +29,7 @@
 
 #include <string>
 #include "TmxPropertySet.h"
+#include "TmxMapTile.h"
 
 class TiXmlNode;
 
@@ -80,12 +81,18 @@ namespace Tmx
 		const PropertySet &GetProperties() const { return properties; }
 
 		// Pick a specific tile from the list.
-		int GetTileGid(int x, int y) const { return tile_map[y * width + x]; }
+		int GetTileGid(int x, int y) const { return tile_map[y * width + x].gid; }
 
-		// Set the tile at specific position.
-		// x - the column of the tile, in tiles.
-		// y - the row of the tile, in tiles.
-		void SetTile(int x, int y, int tile) { tile_map[y * width + x] = tile; }
+		// Get whether the tile is flipped horizontally.
+		bool IsTileFlippedHorizontally(int x, int y) const 
+		{ return tile_map[y * width + x].flippedHorizontally; }
+
+		// Get whether the tile is flipped vertically.
+		bool IsTileFlippedVertically(int x, int y) const 
+		{ return tile_map[y * width + x].flippedVertically; }
+
+		// Get the tile specific to the map.
+		MapTile GetTile(int x, int y) const { return tile_map[y * width + x]; }
 
 		// Get the type of encoding that was used for parsing the layer data.
 		// See: LayerEncodingType
@@ -110,7 +117,7 @@ namespace Tmx
 
 		PropertySet properties;
 
-		int *tile_map;
+		MapTile *tile_map;
 
 		LayerEncodingType encoding;
 		LayerCompressionType compression;

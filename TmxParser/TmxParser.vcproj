@@ -301,6 +301,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TmxMapTile.h"
+				>
+			</File>
+			<File
 				RelativePath=".\TmxObject.h"
 				>
 			</File>
