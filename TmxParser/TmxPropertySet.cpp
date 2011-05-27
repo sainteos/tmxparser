@@ -63,7 +63,7 @@ namespace Tmx
 		// Find the property in the map.
 		map< string, string >::const_iterator iter = properties.find(name);
 
-		if (iter == properties.cend())
+		if (iter == properties.end())
 			return std::string("No such property!");
 
 		return std::string(iter->second);
