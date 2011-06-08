@@ -46,12 +46,12 @@ namespace Tmx
 		, height(0)
 		, tile_width(0)
 		, tile_height(0)
-		, has_error(false)
-		, error_code(0)
-		, error_text()
 		, layers()
 		, object_groups()
 		, tilesets() 
+		, has_error(false)
+		, error_code(0)
+		, error_text()
 	{}
 
 	Map::~Map() 
@@ -139,7 +139,7 @@ namespace Tmx
 		fclose(file);
 
 		// Copy the contents into a C++ string and delete it from memory.
-		std::string text(fileText);
+		std::string text(fileText, fileText+fileSize);
 		delete [] fileText;
 
 		ParseText(text);		

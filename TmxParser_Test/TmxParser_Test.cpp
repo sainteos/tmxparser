@@ -27,6 +27,7 @@
 //-----------------------------------------------------------------------------
 #include "../TmxParser/Tmx.h"
 #include <cstdio>
+#include <stdlib.h>
 
 int main() {
 	Tmx::Map *map = new Tmx::Map();
@@ -34,7 +35,7 @@ int main() {
 
 	if (map->HasError()) {
 		printf("error code: %d\n", map->GetErrorCode());
-		printf("error text: %s\n", map->GetErrorText());
+		printf("error text: %s\n", map->GetErrorText().c_str());
 
 		system("PAUSE");
 

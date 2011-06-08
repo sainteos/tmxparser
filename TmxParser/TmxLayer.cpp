@@ -29,6 +29,7 @@
 #include "TmxUtil.h"
 #include "tinyxml/tinyxml.h"
 #include "zlib/zlib.h"
+#include <stdlib.h>
 
 namespace Tmx 
 {
@@ -170,7 +171,7 @@ namespace Tmx
 		{
 			// Use zlib to uncompress the layer into the temporary array of tiles.
 			uLongf outlen = width * height * 4;
-			out = new int[outlen];
+			out = (int *)malloc(outlen);
 			uncompress(
 				(Bytef*)out, &outlen, 
 				(const Bytef*)text.c_str(), text.size());
