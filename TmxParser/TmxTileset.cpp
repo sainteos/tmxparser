@@ -37,14 +37,14 @@ namespace Tmx
 {
 	Tileset::Tileset() 
 		: first_gid(0)
+		, name()
 		, tile_width(0)
 		, tile_height(0)
 		, margin(0)
 		, spacing(0)
-		, name()
+		, image(NULL)
 		, tiles()
 	{
-		image = NULL;
 	}
 
 	Tileset::~Tileset() 
@@ -91,8 +91,6 @@ namespace Tmx
 			image = new Image();
 			image->Parse(imageNode);
 		}
-
-		const TiXmlNode *tilesNode = tilesetNode->FirstChild("tiles");
 
 		// Iterate through all of the tile elements and parse each.
 		const TiXmlNode *tileNode = tilesetNode->FirstChild("tile");

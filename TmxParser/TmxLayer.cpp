@@ -187,6 +187,8 @@ namespace Tmx
 		} 
 		else 
 		{
+			out = (int*)malloc(text.size());
+		
 			// Copy every gid into the temporary array since
 			// the decoded string is an array of 32-bit integers.
 			memcpy(out, text.c_str(), text.size());

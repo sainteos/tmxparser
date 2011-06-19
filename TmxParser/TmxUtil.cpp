@@ -99,7 +99,6 @@ namespace Tmx {
 			return NULL;
 		}
 
-		const int outLength = bufferSize - strm.avail_out;
 		inflateEnd(&strm);
 
 		return out;
