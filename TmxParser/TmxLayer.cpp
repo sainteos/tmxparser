@@ -151,10 +151,9 @@ namespace Tmx
 
 			// Read the Global-ID of the tile directly into the array entry.
 			tileElem->Attribute("gid", &gid);
-			++tileCount;
 
 			// Convert the gid to a map tile.
-			tile_map[tileCount] = MapTile(gid);
+			tile_map[tileCount++] = MapTile(gid);
 
 			tileNode = dataNode->IterateChildren("tile", tileNode);
 		}

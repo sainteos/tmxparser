@@ -31,7 +31,7 @@
 
 int main() {
 	Tmx::Map *map = new Tmx::Map();
-	map->ParseFile("./example/example.tmx");
+	map->ParseFile("./example/large_leveL_test.tmx");
 
 	if (map->HasError()) {
 		printf("error code: %d\n", map->GetErrorCode());
@@ -61,14 +61,16 @@ int main() {
 		printf("Image Source: %s\n", tileset->GetImage()->GetSource().c_str());
 		printf("Transparent Color (hex): %s\n", tileset->GetImage()->GetTransparentColor().c_str());
 
-		// Get a tile from the tileset.
-		const Tmx::Tile *tile = tileset->GetTile(0);
+		if (tileset->GetTiles().size() > 0) {
+			// Get a tile from the tileset.
+			const Tmx::Tile *tile = tileset->GetTile(0);
 
-		// Print the properties of a tile.
-		std::map< std::string, std::string > list = tile->GetProperties().GetList();
-		std::map< std::string, std::string >::iterator iter;
-		for (iter = list.begin(); iter != list.end(); ++iter) {
-			printf("%s = %s\n", iter->first.c_str(), iter->second.c_str());
+			// Print the properties of a tile.
+			std::map< std::string, std::string > list = tile->GetProperties().GetList();
+			std::map< std::string, std::string >::iterator iter;
+			for (iter = list.begin(); iter != list.end(); ++iter) {
+				printf("%s = %s\n", iter->first.c_str(), iter->second.c_str());
+			}
 		}
 	}
 
