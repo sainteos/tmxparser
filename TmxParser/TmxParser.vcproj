@@ -262,10 +262,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\zlib\minigzip.c"
-					>
-				</File>
-				<File
 					RelativePath=".\zlib\trees.c"
 					>
 				</File>
