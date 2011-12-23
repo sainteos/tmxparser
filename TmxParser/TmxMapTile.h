@@ -32,9 +32,9 @@ namespace Tmx
 	//-------------------------------------------------------------------------
 	// Flags that may be in the first two bits of the gid.
 	//-------------------------------------------------------------------------
-	const int FlippedHorizontallyFlag = 0x80000000;
-	const int FlippedVerticallyFlag   = 0x40000000;
-	const int FlippedDiagonallyFlag	  = 0x20000000;
+	const unsigned FlippedHorizontallyFlag = 0x80000000;
+	const unsigned FlippedVerticallyFlag   = 0x40000000;
+	const unsigned FlippedDiagonallyFlag   = 0x20000000;
 
 	//-------------------------------------------------------------------------
 	// Struct to store information about a specific tile in the map layer.

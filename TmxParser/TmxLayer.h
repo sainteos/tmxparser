@@ -81,7 +81,7 @@ namespace Tmx
 		const PropertySet &GetProperties() const { return properties; }
 
 		// Pick a specific tile from the list.
-		int GetTileGid(int x, int y) const { return tile_map[y * width + x].gid; }
+		unsigned GetTileGid(int x, int y) const { return tile_map[y * width + x].gid; }
 
 		// Get whether the tile is flipped horizontally.
 		bool IsTileFlippedHorizontally(int x, int y) const 
@@ -90,6 +90,10 @@ namespace Tmx
 		// Get whether the tile is flipped vertically.
 		bool IsTileFlippedVertically(int x, int y) const 
 		{ return tile_map[y * width + x].flippedVertically; }
+
+		// Get whether the tile is flipped diagonally.
+		bool IsTileFlippedDiagonally(int x, int y) const
+		{ return tile_map[y * width + x].flippedDiagonally; }
 
 		// Get the tile specific to the map.
 		MapTile GetTile(int x, int y) const { return tile_map[y * width + x]; }

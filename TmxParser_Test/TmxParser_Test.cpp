@@ -97,9 +97,14 @@ int main() {
 					printf(" ");
 				}
 				if (layer->IsTileFlippedVertically(y, x)){
-					printf("v  ");
+					printf("v");
 				}else{
-					printf("   ");
+					printf(" ");
+				}
+				if (layer->IsTileFlippedDiagonally(y, x)){
+					printf("d ");
+				} else {
+					printf("  ");
 				}
 			}
 
