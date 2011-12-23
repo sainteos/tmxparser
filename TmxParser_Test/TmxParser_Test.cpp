@@ -31,7 +31,7 @@
 
 int main() {
 	Tmx::Map *map = new Tmx::Map();
-	map->ParseFile("./example/large_leveL_test.tmx");
+	map->ParseFile("./example/example.tmx");
 
 	if (map->HasError()) {
 		printf("error code: %d\n", map->GetErrorCode());
