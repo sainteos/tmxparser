@@ -153,7 +153,7 @@ namespace Tmx
 			tileElem->Attribute("gid", &gid);
 
 			// Convert the gid to a map tile.
-			tile_map[tileCount++] = MapTile(gid);
+			tile_map[tileCount++] = MapTile((unsigned)gid);
 
 			tileNode = dataNode->IterateChildren("tile", tileNode);
 		}
@@ -164,13 +164,13 @@ namespace Tmx
 		const std::string &text = Util::DecodeBase64(innerText);
 
 		// Temporary array of gids to be converted to map tiles.
-		int *out = 0;
+		unsigned *out = 0;
 
 		if (compression == TMX_COMPRESSION_ZLIB) 
 		{
 			// Use zlib to uncompress the layer into the temporary array of tiles.
 			uLongf outlen = width * height * 4;
-			out = (int *)malloc(outlen);
+			out = (unsigned *)malloc(outlen);
 			uncompress(
 				(Bytef*)out, &outlen, 
 				(const Bytef*)text.c_str(), text.size());
@@ -179,14 +179,14 @@ namespace Tmx
 		else if (compression == TMX_COMPRESSION_GZIP) 
 		{
 			// Use the utility class for decompressing (which uses zlib)
-			out = (int*)Util::DecompressGZIP(
+			out = (unsigned *)Util::DecompressGZIP(
 				text.c_str(), 
 				text.size(), 
 				width * height * 4);
 		} 
 		else 
 		{
-			out = (int*)malloc(text.size());
+			out = (unsigned *)malloc(text.size());
 		
 			// Copy every gid into the temporary array since
 			// the decoded string is an array of 32-bit integers.
@@ -217,7 +217,7 @@ namespace Tmx
 		
 		while (pch) 
 		{
-			tile_map[tileCount] = MapTile(atoi(pch));
+			tile_map[tileCount] = MapTile((unsigned)atoi(pch));
 
 			++tileCount;
 			pch = strtok(NULL, ";");

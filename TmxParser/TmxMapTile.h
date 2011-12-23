@@ -34,6 +34,7 @@ namespace Tmx
 	//-------------------------------------------------------------------------
 	const int FlippedHorizontallyFlag = 0x80000000;
 	const int FlippedVerticallyFlag   = 0x40000000;
+	const int FlippedDiagonallyFlag	  = 0x20000000;
 
 	//-------------------------------------------------------------------------
 	// Struct to store information about a specific tile in the map layer.
@@ -45,25 +46,30 @@ namespace Tmx
 			: gid(0)
 			, flippedHorizontally(false)
 			, flippedVertically(false)
+			, flippedDiagonally(false)
 		{}
 
 		// Will take a gid and read the attributes from the first
 		// two bits of it.
-		MapTile(int _gid)
+		MapTile(unsigned _gid)
 			: gid(_gid)
 			, flippedHorizontally((_gid & FlippedHorizontallyFlag) != 0)
 			, flippedVertically((_gid & FlippedVerticallyFlag) != 0)
+			, flippedDiagonally((_gid & FlippedDiagonallyFlag) != 0)
 		{
-			gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag);
+			gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
 		}
 
 		// Global id.
-		int gid;
+		unsigned gid;
 
 		// True when the tile should be drawn flipped horizontally.
 		bool flippedHorizontally;
 
 		// True when the tile should be drawn flipped vertically.
 		bool flippedVertically;
+
+		// True when the tile should be drawn flipped diagonally.
+		bool flippedDiagonally;
 	};
 };
