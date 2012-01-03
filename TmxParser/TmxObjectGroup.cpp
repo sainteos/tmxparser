@@ -38,7 +38,13 @@ namespace Tmx
 	{}
 
 	ObjectGroup::~ObjectGroup() 
-	{}
+	{
+		for(std::size_t i = 0; i < objects.size(); i++)
+		{
+			Object *obj = objects.at(i);
+			delete obj;
+		}
+	}
 
 	void ObjectGroup::Parse(const TiXmlNode *objectGroupNode) 
 	{
