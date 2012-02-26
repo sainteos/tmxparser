@@ -167,6 +167,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TmxPolygon.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TmxPolyline.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TmxPropertySet.cpp"
 				>
 			</File>
@@ -306,6 +314,18 @@
 			</File>
 			<File
 				RelativePath=".\TmxObjectGroup.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TmxPoint.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TmxPolygon.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TmxPolyline.h"
 				>
 			</File>
 			<File

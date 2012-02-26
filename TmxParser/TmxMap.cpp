@@ -183,14 +183,14 @@ namespace Tmx
 		}
 
 		// Read the map properties.
-		TiXmlNode *propertiesNode = mapElem->FirstChild("properties");
+		const TiXmlNode *propertiesNode = mapElem->FirstChild("properties");
 		if (propertiesNode) 
 		{
 			properties.Parse(propertiesNode);
 		}
 
 		// Iterate through all of the tileset elements.
-		TiXmlNode *tilesetNode = mapNode->FirstChild("tileset");
+		const TiXmlNode *tilesetNode = mapNode->FirstChild("tileset");
 		while (tilesetNode) 
 		{
 			// Allocate a new tileset and parse it.

@@ -26,6 +26,8 @@
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
 #include "TmxObject.h"
+#include "TmxPolygon.h"
+#include "TmxPolyline.h"
 #include "tinyxml/tinyxml.h"
 
 namespace Tmx 
@@ -38,11 +40,24 @@ namespace Tmx
 		, width(0)
 		, height(0)
 		, gid(0)
+		, polygon(0)
+		, polyline(0)
 		, properties() 
 	{}
 
 	Object::~Object() 
-	{}
+	{
+		if (polygon != 0)
+		{
+			delete polygon;
+			polygon = 0;
+		}
+		if (polyline != 0)
+		{
+			delete polyline;
+			polyline = 0;
+		}
+	}
 
 	void Object::Parse(const TiXmlNode *objectNode) 
 	{
@@ -60,6 +75,26 @@ namespace Tmx
 		objectElem->Attribute("width", &width);
 		objectElem->Attribute("height", &height);
 		objectElem->Attribute("gid", &gid);
+
+		// Read the Polygon and Polyline of the object if there are any.
+		const TiXmlNode *polygonNode = objectNode->FirstChild("polygon");
+		if (polygonNode)
+		{
+			if (polygon != 0)
+				delete polygon;
+
+			polygon = new Polygon();
+			polygon->Parse(polygonNode);
+		}
+		const TiXmlNode *polylineNode = objectNode->FirstChild("polyline");
+		if (polylineNode)
+		{
+			if (polyline != 0)
+				delete polyline;
+
+			polyline = new Polyline();
+			polyline->Parse(polylineNode);
+		}
 
 		// Read the properties of the object.
 		const TiXmlNode *propertiesNode = objectNode->FirstChild("properties");

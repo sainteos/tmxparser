@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// TmxObject.h
+// TmxPolyline.h
 //
 // Copyright (c) 2010-2012, Tamir Atias
 // All rights reserved.
@@ -27,71 +27,31 @@
 //-----------------------------------------------------------------------------
 #pragma once
 
-#include <string>
-#include "TmxPropertySet.h"
+#include <vector>
+#include "TmxPoint.h"
 
 class TiXmlNode;
 
-namespace Tmx 
+namespace Tmx
 {
-	class Polygon;
-	class Polyline;
-
 	//-------------------------------------------------------------------------
-	// Class used for representing a single object from the objectgroup.
+	// Class to store a Polyline of an Object.
 	//-------------------------------------------------------------------------
-	class Object 
+	class Polyline
 	{
 	public:
-		Object();
-		~Object();
+		Polyline();
 
-		// Parse an object node.
-		void Parse(const TiXmlNode *objectNode);
-	
-		// Get the name of the object.
-		const std::string &GetName() const { return name; }
-		
-		// Get the type of the object.
-		const std::string &GetType() const { return type; }
+		// Parse the polyline node.
+		void Parse(const TiXmlNode *polylineNode);
 
-		// Get the left side of the object, in pixels.
-		int GetX() const { return x; }
+		// Get one of the vertices.
+		const Point &GetPoint(int index) const { return points[index]; }
 
-		// Get the top side of the object, in pixels.
-		int GetY() const { return y; }
-		
-		// Get the width of the object, in pixels.
-		int GetWidth() const { return width; }
-		
-		// Get the height of the object, in pixels.
-		int GetHeight() const { return height; }
-
-		// Get the Global ID of the tile associated with this object.
-		int GetGid() const { return gid; }
-
-		// Get the Polygon.
-		const Polygon *GetPolygon() const { return polygon; }
-
-		// Get the Polyline.
-		const Polyline *GetPolyline() const { return polyline; }
-
-		// Get the property set.
-		const PropertySet &GetProperties() const { return properties; }
+		// Get the number of vertices.
+		int GetNumPoints() const { return points.size(); }
 
 	private:
-		std::string name;
-		std::string type;
-
-		int x;
-		int y;
-		int width;
-		int height;
-		int gid;
-
-		Polygon *polygon;
-		Polyline *polyline;
-
-		PropertySet properties;
+		std::vector< Point > points;
 	};
 };

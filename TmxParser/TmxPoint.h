@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// TmxObject.h
+// TmxPoint.h
 //
 // Copyright (c) 2010-2012, Tamir Atias
 // All rights reserved.
@@ -27,71 +27,14 @@
 //-----------------------------------------------------------------------------
 #pragma once
 
-#include <string>
-#include "TmxPropertySet.h"
-
-class TiXmlNode;
-
-namespace Tmx 
+namespace Tmx
 {
-	class Polygon;
-	class Polyline;
-
 	//-------------------------------------------------------------------------
-	// Class used for representing a single object from the objectgroup.
+	// Used to store a vertex of a Polygon/Polyline.
 	//-------------------------------------------------------------------------
-	class Object 
+	struct Point
 	{
-	public:
-		Object();
-		~Object();
-
-		// Parse an object node.
-		void Parse(const TiXmlNode *objectNode);
-	
-		// Get the name of the object.
-		const std::string &GetName() const { return name; }
-		
-		// Get the type of the object.
-		const std::string &GetType() const { return type; }
-
-		// Get the left side of the object, in pixels.
-		int GetX() const { return x; }
-
-		// Get the top side of the object, in pixels.
-		int GetY() const { return y; }
-		
-		// Get the width of the object, in pixels.
-		int GetWidth() const { return width; }
-		
-		// Get the height of the object, in pixels.
-		int GetHeight() const { return height; }
-
-		// Get the Global ID of the tile associated with this object.
-		int GetGid() const { return gid; }
-
-		// Get the Polygon.
-		const Polygon *GetPolygon() const { return polygon; }
-
-		// Get the Polyline.
-		const Polyline *GetPolyline() const { return polyline; }
-
-		// Get the property set.
-		const PropertySet &GetProperties() const { return properties; }
-
-	private:
-		std::string name;
-		std::string type;
-
 		int x;
 		int y;
-		int width;
-		int height;
-		int gid;
-
-		Polygon *polygon;
-		Polyline *polyline;
-
-		PropertySet properties;
 	};
-};
+}

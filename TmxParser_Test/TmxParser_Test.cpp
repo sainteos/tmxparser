@@ -133,6 +133,24 @@ int main() {
 			printf("Object Name: %s\n", object->GetName().c_str());
 			printf("Object Position: (%03d, %03d)\n", object->GetX(), object->GetY());
 			printf("Object Size: (%03d, %03d)\n", object->GetWidth(), object->GetHeight());
+
+			// Print Polygon points.
+			const Tmx::Polygon *polygon = object->GetPolygon();
+			if (polygon != 0) {
+				for (int i = 0; i < polygon->GetNumPoints(); i++) {
+					const Tmx::Point &point = polygon->GetPoint(i);
+					printf("Object Polygon: Point %d: (%d, %d)\n", i, point.x, point.y);
+				}
+			}
+
+			// Print Polyline points.
+			const Tmx::Polyline *polyline = object->GetPolyline();
+			if (polyline != 0) {
+				for (int i = 0; i < polyline->GetNumPoints(); i++) {
+					const Tmx::Point &point = polyline->GetPoint(i);
+					printf("Object Polyline: Point %d: (%d, %d)\n", i, point.x, point.y);
+				}
+			}
 		}
 	}
 

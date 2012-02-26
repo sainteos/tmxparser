@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// TmxImage.h
+// TmxPolygon.cpp
 //
 // Copyright (c) 2010-2012, Tamir Atias
 // All rights reserved.
@@ -25,16 +25,31 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#pragma once
-
-#include "TmxMap.h"
-#include "TmxTileset.h"
-#include "TmxTile.h"
-#include "TmxImage.h"
-#include "TmxLayer.h"
-#include "TmxObject.h"
-#include "TmxObjectGroup.h"
 #include "TmxPolygon.h"
-#include "TmxPolyline.h"
-#include "TmxPropertySet.h"
-#include "TmxUtil.h"
+#include "tinyxml/tinyxml.h"
+
+namespace Tmx 
+{
+	Polygon::Polygon()
+		: points()
+	{
+	}
+
+	void Polygon::Parse(const TiXmlNode *polygonNode)
+	{
+		char *pointsLine = strdup(polygonNode->ToElement()->Attribute("points"));
+		
+		char *token = strtok(pointsLine, " ");
+		while (token)
+		{
+			Point point;
+			sscanf(token, "%d,%d", &point.x, &point.y);
+
+			points.push_back(point);
+
+			token = strtok(0, " ");
+		}
+
+		free(pointsLine);
+	}
+}

@@ -45,7 +45,7 @@ namespace Tmx
 		// Parse a node containing all the property nodes.
 		void Parse(const TiXmlNode *propertiesNode);
 	
-		// Get a numberic property (integer).
+		// Get a numeric property (integer).
 		int GetNumericProperty(const std::string &name) const;
 
 		// Get a literal property (string).

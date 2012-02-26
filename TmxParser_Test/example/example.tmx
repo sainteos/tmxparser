@@ -34,4 +34,15 @@
    eJxjYBgFgwkAAAGQAAE=
   </data>
  </layer>
+ <objectgroup name="Polygon Testing" width="10" height="10">
+  <object x="93" y="49">
+   <polygon points="0,0 51,6 9,56"/>
+  </object>
+  <object x="114" y="176">
+   <polygon points="0,0 51,-24 60,33"/>
+  </object>
+  <object x="228" y="88">
+   <polyline points="0,0 54,95 -3,183 -131,201"/>
+  </object>
+ </objectgroup>
 </map>

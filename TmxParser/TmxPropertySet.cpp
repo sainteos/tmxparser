@@ -66,7 +66,7 @@ namespace Tmx
 		if (iter == properties.end())
 			return std::string("No such property!");
 
-		return std::string(iter->second);
+		return iter->second;
 	}
 
 	int PropertySet::GetNumericProperty(const string &name) const 
