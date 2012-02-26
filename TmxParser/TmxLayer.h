@@ -77,6 +77,9 @@ namespace Tmx
 		// Get the height of the layer, in tiles.
 		int GetHeight() const { return height; }
 
+		// Get the visibility of the layer
+		bool IsVisible() const { return visible; }
+
 		// Get the property set.
 		const PropertySet &GetProperties() const { return properties; }
 
