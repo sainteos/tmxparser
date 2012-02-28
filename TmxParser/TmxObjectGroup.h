@@ -66,6 +66,9 @@ namespace Tmx
 		// Get the number of objects in the list.
 		int GetNumObjects() const { return objects.size(); }
 
+		// Get whether the object layer is visible.
+		int GetVisibility() const { return visible; }
+
 		// Get the whole list of objects.
 		const std::vector< Object* > &GetObjects() const { return objects; }
 
@@ -74,6 +77,7 @@ namespace Tmx
 		
 		int width;
 		int height;
+		int visible;
 
 		std::vector< Object* > objects;
 	};

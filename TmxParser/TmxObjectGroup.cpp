@@ -55,6 +55,7 @@ namespace Tmx
 		
 		objectGroupElem->Attribute("width", &width);
 		objectGroupElem->Attribute("height", &height);
+		objectGroupElem->Attribute("visible", &visible);
 
 		// Iterate through all of the object elements.
 		const TiXmlNode *objectNode = objectGroupNode->FirstChild("object");
