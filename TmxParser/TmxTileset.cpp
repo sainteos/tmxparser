@@ -25,10 +25,10 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
+#include <tinyxml.h>
 #include "TmxTileset.h"
 #include "TmxImage.h"
 #include "TmxTile.h"
-#include "tinyxml/tinyxml.h"
 
 using std::vector;
 using std::string;

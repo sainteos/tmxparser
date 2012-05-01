@@ -25,10 +25,10 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
+#include <stdlib.h>
+#include <zlib.h>
 #include "TmxUtil.h"
 #include "base64/base64.h"
-#include "zlib/zlib.h"
-#include <stdlib.h>
 
 namespace Tmx {
 	std::string Util::DecodeBase64(const std::string &str) 

@@ -25,9 +25,9 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
+#include <tinyxml.h>
 #include "TmxObjectGroup.h"
 #include "TmxObject.h"
-#include "tinyxml/tinyxml.h"
 
 namespace Tmx 
 {

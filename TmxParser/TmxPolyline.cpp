@@ -25,8 +25,8 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
+#include <tinyxml.h>
 #include "TmxPolyline.h"
-#include "tinyxml/tinyxml.h"
 
 namespace Tmx 
 {

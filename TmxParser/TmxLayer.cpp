@@ -25,11 +25,11 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
+#include <tinyxml.h>
+#include <zlib.h>
+#include <stdlib.h>
 #include "TmxLayer.h"
 #include "TmxUtil.h"
-#include "tinyxml/tinyxml.h"
-#include "zlib/zlib.h"
-#include <stdlib.h>
 
 namespace Tmx 
 {

@@ -25,12 +25,12 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
+#include <tinyxml.h>
+#include <stdio.h>
 #include "TmxMap.h"
 #include "TmxTileset.h"
 #include "TmxLayer.h"
 #include "TmxObjectGroup.h"
-#include "tinyxml/tinyxml.h"
-#include <cstdio>
 
 using std::vector;
 using std::string;

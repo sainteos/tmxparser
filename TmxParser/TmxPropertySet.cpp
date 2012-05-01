@@ -25,8 +25,8 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
+#include <tinyxml.h>
 #include "TmxPropertySet.h"
-#include "tinyxml/tinyxml.h"
 
 using std::string;
 using std::map;
