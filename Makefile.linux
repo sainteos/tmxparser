@@ -25,6 +25,7 @@
 
 CFILES:=$(shell find ./TmxParser/ -maxdepth 1 -type f -name *.c)
 CPPFILES:=$(shell find ./TmxParser/ -maxdepth 1 -type f -name *.cpp)
+CPPFILES+=./TmxParser/base64/base64.cpp
 COBJECTS:=$(CFILES:.c=.o)
 CPPOBJECTS:=$(CPPFILES:.cpp=.o)
 SOURCES:= $(CFILES) $(CPPFILES)
