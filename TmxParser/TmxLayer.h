@@ -35,6 +35,8 @@ class TiXmlNode;
 
 namespace Tmx 
 {
+	class Map;
+
 	//-------------------------------------------------------------------------
 	// Type used for the encoding of the layer data.
 	//-------------------------------------------------------------------------
@@ -62,7 +64,7 @@ namespace Tmx
 	class Layer 
 	{
 	public:
-		Layer();
+		Layer(const Tmx::Map* _map);
 		~Layer();
 
 		// Parse a layer node.
@@ -84,7 +86,10 @@ namespace Tmx
 		const PropertySet &GetProperties() const { return properties; }
 
 		// Pick a specific tile from the list.
-		unsigned GetTileGid(int x, int y) const { return tile_map[y * width + x].gid; }
+		unsigned GetTileId(int x, int y) const { return tile_map[y * width + x].id; }
+
+		// Get the tileset index for a tileset from the list.
+		unsigned GetTileTilesetIndex(int x, int y) const { return tile_map[y * width + x].tilesetId; }
 
 		// Get whether the tile is flipped horizontally.
 		bool IsTileFlippedHorizontally(int x, int y) const 
@@ -99,7 +104,7 @@ namespace Tmx
 		{ return tile_map[y * width + x].flippedDiagonally; }
 
 		// Get the tile specific to the map.
-		MapTile GetTile(int x, int y) const { return tile_map[y * width + x]; }
+		const MapTile& GetTile(int x, int y) const { return tile_map[y * width + x]; }
 
 		// Get the type of encoding that was used for parsing the layer data.
 		// See: LayerEncodingType
@@ -113,6 +118,8 @@ namespace Tmx
 		void ParseXML(const TiXmlNode *dataNode);
 		void ParseBase64(const std::string &innerText);
 		void ParseCSV(const std::string &innerText);
+
+		const Map* map;
 
 		std::string name;
 		

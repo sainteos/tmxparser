@@ -30,11 +30,15 @@
 #include <stdlib.h>
 #include "TmxLayer.h"
 #include "TmxUtil.h"
+#include "TmxMapTile.h"
+#include "TmxMap.h"
+#include "TmxTileset.h"
 
 namespace Tmx 
 {
-	Layer::Layer() 
-		: name() 
+	Layer::Layer(const Map *_map) 
+		: map(_map)
+		, name() 
 		, width(0) 
 		, height(0) 
 		, opacity(1.0f)
@@ -152,8 +156,19 @@ namespace Tmx
 			// Read the Global-ID of the tile directly into the array entry.
 			tileElem->Attribute("gid", &gid);
 
-			// Convert the gid to a map tile.
-			tile_map[tileCount++] = MapTile((unsigned)gid);
+			// Find the tileset index.
+			const int tilesetIndex = map->FindTilesetIndex(gid);
+			if (tilesetIndex != -1)
+			{
+				// If valid, set up the map tile with the tileset.
+				const Tmx::Tileset* tileset = map->GetTileset(tilesetIndex);
+				tile_map[tileCount] = MapTile((unsigned)gid, tileset->GetFirstGid(), tilesetIndex);
+			}
+			else
+			{
+				// Otherwise, make it null.
+				tile_map[tileCount] = MapTile((unsigned)gid, 0, -1);
+			}
 
 			tileNode = dataNode->IterateChildren("tile", tileNode);
 		}
@@ -198,7 +213,21 @@ namespace Tmx
 		{
 			for (int y = 0; y < height; y++)
 			{
-				tile_map[y * width + x] = MapTile(out[y * width + x]);
+				unsigned gid = out[y * width + x];
+
+				// Find the tileset index.
+				const int tilesetIndex = map->FindTilesetIndex(gid);
+				if (tilesetIndex != -1)
+				{
+					// If valid, set up the map tile with the tileset.
+					const Tmx::Tileset* tileset = map->GetTileset(tilesetIndex);
+					tile_map[y * width + x] = MapTile(gid, tileset->GetFirstGid(), tilesetIndex);
+				}
+				else
+				{
+					// Otherwise, make it null.
+					tile_map[y * width + x] = MapTile(gid, 0, -1);
+				}
 			}
 		}
 
@@ -217,7 +246,21 @@ namespace Tmx
 		
 		while (pch) 
 		{
-			tile_map[tileCount] = MapTile((unsigned)atoi(pch));
+			unsigned gid = (unsigned)atoi(pch);
+
+			// Find the tileset index.
+			const int tilesetIndex = map->FindTilesetIndex(gid);
+			if (tilesetIndex != -1)
+			{
+				// If valid, set up the map tile with the tileset.
+				const Tmx::Tileset* tileset = map->GetTileset(tilesetIndex);
+				tile_map[tileCount] = MapTile(gid, tileset->GetFirstGid(), tilesetIndex);
+			}
+			else
+			{
+				// Otherwise, make it null.
+				tile_map[tileCount] = MapTile(gid, 0, -1);
+			}
 
 			++tileCount;
 			pch = strtok(NULL, ";");

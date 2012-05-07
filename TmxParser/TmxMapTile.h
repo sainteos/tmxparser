@@ -43,7 +43,8 @@ namespace Tmx
 	{
 		// Default constructor.
 		MapTile()
-			: gid(0)
+			: tilesetId(0)
+			, id(0)
 			, flippedHorizontally(false)
 			, flippedVertically(false)
 			, flippedDiagonally(false)
@@ -51,17 +52,21 @@ namespace Tmx
 
 		// Will take a gid and read the attributes from the first
 		// two bits of it.
-		MapTile(unsigned _gid)
-			: gid(_gid)
+		MapTile(unsigned _gid, int _tilesetFirstGid, unsigned _tilesetId)
+			: tilesetId(_tilesetId)
+			, id(_gid & ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag))
 			, flippedHorizontally((_gid & FlippedHorizontallyFlag) != 0)
 			, flippedVertically((_gid & FlippedVerticallyFlag) != 0)
 			, flippedDiagonally((_gid & FlippedDiagonallyFlag) != 0)
 		{
-			gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
+			id -= _tilesetFirstGid;
 		}
 
-		// Global id.
-		unsigned gid;
+		// Tileset id.
+		int tilesetId;
+
+		// Id.
+		unsigned id;
 
 		// True when the tile should be drawn flipped horizontally.
 		bool flippedHorizontally;

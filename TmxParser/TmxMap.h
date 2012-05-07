@@ -123,6 +123,9 @@ namespace Tmx
 		// Get the whole object group collection.
 		const std::vector< ObjectGroup* > &GetObjectGroups() const { return object_groups; }
 
+		// Find the tileset index for a tileset using a tile gid.
+		int FindTilesetIndex(int gid) const;
+
 		// Find a tileset for a specific gid.
 		const Tileset *FindTileset(int gid) const;
 
