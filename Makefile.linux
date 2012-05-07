@@ -23,9 +23,8 @@
 # Author: Caleb Stewart
 # Date: 5/1/2012 (M/D/Y)
 
-CFILES:=$(shell find ./TmxParser/ -maxdepth 1 -type f -name *.c)
-CPPFILES:=$(shell find ./TmxParser/ -maxdepth 1 -type f -name *.cpp)
-CPPFILES+=./TmxParser/base64/base64.cpp
+CFILES:=$(shell find ./TmxParser/ -maxdepth 1 -type f -name *.c) $(shell find ./TmxParser/base64 -maxdepth 1 -type f -name *.c)
+CPPFILES:=$(shell find ./TmxParser/ -maxdepth 1 -type f -name *.cpp) $(shell find ./TmxParser/base64 -maxdepth 1 -type f -name *.cpp)
 COBJECTS:=$(CFILES:.c=.o)
 CPPOBJECTS:=$(CPPFILES:.cpp=.o)
 SOURCES:= $(CFILES) $(CPPFILES)
