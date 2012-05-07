@@ -91,7 +91,7 @@ namespace Tmx
 		double GetVersion() const { return version; }
 
 		// Get the orientation of the map.
-		MapOrientation GetOrientation() const { return orientation; }
+		Tmx::MapOrientation GetOrientation() const { return orientation; }
 
 		// Get the width of the map, in tiles.
 		int GetWidth() const { return width; }
@@ -106,37 +106,37 @@ namespace Tmx
 		int GetTileHeight() const { return tile_height; }
 
 		// Get the layer at a certain index.
-		const Layer *GetLayer(int index) const { return layers.at(index); }
+		const Tmx::Layer *GetLayer(int index) const { return layers.at(index); }
 
 		// Get the amount of layers.
 		int GetNumLayers() const { return layers.size(); }
 
 		// Get the whole layers collection.
-		const std::vector< Layer* > &GetLayers() const { return layers; }
+		const std::vector< Tmx::Layer* > &GetLayers() const { return layers; }
 
 		// Get the object group at a certain index.
-		const ObjectGroup *GetObjectGroup(int index) const { return object_groups.at(index); }
+		const Tmx::ObjectGroup *GetObjectGroup(int index) const { return object_groups.at(index); }
 
 		// Get the amount of object groups.
 		int GetNumObjectGroups() const { return object_groups.size(); }
 
 		// Get the whole object group collection.
-		const std::vector< ObjectGroup* > &GetObjectGroups() const { return object_groups; }
+		const std::vector< Tmx::ObjectGroup* > &GetObjectGroups() const { return object_groups; }
 
 		// Find the tileset index for a tileset using a tile gid.
 		int FindTilesetIndex(int gid) const;
 
 		// Find a tileset for a specific gid.
-		const Tileset *FindTileset(int gid) const;
+		const Tmx::Tileset *FindTileset(int gid) const;
 
 		// Get a tileset by an index.
-		const Tileset *GetTileset(int index) const { return tilesets.at(index); }
+		const Tmx::Tileset *GetTileset(int index) const { return tilesets.at(index); }
 
 		// Get the amount of tilesets.
 		int GetNumTilesets() const { return tilesets.size(); }
 
 		// Get the collection of tilesets.
-		const std::vector< Tileset* > &GetTilesets() const { return tilesets; }
+		const std::vector< Tmx::Tileset* > &GetTilesets() const { return tilesets; }
 
 		// Get whether there was an error or not.
 		bool HasError() const { return has_error; }
@@ -148,28 +148,28 @@ namespace Tmx
 		unsigned char GetErrorCode() const { return error_code; }
 
 		// Get the property set.
-		const PropertySet &GetProperties() { return properties; }
+		const Tmx::PropertySet &GetProperties() { return properties; }
 
 	private:
 		std::string file_name;
 		std::string file_path;
 
 		double version;
-		MapOrientation orientation;
+		Tmx::MapOrientation orientation;
 
 		int width;
 		int height;
 		int tile_width;
 		int tile_height;
 
-		std::vector< Layer* > layers;
-		std::vector< ObjectGroup* > object_groups;
-		std::vector< Tileset* > tilesets;
+		std::vector< Tmx::Layer* > layers;
+		std::vector< Tmx::ObjectGroup* > object_groups;
+		std::vector< Tmx::Tileset* > tilesets;
 
 		bool has_error;
 		unsigned char error_code;
 		std::string error_text;
 
-		PropertySet properties;
+		Tmx::PropertySet properties;
 	};
 };

@@ -51,11 +51,11 @@ namespace Tmx
 		int GetId() const { return id; }
 
 		// Get a set of properties regarding the tile.
-		const PropertySet &GetProperties() const { return properties; }
+		const Tmx::PropertySet &GetProperties() const { return properties; }
 
 	private:
 		int id;
 
-		PropertySet properties;
+		Tmx::PropertySet properties;
 	};
 };

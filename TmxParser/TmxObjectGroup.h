@@ -61,7 +61,7 @@ namespace Tmx
 		int GetHeight() const { return height; }
 
 		// Get a single object.
-		const Object *GetObject(int index) const { return objects.at(index); }
+		const Tmx::Object *GetObject(int index) const { return objects.at(index); }
 
 		// Get the number of objects in the list.
 		int GetNumObjects() const { return objects.size(); }
@@ -70,7 +70,7 @@ namespace Tmx
 		int GetVisibility() const { return visible; }
 
 		// Get the whole list of objects.
-		const std::vector< Object* > &GetObjects() const { return objects; }
+		const std::vector< Tmx::Object* > &GetObjects() const { return objects; }
 
 	private:
 		std::string name;
@@ -79,6 +79,6 @@ namespace Tmx
 		int height;
 		int visible;
 
-		std::vector< Object* > objects;
+		std::vector< Tmx::Object* > objects;
 	};
 };

@@ -28,6 +28,7 @@
 #pragma once
 
 #include <string>
+
 #include "TmxPropertySet.h"
 
 class TiXmlNode;
@@ -71,13 +72,13 @@ namespace Tmx
 		int GetGid() const { return gid; }
 
 		// Get the Polygon.
-		const Polygon *GetPolygon() const { return polygon; }
+		const Tmx::Polygon *GetPolygon() const { return polygon; }
 
 		// Get the Polyline.
-		const Polyline *GetPolyline() const { return polyline; }
+		const Tmx::Polyline *GetPolyline() const { return polyline; }
 
 		// Get the property set.
-		const PropertySet &GetProperties() const { return properties; }
+		const Tmx::PropertySet &GetProperties() const { return properties; }
 
 	private:
 		std::string name;
@@ -89,9 +90,9 @@ namespace Tmx
 		int height;
 		int gid;
 
-		Polygon *polygon;
-		Polyline *polyline;
+		Tmx::Polygon *polygon;
+		Tmx::Polyline *polyline;
 
-		PropertySet properties;
+		Tmx::PropertySet properties;
 	};
 };

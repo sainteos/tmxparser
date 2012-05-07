@@ -71,13 +71,13 @@ namespace Tmx
 
 		// Returns a variable containing information 
 		// about the image of the tileset.
-		const Image* GetImage() const { return image; }
+		const Tmx::Image* GetImage() const { return image; }
 
 		// Returns a a single tile of the set.
-		const Tile *GetTile(int index) const;
+		const Tmx::Tile *GetTile(int index) const;
 
 		// Returns the whole tile collection.
-		const std::vector< Tile *> &GetTiles() const { return tiles; } 
+		const std::vector< Tmx::Tile *> &GetTiles() const { return tiles; } 
 
 	private:
 		int first_gid;
@@ -89,8 +89,8 @@ namespace Tmx
 		int margin;
 		int spacing;
 		
-		Image* image;
+		Tmx::Image* image;
 
-		std::vector< Tile* > tiles;
+		std::vector< Tmx::Tile* > tiles;
 	};
 };

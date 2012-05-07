@@ -26,6 +26,7 @@
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
 #include <tinyxml.h>
+
 #include "TmxPolygon.h"
 
 namespace Tmx 

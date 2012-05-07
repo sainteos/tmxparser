@@ -28,6 +28,7 @@
 #pragma once
 
 #include <vector>
+
 #include "TmxPoint.h"
 
 class TiXmlNode;
@@ -46,12 +47,12 @@ namespace Tmx
 		void Parse(const TiXmlNode *polylineNode);
 
 		// Get one of the vertices.
-		const Point &GetPoint(int index) const { return points[index]; }
+		const Tmx::Point &GetPoint(int index) const { return points[index]; }
 
 		// Get the number of vertices.
 		int GetNumPoints() const { return points.size(); }
 
 	private:
-		std::vector< Point > points;
+		std::vector< Tmx::Point > points;
 	};
 };

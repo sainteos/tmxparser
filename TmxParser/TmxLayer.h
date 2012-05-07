@@ -28,6 +28,7 @@
 #pragma once
 
 #include <string>
+
 #include "TmxPropertySet.h"
 #include "TmxMapTile.h"
 
@@ -64,7 +65,7 @@ namespace Tmx
 	class Layer 
 	{
 	public:
-		Layer(const Tmx::Map* _map);
+		Layer(const Tmx::Map *_map);
 		~Layer();
 
 		// Parse a layer node.
@@ -83,43 +84,43 @@ namespace Tmx
 		bool IsVisible() const { return visible; }
 
 		// Get the property set.
-		const PropertySet &GetProperties() const { return properties; }
+		const Tmx::PropertySet &GetProperties() const { return properties; }
 
 		// Pick a specific tile from the list.
 		unsigned GetTileId(int x, int y) const { return tile_map[y * width + x].id; }
 
 		// Get the tileset index for a tileset from the list.
-		unsigned GetTileTilesetIndex(int x, int y) const { return tile_map[y * width + x].tilesetId; }
+		int GetTileTilesetIndex(int x, int y) const { return tile_map[y * width + x].tilesetId; }
 
-		// Get whether the tile is flipped horizontally.
+		// Get whether a tile is flipped horizontally.
 		bool IsTileFlippedHorizontally(int x, int y) const 
 		{ return tile_map[y * width + x].flippedHorizontally; }
 
-		// Get whether the tile is flipped vertically.
+		// Get whether a tile is flipped vertically.
 		bool IsTileFlippedVertically(int x, int y) const 
 		{ return tile_map[y * width + x].flippedVertically; }
 
-		// Get whether the tile is flipped diagonally.
+		// Get whether a tile is flipped diagonally.
 		bool IsTileFlippedDiagonally(int x, int y) const
 		{ return tile_map[y * width + x].flippedDiagonally; }
 
-		// Get the tile specific to the map.
-		const MapTile& GetTile(int x, int y) const { return tile_map[y * width + x]; }
+		// Get a tile specific to the map.
+		const Tmx::MapTile& GetTile(int x, int y) const { return tile_map[y * width + x]; }
 
 		// Get the type of encoding that was used for parsing the layer data.
 		// See: LayerEncodingType
-		LayerEncodingType GetEncoding() const { return encoding; }
+		Tmx::LayerEncodingType GetEncoding() const { return encoding; }
 
 		// Get the type of compression that was used for parsing the layer data.
 		// See: LayerCompressionType
-		LayerCompressionType GetCompression() const { return compression; }
+		Tmx::LayerCompressionType GetCompression() const { return compression; }
 
 	private:
 		void ParseXML(const TiXmlNode *dataNode);
 		void ParseBase64(const std::string &innerText);
 		void ParseCSV(const std::string &innerText);
 
-		const Map* map;
+		const Tmx::Map *map;
 
 		std::string name;
 		
@@ -129,11 +130,11 @@ namespace Tmx
 		float opacity;
 		bool visible;
 
-		PropertySet properties;
+		Tmx::PropertySet properties;
 
-		MapTile *tile_map;
+		Tmx::MapTile *tile_map;
 
-		LayerEncodingType encoding;
-		LayerCompressionType compression;
+		Tmx::LayerEncodingType encoding;
+		Tmx::LayerCompressionType compression;
 	};
 };
