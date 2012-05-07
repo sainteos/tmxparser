@@ -30,7 +30,6 @@
 #include <stdlib.h>
 #include "TmxLayer.h"
 #include "TmxUtil.h"
-#include "TmxMapTile.h"
 #include "TmxMap.h"
 #include "TmxTileset.h"
 
