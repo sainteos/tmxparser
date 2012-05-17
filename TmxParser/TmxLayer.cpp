@@ -28,6 +28,7 @@
 #include <tinyxml.h>
 #include <zlib.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "TmxLayer.h"
 #include "TmxUtil.h"
@@ -151,10 +152,13 @@ namespace Tmx
 		{
 			const TiXmlElement *tileElem = tileNode->ToElement();
 			
-			int gid = 0;
+			unsigned gid = 0;
 
-			// Read the Global-ID of the tile directly into the array entry.
-			tileElem->Attribute("gid", &gid);
+			// Read the Global-ID of the tile.
+			const char* gidText = tileElem->Attribute("gid");
+
+			// Convert to an unsigned.
+			sscanf(gidText, "%u", &gid);
 
 			// Find the tileset index.
 			const int tilesetIndex = map->FindTilesetIndex(gid);
@@ -162,15 +166,16 @@ namespace Tmx
 			{
 				// If valid, set up the map tile with the tileset.
 				const Tmx::Tileset* tileset = map->GetTileset(tilesetIndex);
-				tile_map[tileCount] = MapTile((unsigned)gid, tileset->GetFirstGid(), tilesetIndex);
+				tile_map[tileCount] = MapTile(gid, tileset->GetFirstGid(), tilesetIndex);
 			}
 			else
 			{
 				// Otherwise, make it null.
-				tile_map[tileCount] = MapTile((unsigned)gid, 0, -1);
+				tile_map[tileCount] = MapTile(gid, 0, -1);
 			}
 
 			tileNode = dataNode->IterateChildren("tile", tileNode);
+			tileCount++;
 		}
 	}
 
@@ -241,12 +246,13 @@ namespace Tmx
 		char *csv = strdup(innerText.c_str());
 		
 		// Iterate through every token of ';' in the CSV string.
-		char *pch = strtok(csv, ";");
+		char *pch = strtok(csv, ",");
 		int tileCount = 0;
 		
 		while (pch) 
 		{
-			unsigned gid = (unsigned)atoi(pch);
+			unsigned gid;
+			sscanf(pch, "%u", &gid);
 
 			// Find the tileset index.
 			const int tilesetIndex = map->FindTilesetIndex(gid);
@@ -262,8 +268,8 @@ namespace Tmx
 				tile_map[tileCount] = MapTile(gid, 0, -1);
 			}
 
-			++tileCount;
-			pch = strtok(NULL, ";");
+			pch = strtok(NULL, ",");
+			tileCount++;
 		}
 
 		free(csv);
