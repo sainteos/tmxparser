@@ -63,7 +63,7 @@ int main() {
 
 		if (tileset->GetTiles().size() > 0) {
 			// Get a tile from the tileset.
-			const Tmx::Tile *tile = tileset->GetTile(0);
+			const Tmx::Tile *tile = *(tileset->GetTiles().begin());
 
 			// Print the properties of a tile.
 			std::map< std::string, std::string > list = tile->GetProperties().GetList();
