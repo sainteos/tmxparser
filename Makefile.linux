@@ -60,12 +60,15 @@ clean:
 
 install:
 	@echo "installing -- headers"
-	@install -d /usr/include/TmxParser
-	@install $(TMXHEADERS) /usr/include/TmxParser/
+	@install -d $(DESTDIR)/usr/include/TmxParser
+	@install $(TMXHEADERS) $(DESTDIR)/usr/include/TmxParser/
 	@echo "installing -- library"
-	@install libtmxparser.a /usr/lib/
+	@install -d $(DESTDIR)/usr/lib/
+	@install libtmxparser.a $(DESTDIR)/usr/lib/
+ifeq ($(strip $(DESTDIR)),)
 	@echo "installing -- running ldconfig"
 	@ldconfig
+endif
 
 uninstall:
 	@echo "uninstalling -- headers"
