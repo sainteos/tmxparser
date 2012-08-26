@@ -235,6 +235,9 @@ namespace Tmx
 
 	int Map::FindTilesetIndex(int gid) const
 	{
+		// Clean up the flags from the gid (thanks marwes91).
+		gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
+
 		for (int i = tilesets.size() - 1; i > -1; --i) 
 		{
 			// If the gid beyond the tileset gid return its index.
