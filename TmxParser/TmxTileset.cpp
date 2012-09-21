@@ -106,6 +106,14 @@ namespace Tmx
 
 			tileNode = tilesetNode->IterateChildren("tile", tileNode);
 		}
+		
+		// Parse the properties if any.
+		const TiXmlNode *propertiesNode = tilesetNode->FirstChild("properties");
+		
+		if (propertiesNode) 
+		{
+			properties.Parse(propertiesNode);
+		}
 	}
 
 	const Tile *Tileset::GetTile(int index) const 

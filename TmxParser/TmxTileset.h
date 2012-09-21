@@ -30,6 +30,8 @@
 #include <string>
 #include <vector>
 
+#include "TmxPropertySet.h"
+
 class TiXmlNode;
 
 namespace Tmx 
@@ -78,6 +80,9 @@ namespace Tmx
 
 		// Returns the whole tile collection.
 		const std::vector< Tmx::Tile *> &GetTiles() const { return tiles; } 
+		
+		// Get a set of properties regarding the tile.
+		const Tmx::PropertySet &GetProperties() const { return properties; }
 
 	private:
 		int first_gid;
@@ -92,5 +97,7 @@ namespace Tmx
 		Tmx::Image* image;
 
 		std::vector< Tmx::Tile* > tiles;
+		
+		Tmx::PropertySet properties;
 	};
 };
