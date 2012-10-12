@@ -132,6 +132,15 @@ namespace Tmx
 		fseek(file, 0, SEEK_END);
 		fileSize = ftell(file);
 		fseek(file, 0, SEEK_SET);
+		
+		// Check if the file size is valid.
+		if (fileSize <= 0)
+		{
+			has_error = true;
+			error_code = TMX_INVALID_FILE_SIZE;
+			error_text = "The size of the file is invalid.";
+			return;
+		}
 
 		// Allocate memory for the file and read it into the memory.
 		fileText = new char[fileSize];

@@ -49,6 +49,9 @@ namespace Tmx
 		// There was an error in parsing the TMX file.
 		// This is being caused by TinyXML parsing problems.
 		TMX_PARSING_ERROR = 0x02,
+		
+		// The size of the file is invalid.
+		TMX_INVALID_FILE_SIZE = 0x04
 	};
 
 	//-------------------------------------------------------------------------
