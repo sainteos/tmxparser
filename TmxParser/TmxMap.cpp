@@ -155,6 +155,8 @@ namespace Tmx
 		}
 
 		// Allocate memory for the file and read it into the memory.
+		fileText = new char[fileSize + 1];
+		fileText[fileSize] = 0;
 #ifdef USE_SDL2_LOAD
 		file->read(file, fileText, 1, fileSize);
 #else
