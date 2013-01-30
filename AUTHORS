@@ -1,3 +1,4 @@
 tmw_desert_spacing.png - (C) The Mana World Development Team, GPL
 Makefile.linux - Caleb Stewart
 Android.mk, SDL2 IO Support - noschultz
+Image layers, staggered isometric orientation, ellipse objects - David Pulido Vargas
