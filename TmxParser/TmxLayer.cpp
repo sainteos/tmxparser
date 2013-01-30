@@ -44,6 +44,7 @@ namespace Tmx
 		, height(0) 
 		, opacity(1.0f)
 		, visible(true)
+		, zOrder(0)
 		, properties()
 		, encoding(TMX_ENCODING_XML)
 		, compression(TMX_COMPRESSION_NONE)

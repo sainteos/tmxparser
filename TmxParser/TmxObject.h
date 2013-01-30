@@ -35,6 +35,7 @@ class TiXmlNode;
 
 namespace Tmx 
 {
+	class Ellipse;
 	class Polygon;
 	class Polyline;
 
@@ -71,6 +72,9 @@ namespace Tmx
 		// Get the Global ID of the tile associated with this object.
 		int GetGid() const { return gid; }
 
+		// Get the ellipse.
+		const Tmx::Ellipse *GetEllipse() const { return ellipse; }
+
 		// Get the Polygon.
 		const Tmx::Polygon *GetPolygon() const { return polygon; }
 
@@ -90,6 +94,7 @@ namespace Tmx
 		int height;
 		int gid;
 
+		Tmx::Ellipse *ellipse;
 		Tmx::Polygon *polygon;
 		Tmx::Polyline *polyline;
 

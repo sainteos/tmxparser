@@ -119,6 +119,12 @@ namespace Tmx
 		// See: LayerCompressionType
 		Tmx::LayerCompressionType GetCompression() const { return compression; }
 
+		// Get the zorder of the layer.
+		int GetZOrder() const { return zOrder; }
+		
+		// Set the zorder of the layer.
+		void SetZOrder( int z ) { zOrder = z; }
+
 	private:
 		void ParseXML(const TiXmlNode *dataNode);
 		void ParseBase64(const std::string &innerText);
@@ -133,6 +139,7 @@ namespace Tmx
 	
 		float opacity;
 		bool visible;
+		int zOrder;
 
 		Tmx::PropertySet properties;
 

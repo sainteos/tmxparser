@@ -30,6 +30,7 @@
 #include "TmxObject.h"
 #include "TmxPolygon.h"
 #include "TmxPolyline.h"
+#include "TmxEllipse.h"
 
 namespace Tmx 
 {
@@ -41,6 +42,7 @@ namespace Tmx
 		, width(0)
 		, height(0)
 		, gid(0)
+		, ellipse(0)
 		, polygon(0)
 		, polyline(0)
 		, properties() 
@@ -48,6 +50,11 @@ namespace Tmx
 
 	Object::~Object() 
 	{
+		if (ellipse != 0)
+		{
+			delete ellipse;
+			ellipse = 0;
+		}
 		if (polygon != 0)
 		{
 			delete polygon;
@@ -76,6 +83,16 @@ namespace Tmx
 		objectElem->Attribute("width", &width);
 		objectElem->Attribute("height", &height);
 		objectElem->Attribute("gid", &gid);
+
+		// Read the ellipse of the object if there are any.
+		const TiXmlNode *ellipseNode = objectNode->FirstChild("ellipse");
+		if (ellipseNode)
+		{
+			if (ellipse != 0)
+				delete ellipse;
+
+			ellipse = new Ellipse(x,y,width,height);			
+		}
 
 		// Read the Polygon and Polyline of the object if there are any.
 		const TiXmlNode *polygonNode = objectNode->FirstChild("polygon");

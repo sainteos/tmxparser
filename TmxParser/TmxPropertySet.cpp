@@ -38,6 +38,11 @@ namespace Tmx
 	PropertySet::PropertySet() : properties()  
 	{}
 
+	PropertySet::~PropertySet()
+	{
+		properties.clear();
+	}
+
 	void PropertySet::Parse(const TiXmlNode *propertiesNode) 
 	{
 		// Iterate through all of the property nodes.
@@ -73,6 +78,17 @@ namespace Tmx
 	int PropertySet::GetNumericProperty(const string &name) const 
 	{
 		return atoi(GetLiteralProperty(name).c_str());
+	}
+
+	float PropertySet::GetFloatProperty(const string &name) const 
+	{
+		return float(atof(GetLiteralProperty(name).c_str()));
+	}
+
+	bool PropertySet::HasProperty( const string& name ) const
+	{
+		if( properties.empty() ) return false;
+		return ( properties.find(name) != properties.end() );
 	}
 
 };

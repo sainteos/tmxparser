@@ -35,6 +35,7 @@
 namespace Tmx 
 {
 	class Layer;
+	class ImageLayer;
 	class ObjectGroup;
 	class Tileset;
 
@@ -63,7 +64,10 @@ namespace Tmx
 		TMX_MO_ORTHOGONAL = 0x01,
 
 		// This map is an isometric map.
-		TMX_MO_ISOMETRIC = 0x02
+		TMX_MO_ISOMETRIC = 0x02,
+
+		// This map is an isometric staggered map.
+		TMX_MO_STAGGERED = 0x03
 	};
 
 	//-------------------------------------------------------------------------
@@ -130,6 +134,15 @@ namespace Tmx
 		// Get the whole object group collection.
 		const std::vector< Tmx::ObjectGroup* > &GetObjectGroups() const { return object_groups; }
 
+		// Get the layer at a certain index.
+		const Tmx::ImageLayer *GetImageLayer(int index) const { return image_layers.at(index); }
+
+		// Get the amount of layers.
+		int GetNumImageLayers() const { return image_layers.size(); }
+
+		// Get the whole layers collection.
+		const std::vector< Tmx::ImageLayer* > &GetImageLayers() const { return image_layers; }
+
 		// Find the tileset index for a tileset using a tile gid.
 		int FindTilesetIndex(int gid) const;
 
@@ -170,6 +183,7 @@ namespace Tmx
 		int tile_height;
 
 		std::vector< Tmx::Layer* > layers;
+		std::vector< Tmx::ImageLayer* > image_layers;
 		std::vector< Tmx::ObjectGroup* > object_groups;
 		std::vector< Tmx::Tileset* > tilesets;
 

@@ -32,6 +32,7 @@
 #include "TmxTileset.h"
 #include "TmxLayer.h"
 #include "TmxObjectGroup.h"
+#include "TmxImageLayer.h"
 
 #ifdef USE_SDL2_LOAD
 #include <SDL.h>
@@ -79,6 +80,19 @@ namespace Tmx
 		for (lIter = layers.begin(); lIter != layers.end(); ++lIter) 
 		{
 			Layer *layer = (*lIter);
+
+			if (layer) 
+			{
+				delete layer;
+				layer = NULL;
+			}
+		}
+
+		// Iterate through all of the layers and delete each of them.
+		vector< ImageLayer* >::iterator ilIter;
+		for (ilIter = image_layers.begin(); ilIter != image_layers.end(); ++ilIter) 
+		{
+			ImageLayer *layer = (*ilIter);
 
 			if (layer) 
 			{
@@ -212,54 +226,73 @@ namespace Tmx
 		{
 			orientation = TMX_MO_ISOMETRIC;
 		}
-
-		// Read the map properties.
-		const TiXmlNode *propertiesNode = mapElem->FirstChild("properties");
-		if (propertiesNode) 
+		else if (!orientationStr.compare("staggered")) 
 		{
-			properties.Parse(propertiesNode);
+			orientation = TMX_MO_STAGGERED;
 		}
-
-		// Iterate through all of the tileset elements.
-		const TiXmlNode *tilesetNode = mapNode->FirstChild("tileset");
-		while (tilesetNode) 
-		{
-			// Allocate a new tileset and parse it.
-			Tileset *tileset = new Tileset();
-			tileset->Parse(tilesetNode->ToElement());
-
-			// Add the tileset to the list.
-			tilesets.push_back(tileset);
-
-			tilesetNode = mapNode->IterateChildren("tileset", tilesetNode);
-		}
-
-		// Iterate through all of the layer elements.
-		TiXmlNode *layerNode = mapNode->FirstChild("layer");
-		while (layerNode) 
-		{
-			// Allocate a new layer and parse it.
-			Layer *layer = new Layer(this);
-			layer->Parse(layerNode);
-
-			// Add the layer to the list.
-			layers.push_back(layer);
-
-			layerNode = mapNode->IterateChildren("layer", layerNode);
-		}
-
-		// Iterate through all of the objectgroup elements.
-		TiXmlNode *objectGroupNode = mapNode->FirstChild("objectgroup");
-		while (objectGroupNode) 
-		{
-			// Allocate a new object group and parse it.
-			ObjectGroup *objectGroup = new ObjectGroup();
-			objectGroup->Parse(objectGroupNode);
 		
-			// Add the object group to the list.
-			object_groups.push_back(objectGroup);
 
-			objectGroupNode = mapNode->IterateChildren("objectgroup", objectGroupNode);
+		const TiXmlNode *node = mapElem->FirstChild();
+		int zOrder = 0;
+		while( node )
+		{
+			// Read the map properties.
+			if( strcmp( node->Value(), "properties" ) == 0 )
+			{
+				properties.Parse(node);			
+			}
+
+			// Iterate through all of the tileset elements.
+			if( strcmp( node->Value(), "tileset" ) == 0 )
+			{
+				// Allocate a new tileset and parse it.
+				Tileset *tileset = new Tileset();
+				tileset->Parse(node->ToElement());
+
+				// Add the tileset to the list.
+				tilesets.push_back(tileset);
+			}
+
+			// Iterate through all of the layer elements.			
+			if( strcmp( node->Value(), "layer" ) == 0 )
+			{
+				// Allocate a new layer and parse it.
+				Layer *layer = new Layer(this);
+				layer->Parse(node);
+				layer->SetZOrder( zOrder );
+				++zOrder;
+
+				// Add the layer to the list.
+				layers.push_back(layer);
+			}
+
+			// Iterate through all of the imagen layer elements.			
+			if( strcmp( node->Value(), "imagelayer" ) == 0 )
+			{
+				// Allocate a new layer and parse it.
+				ImageLayer *imageLayer = new ImageLayer(this);
+				imageLayer->Parse(node);
+				imageLayer->SetZOrder( zOrder );
+				++zOrder;
+
+				// Add the layer to the list.
+				image_layers.push_back(imageLayer);
+			}
+
+			// Iterate through all of the objectgroup elements.
+			if( strcmp( node->Value(), "objectgroup" ) == 0 )
+			{
+				// Allocate a new object group and parse it.
+				ObjectGroup *objectGroup = new ObjectGroup();
+				objectGroup->Parse(node);
+				objectGroup->SetZOrder( zOrder );
+				++zOrder;
+		
+				// Add the object group to the list.
+				object_groups.push_back(objectGroup);
+			}
+
+			node = node->NextSibling();
 		}
 	}
 

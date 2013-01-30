@@ -36,6 +36,7 @@ namespace Tmx
 		: name()
 		, width(0)
 		, height(0)
+		, zOrder(0)
 	{}
 
 	ObjectGroup::~ObjectGroup() 
@@ -57,6 +58,13 @@ namespace Tmx
 		objectGroupElem->Attribute("width", &width);
 		objectGroupElem->Attribute("height", &height);
 		objectGroupElem->Attribute("visible", &visible);
+
+		// Read the properties.
+		const TiXmlNode *propertiesNode = objectGroupNode->FirstChild("properties");
+		if (propertiesNode) 
+		{
+			properties.Parse(propertiesNode);
+		}
 
 		// Iterate through all of the object elements.
 		const TiXmlNode *objectNode = objectGroupNode->FirstChild("object");

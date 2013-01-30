@@ -30,6 +30,8 @@
 #include <string>
 #include <vector>
 
+#include "TmxPropertySet.h"
+
 class TiXmlNode;
 
 namespace Tmx 
@@ -69,8 +71,17 @@ namespace Tmx
 		// Get whether the object layer is visible.
 		int GetVisibility() const { return visible; }
 
+		// Get the property set.
+		const Tmx::PropertySet &GetProperties() const { return properties; }
+
 		// Get the whole list of objects.
 		const std::vector< Tmx::Object* > &GetObjects() const { return objects; }
+
+		// Get the zorder of the object group.
+		int GetZOrder() const { return zOrder; }
+		
+		// Set the zorder of the object group.
+		void SetZOrder( int z ) { zOrder = z; }
 
 	private:
 		std::string name;
@@ -78,6 +89,9 @@ namespace Tmx
 		int width;
 		int height;
 		int visible;
+		int zOrder;
+
+		Tmx::PropertySet properties;
 
 		std::vector< Tmx::Object* > objects;
 	};
