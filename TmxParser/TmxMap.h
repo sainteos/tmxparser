@@ -168,8 +168,7 @@ namespace Tmx
 		unsigned char GetErrorCode() const { return error_code; }
 
 		// Get the property set.
-		const Tmx::PropertySet &GetProperties() const { return 
-properties; }
+		const Tmx::PropertySet &GetProperties() const { return properties; }
 
 	private:
 		std::string file_name;
