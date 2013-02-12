@@ -157,6 +157,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TmxEllipse.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TmxImageLayer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\TmxMap.cpp"
 				>
 			</File>
@@ -300,6 +308,14 @@
 			</File>
 			<File
 				RelativePath=".\TmxLayer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TmxEllipse.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TmxImageLayer.h"
 				>
 			</File>
 			<File
