@@ -93,19 +93,32 @@ namespace Tmx
 			image->Parse(imageNode);
 		}
 
-		// Iterate through all of the tile elements and parse each.
-		const TiXmlNode *tileNode = tilesetNode->FirstChild("tile");
-		while (tileNode)
+        // Populate the tile list
+        int tileCount = (image->GetWidth() / tile_width) * (image->GetHeight() / tile_height);
+
+        int tId = tiles.size();
+        while (tId < tileCount)
+        {
+            Tile* tile = new Tile(tId);
+            tiles.push_back(tile);
+            tId++;
+        }
+
+
+        // Iterate through all of the tile elements and parse each.
+        const TiXmlNode *tileNode = tilesetNode->FirstChild("tile");
+        while (tileNode)
 		{
-			// Allocate a new tile and parse it.
-			Tile *tile = new Tile();
-			tile->Parse(tileNode);
+            // Parse it to get the tile id.
+            Tile tile;
+            tile.Parse(tileNode);
 
-			// Add the tile to the collection.
-			tiles.push_back(tile);
+            // Using the ID in the temporary tile get the real tile and parse for real.
+            tiles[tile.GetId()]->Parse(tileNode);
 
-			tileNode = tilesetNode->IterateChildren("tile", tileNode);
+            tileNode = tilesetNode->IterateChildren("tile", tileNode);
 		}
+
 		
 		// Parse the properties if any.
 		const TiXmlNode *propertiesNode = tilesetNode->FirstChild("properties");

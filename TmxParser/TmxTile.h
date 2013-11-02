@@ -41,6 +41,7 @@ namespace Tmx
 	class Tile 
 	{
 	public:
+        Tile(int id);
 		Tile();
 		~Tile();
 	
