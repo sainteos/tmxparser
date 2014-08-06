@@ -34,10 +34,6 @@
 #include "TmxObjectGroup.h"
 #include "TmxImageLayer.h"
 
-#ifdef USE_SDL2_LOAD
-#include <SDL.h>
-#endif
-
 using std::vector;
 using std::string;
 
@@ -135,11 +131,7 @@ namespace Tmx
         int fileSize;
 
         // Open the file for reading.
-#ifdef USE_SDL2_LOAD
-        SDL_RWops * file = SDL_RWFromFile (fileName.c_str(), "rb");
-#else
         FILE *file = fopen(fileName.c_str(), "rb");
-#endif
 
         // Check if the file could not be opened.
         if (!file) 
@@ -151,13 +143,9 @@ namespace Tmx
         }
     
         // Find out the file size.  
-#ifdef USE_SDL2_LOAD
-        fileSize = file->size(file);
-#else
         fseek(file, 0, SEEK_END);
         fileSize = ftell(file);
         fseek(file, 0, SEEK_SET);
-#endif
         
         // Check if the file size is valid.
         if (fileSize <= 0)
@@ -171,17 +159,9 @@ namespace Tmx
         // Allocate memory for the file and read it into the memory.
         fileText = new char[fileSize + 1];
         fileText[fileSize] = 0;
-#ifdef USE_SDL2_LOAD
-        file->read(file, fileText, 1, fileSize);
-#else
         fread(fileText, 1, fileSize, file);
-#endif
 
-#ifdef USE_SDL2_LOAD
-        file->close(file);
-#else
         fclose(file);
-#endif
 
         // Copy the contents into a C++ string and delete it from memory.
         std::string text(fileText, fileText+fileSize);
