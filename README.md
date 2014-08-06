@@ -26,6 +26,6 @@ An example file is provided to understand how to use the library.
 ## Installation
 
 ```
-make -f Makefile.linux
-sudo make -f Makefile.linux install
+make
+sudo make install
 ```
