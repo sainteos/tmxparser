@@ -125,6 +125,9 @@ namespace Tmx
         // Set the zorder of the layer.
         void SetZOrder( int z ) { zOrder = z; }
 
+        float GetOpacity() const { return opacity; }
+        bool GetVisible() const { return visible; }
+
     private:
         void ParseXML(const TiXmlNode *dataNode);
         void ParseBase64(const std::string &innerText);
