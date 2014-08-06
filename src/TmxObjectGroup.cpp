@@ -32,53 +32,53 @@
 
 namespace Tmx 
 {
-	ObjectGroup::ObjectGroup()
-		: name()
-		, width(0)
-		, height(0)
-		, zOrder(0)
-	{}
+    ObjectGroup::ObjectGroup()
+        : name()
+        , width(0)
+        , height(0)
+        , zOrder(0)
+    {}
 
-	ObjectGroup::~ObjectGroup() 
-	{
-		for(std::size_t i = 0; i < objects.size(); i++)
-		{
-			Object *obj = objects.at(i);
-			delete obj;
-		}
-	}
+    ObjectGroup::~ObjectGroup() 
+    {
+        for(std::size_t i = 0; i < objects.size(); i++)
+        {
+            Object *obj = objects.at(i);
+            delete obj;
+        }
+    }
 
-	void ObjectGroup::Parse(const TiXmlNode *objectGroupNode) 
-	{
-		const TiXmlElement *objectGroupElem = objectGroupNode->ToElement();
+    void ObjectGroup::Parse(const TiXmlNode *objectGroupNode) 
+    {
+        const TiXmlElement *objectGroupElem = objectGroupNode->ToElement();
 
-		// Read the object group attributes.
-		name = objectGroupElem->Attribute("name");
-		
-		objectGroupElem->Attribute("width", &width);
-		objectGroupElem->Attribute("height", &height);
-		objectGroupElem->Attribute("visible", &visible);
+        // Read the object group attributes.
+        name = objectGroupElem->Attribute("name");
+        
+        objectGroupElem->Attribute("width", &width);
+        objectGroupElem->Attribute("height", &height);
+        objectGroupElem->Attribute("visible", &visible);
 
-		// Read the properties.
-		const TiXmlNode *propertiesNode = objectGroupNode->FirstChild("properties");
-		if (propertiesNode) 
-		{
-			properties.Parse(propertiesNode);
-		}
+        // Read the properties.
+        const TiXmlNode *propertiesNode = objectGroupNode->FirstChild("properties");
+        if (propertiesNode) 
+        {
+            properties.Parse(propertiesNode);
+        }
 
-		// Iterate through all of the object elements.
-		const TiXmlNode *objectNode = objectGroupNode->FirstChild("object");
-		while (objectNode) 
-		{
-			// Allocate a new object and parse it.
-			Object *object = new Object();
-			object->Parse(objectNode);
-			
-			// Add the object to the list.
-			objects.push_back(object);
+        // Iterate through all of the object elements.
+        const TiXmlNode *objectNode = objectGroupNode->FirstChild("object");
+        while (objectNode) 
+        {
+            // Allocate a new object and parse it.
+            Object *object = new Object();
+            object->Parse(objectNode);
+            
+            // Add the object to the list.
+            objects.push_back(object);
 
-			objectNode = objectGroupNode->IterateChildren("object", objectNode);
-		}
-	}
+            objectNode = objectGroupNode->IterateChildren("object", objectNode);
+        }
+    }
 
 }

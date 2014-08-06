@@ -31,26 +31,26 @@
 
 namespace Tmx 
 {
-	Polygon::Polygon()
-		: points()
-	{
-	}
+    Polygon::Polygon()
+        : points()
+    {
+    }
 
-	void Polygon::Parse(const TiXmlNode *polygonNode)
-	{
-		char *pointsLine = strdup(polygonNode->ToElement()->Attribute("points"));
-		
-		char *token = strtok(pointsLine, " ");
-		while (token)
-		{
-			Point point;
-			sscanf(token, "%d,%d", &point.x, &point.y);
+    void Polygon::Parse(const TiXmlNode *polygonNode)
+    {
+        char *pointsLine = strdup(polygonNode->ToElement()->Attribute("points"));
+        
+        char *token = strtok(pointsLine, " ");
+        while (token)
+        {
+            Point point;
+            sscanf(token, "%d,%d", &point.x, &point.y);
 
-			points.push_back(point);
+            points.push_back(point);
 
-			token = strtok(0, " ");
-		}
+            token = strtok(0, " ");
+        }
 
-		free(pointsLine);
-	}
+        free(pointsLine);
+    }
 }

@@ -33,35 +33,35 @@ class TiXmlNode;
 
 namespace Tmx 
 {
-	//-------------------------------------------------------------------------
-	// An image within a tileset.
-	//-------------------------------------------------------------------------
-	class Image 
-	{
-	public:
-		Image();
-		~Image();
+    //-------------------------------------------------------------------------
+    // An image within a tileset.
+    //-------------------------------------------------------------------------
+    class Image 
+    {
+    public:
+        Image();
+        ~Image();
 
-		// Parses an image element.
-		void Parse(const TiXmlNode *imageNode);
+        // Parses an image element.
+        void Parse(const TiXmlNode *imageNode);
 
-		// Get the path to the file of the image (relative to the map)
-		const std::string &GetSource() const { return source; }
+        // Get the path to the file of the image (relative to the map)
+        const std::string &GetSource() const { return source; }
 
-		// Get the width of the image.
-		int GetWidth() const { return width; }
+        // Get the width of the image.
+        int GetWidth() const { return width; }
 
-		// Get the height of the image.
-		int GetHeight() const { return height; }
+        // Get the height of the image.
+        int GetHeight() const { return height; }
 
-		// Get the transparent color used in the image.
-		const std::string &GetTransparentColor() const 
-		{ return transparent_color; }
+        // Get the transparent color used in the image.
+        const std::string &GetTransparentColor() const 
+        { return transparent_color; }
 
-	private:
-		std::string source;
-		int width;
-		int height;
-		std::string transparent_color;
-	};
+    private:
+        std::string source;
+        int width;
+        int height;
+        std::string transparent_color;
+    };
 }

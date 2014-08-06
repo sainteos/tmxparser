@@ -31,62 +31,62 @@ using std::string;
 
 namespace Tmx 
 {
-	ImageLayer::ImageLayer(const Tmx::Map *_map) 
-		: map(_map)
-		, name()
-		, width(0)
-		, height(0)
-		, opacity(0)
-		, visible(0)
-		, zOrder(0)
-		, image(NULL)
+    ImageLayer::ImageLayer(const Tmx::Map *_map) 
+        : map(_map)
+        , name()
+        , width(0)
+        , height(0)
+        , opacity(0)
+        , visible(0)
+        , zOrder(0)
+        , image(NULL)
 
-	{
-	}
+    {
+    }
 
-	ImageLayer::~ImageLayer() 
-	{
-		delete image;
-	}
+    ImageLayer::~ImageLayer() 
+    {
+        delete image;
+    }
 
-	void ImageLayer::Parse(const TiXmlNode *imageLayerNode) 
-	{
-		const TiXmlElement *imagenLayerElem = imageLayerNode->ToElement();
+    void ImageLayer::Parse(const TiXmlNode *imageLayerNode) 
+    {
+        const TiXmlElement *imagenLayerElem = imageLayerNode->ToElement();
 
-		// Read all the attributes into local variables.
-		name = imagenLayerElem->Attribute("name");
+        // Read all the attributes into local variables.
+        name = imagenLayerElem->Attribute("name");
 
-		imagenLayerElem->Attribute("width", &width);
-		imagenLayerElem->Attribute("height", &height);
+        imagenLayerElem->Attribute("width", &width);
+        imagenLayerElem->Attribute("height", &height);
 
-		const char *opacityStr = imagenLayerElem->Attribute("opacity");
-		if (opacityStr) 
-		{
-			opacity = (float)atof(opacityStr);
-		}
+        const char *opacityStr = imagenLayerElem->Attribute("opacity");
+        if (opacityStr) 
+        {
+            opacity = (float)atof(opacityStr);
+        }
 
-		const char *visibleStr = imagenLayerElem->Attribute("visible");
-		if (visibleStr) 
-		{
-			visible = atoi(visibleStr) != 0; // to prevent visual c++ from complaining..
-		}
+        const char *visibleStr = imagenLayerElem->Attribute("visible");
+        if (visibleStr) 
+        {
+            visible = atoi(visibleStr) != 0; // to prevent visual c++ from complaining..
+        }
 
-		// Parse the image.
-		const TiXmlNode *imageNode = imagenLayerElem->FirstChild("image");
-		
-		if (imageNode) 
-		{
-			image = new Image();
-			image->Parse(imageNode);
-		}
+        // Parse the image.
+        const TiXmlNode *imageNode = imagenLayerElem->FirstChild("image");
+        
+        if (imageNode) 
+        {
+            image = new Image();
+            image->Parse(imageNode);
+        }
 
-		// Parse the properties if any.
-		const TiXmlNode *propertiesNode = imagenLayerElem->FirstChild("properties");
-		
-		if (propertiesNode) 
-		{
-			properties.Parse(propertiesNode);
-		}
-	}
+        // Parse the properties if any.
+        const TiXmlNode *propertiesNode = imagenLayerElem->FirstChild("properties");
+        
+        if (propertiesNode) 
+        {
+            properties.Parse(propertiesNode);
+        }
+    }
 
 }

@@ -31,11 +31,11 @@
 
 namespace Tmx 
 {
-	Ellipse::Ellipse( int _x, int _y, int width, int height )
-		: x(_x+(width/2))
-		, y(_y+(height/2))
-		, radiusX(width/2)
-		, radiusY(height/2)
-	{
-	}
+    Ellipse::Ellipse( int _x, int _y, int width, int height )
+        : x(_x+(width/2))
+        , y(_y+(height/2))
+        , radiusX(width/2)
+        , radiusY(height/2)
+    {
+    }
 }

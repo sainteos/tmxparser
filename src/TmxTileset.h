@@ -36,68 +36,68 @@ class TiXmlNode;
 
 namespace Tmx 
 {
-	class Image;
-	class Tile;
+    class Image;
+    class Tile;
 
-	//-------------------------------------------------------------------------
-	// A class used for storing information about each of the tilesets.
-	// A tileset is a collection of tiles, of whom each may contain properties.
-	// The tileset class itself does not have properties.
-	//-------------------------------------------------------------------------
-	class Tileset 
-	{
-	public:
-		Tileset();
-		~Tileset();
+    //-------------------------------------------------------------------------
+    // A class used for storing information about each of the tilesets.
+    // A tileset is a collection of tiles, of whom each may contain properties.
+    // The tileset class itself does not have properties.
+    //-------------------------------------------------------------------------
+    class Tileset 
+    {
+    public:
+        Tileset();
+        ~Tileset();
 
-		// Parse a tileset element.
-		void Parse(const TiXmlNode *tilesetNode);
+        // Parse a tileset element.
+        void Parse(const TiXmlNode *tilesetNode);
 
-		// Returns the global id of the first tile.
-		int GetFirstGid() const { return first_gid; }
+        // Returns the global id of the first tile.
+        int GetFirstGid() const { return first_gid; }
 
-		// Returns the name of the tileset.
-		const std::string &GetName() const { return name; }
+        // Returns the name of the tileset.
+        const std::string &GetName() const { return name; }
 
-		// Get the width of a single tile.
-		int GetTileWidth() const { return tile_width; } 
+        // Get the width of a single tile.
+        int GetTileWidth() const { return tile_width; } 
 
-		// Get the height of a single tile.
-		int GetTileHeight() const { return tile_height; }
+        // Get the height of a single tile.
+        int GetTileHeight() const { return tile_height; }
 
-		// Get the margin of the tileset.
-		int GetMargin() const { return margin; }
+        // Get the margin of the tileset.
+        int GetMargin() const { return margin; }
 
-		// Get the spacing of the tileset.
-		int GetSpacing() const { return spacing; }
+        // Get the spacing of the tileset.
+        int GetSpacing() const { return spacing; }
 
-		// Returns a variable containing information 
-		// about the image of the tileset.
-		const Tmx::Image* GetImage() const { return image; }
+        // Returns a variable containing information 
+        // about the image of the tileset.
+        const Tmx::Image* GetImage() const { return image; }
 
-		// Returns a a single tile of the set.
-		const Tmx::Tile *GetTile(int index) const;
+        // Returns a a single tile of the set.
+        const Tmx::Tile *GetTile(int index) const;
 
-		// Returns the whole tile collection.
-		const std::vector< Tmx::Tile *> &GetTiles() const { return tiles; } 
-		
-		// Get a set of properties regarding the tile.
-		const Tmx::PropertySet &GetProperties() const { return properties; }
+        // Returns the whole tile collection.
+        const std::vector< Tmx::Tile *> &GetTiles() const { return tiles; } 
+        
+        // Get a set of properties regarding the tile.
+        const Tmx::PropertySet &GetProperties() const { return properties; }
 
-	private:
-		int first_gid;
-		
-		std::string name;
-		
-		int tile_width;
-		int tile_height;
-		int margin;
-		int spacing;
-		
-		Tmx::Image* image;
+    private:
+        int first_gid;
+        
+        std::string name;
+        
+        int tile_width;
+        int tile_height;
+        int margin;
+        int spacing;
+        
+        Tmx::Image* image;
 
-		std::vector< Tmx::Tile* > tiles;
-		
-		Tmx::PropertySet properties;
-	};
+        std::vector< Tmx::Tile* > tiles;
+        
+        Tmx::PropertySet properties;
+    };
 }

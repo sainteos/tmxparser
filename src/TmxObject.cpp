@@ -34,91 +34,91 @@
 
 namespace Tmx 
 {
-	Object::Object() 
-		: name()
-		, type()
-		, x(0)
-		, y(0)
-		, width(0)
-		, height(0)
-		, gid(0)
-		, ellipse(0)
-		, polygon(0)
-		, polyline(0)
-		, properties() 
-	{}
+    Object::Object() 
+        : name()
+        , type()
+        , x(0)
+        , y(0)
+        , width(0)
+        , height(0)
+        , gid(0)
+        , ellipse(0)
+        , polygon(0)
+        , polyline(0)
+        , properties() 
+    {}
 
-	Object::~Object() 
-	{
-		if (ellipse != 0)
-		{
-			delete ellipse;
-			ellipse = 0;
-		}
-		if (polygon != 0)
-		{
-			delete polygon;
-			polygon = 0;
-		}
-		if (polyline != 0)
-		{
-			delete polyline;
-			polyline = 0;
-		}
-	}
+    Object::~Object() 
+    {
+        if (ellipse != 0)
+        {
+            delete ellipse;
+            ellipse = 0;
+        }
+        if (polygon != 0)
+        {
+            delete polygon;
+            polygon = 0;
+        }
+        if (polyline != 0)
+        {
+            delete polyline;
+            polyline = 0;
+        }
+    }
 
-	void Object::Parse(const TiXmlNode *objectNode) 
-	{
-		const TiXmlElement *objectElem = objectNode->ToElement();
+    void Object::Parse(const TiXmlNode *objectNode) 
+    {
+        const TiXmlElement *objectElem = objectNode->ToElement();
 
-		// Read the attributes of the object.
-		const char *tempName = objectElem->Attribute("name");
-		const char *tempType = objectElem->Attribute("type");
-		
-		if (tempName) name = tempName;
-		if (tempType) type = tempType;
-		
-		objectElem->Attribute("x", &x);
-		objectElem->Attribute("y", &y);
-		objectElem->Attribute("width", &width);
-		objectElem->Attribute("height", &height);
-		objectElem->Attribute("gid", &gid);
+        // Read the attributes of the object.
+        const char *tempName = objectElem->Attribute("name");
+        const char *tempType = objectElem->Attribute("type");
+        
+        if (tempName) name = tempName;
+        if (tempType) type = tempType;
+        
+        objectElem->Attribute("x", &x);
+        objectElem->Attribute("y", &y);
+        objectElem->Attribute("width", &width);
+        objectElem->Attribute("height", &height);
+        objectElem->Attribute("gid", &gid);
 
-		// Read the ellipse of the object if there are any.
-		const TiXmlNode *ellipseNode = objectNode->FirstChild("ellipse");
-		if (ellipseNode)
-		{
-			if (ellipse != 0)
-				delete ellipse;
+        // Read the ellipse of the object if there are any.
+        const TiXmlNode *ellipseNode = objectNode->FirstChild("ellipse");
+        if (ellipseNode)
+        {
+            if (ellipse != 0)
+                delete ellipse;
 
-			ellipse = new Ellipse(x,y,width,height);			
-		}
+            ellipse = new Ellipse(x,y,width,height);            
+        }
 
-		// Read the Polygon and Polyline of the object if there are any.
-		const TiXmlNode *polygonNode = objectNode->FirstChild("polygon");
-		if (polygonNode)
-		{
-			if (polygon != 0)
-				delete polygon;
+        // Read the Polygon and Polyline of the object if there are any.
+        const TiXmlNode *polygonNode = objectNode->FirstChild("polygon");
+        if (polygonNode)
+        {
+            if (polygon != 0)
+                delete polygon;
 
-			polygon = new Polygon();
-			polygon->Parse(polygonNode);
-		}
-		const TiXmlNode *polylineNode = objectNode->FirstChild("polyline");
-		if (polylineNode)
-		{
-			if (polyline != 0)
-				delete polyline;
+            polygon = new Polygon();
+            polygon->Parse(polygonNode);
+        }
+        const TiXmlNode *polylineNode = objectNode->FirstChild("polyline");
+        if (polylineNode)
+        {
+            if (polyline != 0)
+                delete polyline;
 
-			polyline = new Polyline();
-			polyline->Parse(polylineNode);
-		}
+            polyline = new Polyline();
+            polyline->Parse(polylineNode);
+        }
 
-		// Read the properties of the object.
-		const TiXmlNode *propertiesNode = objectNode->FirstChild("properties");
-		if (propertiesNode) 
-		{
-			properties.Parse(propertiesNode);
-		}
-	}
+        // Read the properties of the object.
+        const TiXmlNode *propertiesNode = objectNode->FirstChild("properties");
+        if (propertiesNode) 
+        {
+            properties.Parse(propertiesNode);
+        }
+    }
 }

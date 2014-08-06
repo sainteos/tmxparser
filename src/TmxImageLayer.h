@@ -32,62 +32,62 @@ class TiXmlNode;
 
 namespace Tmx 
 {
-	class Map;
-	class Image;
+    class Map;
+    class Image;
 
-	//-------------------------------------------------------------------------
-	// A class used for storing information about each of the tilesets.
-	// A tileset is a collection of tiles, of whom each may contain properties.
-	// The tileset class itself does not have properties.
-	//-------------------------------------------------------------------------
-	class ImageLayer 
-	{
-	public:
-		ImageLayer(const Tmx::Map *_map);
-		~ImageLayer();
+    //-------------------------------------------------------------------------
+    // A class used for storing information about each of the tilesets.
+    // A tileset is a collection of tiles, of whom each may contain properties.
+    // The tileset class itself does not have properties.
+    //-------------------------------------------------------------------------
+    class ImageLayer 
+    {
+    public:
+        ImageLayer(const Tmx::Map *_map);
+        ~ImageLayer();
 
-		// Parse a ImageLayer element.
-		void Parse(const TiXmlNode *imageLayerNode);
+        // Parse a ImageLayer element.
+        void Parse(const TiXmlNode *imageLayerNode);
 
-		// Returns the name of the ImageLayer.
-		const std::string &GetName() const { return name; }
+        // Returns the name of the ImageLayer.
+        const std::string &GetName() const { return name; }
 
-		// Get the width of the ImageLayer.
-		int GetWidth() const { return width; } 
+        // Get the width of the ImageLayer.
+        int GetWidth() const { return width; } 
 
-		// Get the height of the ImageLayer.
-		int GetHeight() const { return height; }
+        // Get the height of the ImageLayer.
+        int GetHeight() const { return height; }
 
-		// Get the visibility of the ImageLayer.
-		bool IsVisible() const { return visible; }
+        // Get the visibility of the ImageLayer.
+        bool IsVisible() const { return visible; }
 
-		// Returns a variable containing information 
-		// about the image of the ImageLayer.
-		const Tmx::Image* GetImage() const { return image; }
+        // Returns a variable containing information 
+        // about the image of the ImageLayer.
+        const Tmx::Image* GetImage() const { return image; }
 
-		// Get a set of properties regarding the ImageLayer.
-		const Tmx::PropertySet &GetProperties() const { return properties; }
+        // Get a set of properties regarding the ImageLayer.
+        const Tmx::PropertySet &GetProperties() const { return properties; }
 
-		// Get the zorder of the ImageLayer.
-		int GetZOrder() const { return zOrder; }
-		
-		// Set the zorder of the ImageLayer.
-		void SetZOrder( int z ) { zOrder = z; }
+        // Get the zorder of the ImageLayer.
+        int GetZOrder() const { return zOrder; }
+        
+        // Set the zorder of the ImageLayer.
+        void SetZOrder( int z ) { zOrder = z; }
 
-	private:
-		const Tmx::Map *map;
+    private:
+        const Tmx::Map *map;
 
-		std::string name;
-		
-		int width;
-		int height;
+        std::string name;
+        
+        int width;
+        int height;
 
-		float opacity;
-		bool visible;
-		int zOrder;
-		
-		Tmx::Image* image;
+        float opacity;
+        bool visible;
+        int zOrder;
+        
+        Tmx::Image* image;
 
-		Tmx::PropertySet properties;
-	};
+        Tmx::PropertySet properties;
+    };
 }

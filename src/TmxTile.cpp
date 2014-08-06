@@ -34,25 +34,25 @@ namespace Tmx
     Tile::Tile(int id) : id(id)
     {}
 
-	Tile::Tile() : properties()
-	{}
+    Tile::Tile() : properties()
+    {}
 
-	Tile::~Tile() 
-	{}
+    Tile::~Tile() 
+    {}
 
-	void Tile::Parse(const TiXmlNode *tileNode) 
-	{
-		const TiXmlElement *tileElem = tileNode->ToElement();
+    void Tile::Parse(const TiXmlNode *tileNode) 
+    {
+        const TiXmlElement *tileElem = tileNode->ToElement();
 
-		// Parse the attributes.
-		tileElem->Attribute("id", &id);
+        // Parse the attributes.
+        tileElem->Attribute("id", &id);
 
-		// Parse the properties if any.
-		const TiXmlNode *propertiesNode = tileNode->FirstChild("properties");
-		
-		if (propertiesNode) 
-		{
-			properties.Parse(propertiesNode);
-		}
-	}
+        // Parse the properties if any.
+        const TiXmlNode *propertiesNode = tileNode->FirstChild("properties");
+        
+        if (propertiesNode) 
+        {
+            properties.Parse(propertiesNode);
+        }
+    }
 }

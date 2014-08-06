@@ -35,69 +35,69 @@ class TiXmlNode;
 
 namespace Tmx 
 {
-	class Ellipse;
-	class Polygon;
-	class Polyline;
+    class Ellipse;
+    class Polygon;
+    class Polyline;
 
-	//-------------------------------------------------------------------------
-	// Class used for representing a single object from the objectgroup.
-	//-------------------------------------------------------------------------
-	class Object 
-	{
-	public:
-		Object();
-		~Object();
+    //-------------------------------------------------------------------------
+    // Class used for representing a single object from the objectgroup.
+    //-------------------------------------------------------------------------
+    class Object 
+    {
+    public:
+        Object();
+        ~Object();
 
-		// Parse an object node.
-		void Parse(const TiXmlNode *objectNode);
-	
-		// Get the name of the object.
-		const std::string &GetName() const { return name; }
-		
-		// Get the type of the object.
-		const std::string &GetType() const { return type; }
+        // Parse an object node.
+        void Parse(const TiXmlNode *objectNode);
+    
+        // Get the name of the object.
+        const std::string &GetName() const { return name; }
+        
+        // Get the type of the object.
+        const std::string &GetType() const { return type; }
 
-		// Get the left side of the object, in pixels.
-		int GetX() const { return x; }
+        // Get the left side of the object, in pixels.
+        int GetX() const { return x; }
 
-		// Get the top side of the object, in pixels.
-		int GetY() const { return y; }
-		
-		// Get the width of the object, in pixels.
-		int GetWidth() const { return width; }
-		
-		// Get the height of the object, in pixels.
-		int GetHeight() const { return height; }
+        // Get the top side of the object, in pixels.
+        int GetY() const { return y; }
+        
+        // Get the width of the object, in pixels.
+        int GetWidth() const { return width; }
+        
+        // Get the height of the object, in pixels.
+        int GetHeight() const { return height; }
 
-		// Get the Global ID of the tile associated with this object.
-		int GetGid() const { return gid; }
+        // Get the Global ID of the tile associated with this object.
+        int GetGid() const { return gid; }
 
-		// Get the ellipse.
-		const Tmx::Ellipse *GetEllipse() const { return ellipse; }
+        // Get the ellipse.
+        const Tmx::Ellipse *GetEllipse() const { return ellipse; }
 
-		// Get the Polygon.
-		const Tmx::Polygon *GetPolygon() const { return polygon; }
+        // Get the Polygon.
+        const Tmx::Polygon *GetPolygon() const { return polygon; }
 
-		// Get the Polyline.
-		const Tmx::Polyline *GetPolyline() const { return polyline; }
+        // Get the Polyline.
+        const Tmx::Polyline *GetPolyline() const { return polyline; }
 
-		// Get the property set.
-		const Tmx::PropertySet &GetProperties() const { return properties; }
+        // Get the property set.
+        const Tmx::PropertySet &GetProperties() const { return properties; }
 
-	private:
-		std::string name;
-		std::string type;
+    private:
+        std::string name;
+        std::string type;
 
-		int x;
-		int y;
-		int width;
-		int height;
-		int gid;
+        int x;
+        int y;
+        int width;
+        int height;
+        int gid;
 
-		Tmx::Ellipse *ellipse;
-		Tmx::Polygon *polygon;
-		Tmx::Polyline *polyline;
+        Tmx::Ellipse *ellipse;
+        Tmx::Polygon *polygon;
+        Tmx::Polyline *polyline;
 
-		Tmx::PropertySet properties;
-	};
+        Tmx::PropertySet properties;
+    };
 }

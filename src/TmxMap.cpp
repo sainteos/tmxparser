@@ -43,287 +43,287 @@ using std::string;
 
 namespace Tmx 
 {
-	Map::Map() 
-		: file_name()
-		, file_path()
-		, version(0.0)
-		, orientation(TMX_MO_ORTHOGONAL)
-		, width(0)
-		, height(0)
-		, tile_width(0)
-		, tile_height(0)
-		, layers()
-		, object_groups()
-		, tilesets() 
-		, has_error(false)
-		, error_code(0)
-		, error_text()
-	{}
+    Map::Map() 
+        : file_name()
+        , file_path()
+        , version(0.0)
+        , orientation(TMX_MO_ORTHOGONAL)
+        , width(0)
+        , height(0)
+        , tile_width(0)
+        , tile_height(0)
+        , layers()
+        , object_groups()
+        , tilesets() 
+        , has_error(false)
+        , error_code(0)
+        , error_text()
+    {}
 
-	Map::~Map() 
-	{
-		// Iterate through all of the object groups and delete each of them.
-		vector< ObjectGroup* >::iterator ogIter;
-		for (ogIter = object_groups.begin(); ogIter != object_groups.end(); ++ogIter) 
-		{
-			ObjectGroup *objectGroup = (*ogIter);
-			
-			if (objectGroup)
-			{
-				delete objectGroup;
-				objectGroup = NULL;
-			}
-		}
+    Map::~Map() 
+    {
+        // Iterate through all of the object groups and delete each of them.
+        vector< ObjectGroup* >::iterator ogIter;
+        for (ogIter = object_groups.begin(); ogIter != object_groups.end(); ++ogIter) 
+        {
+            ObjectGroup *objectGroup = (*ogIter);
+            
+            if (objectGroup)
+            {
+                delete objectGroup;
+                objectGroup = NULL;
+            }
+        }
 
-		// Iterate through all of the layers and delete each of them.
-		vector< Layer* >::iterator lIter;
-		for (lIter = layers.begin(); lIter != layers.end(); ++lIter) 
-		{
-			Layer *layer = (*lIter);
+        // Iterate through all of the layers and delete each of them.
+        vector< Layer* >::iterator lIter;
+        for (lIter = layers.begin(); lIter != layers.end(); ++lIter) 
+        {
+            Layer *layer = (*lIter);
 
-			if (layer) 
-			{
-				delete layer;
-				layer = NULL;
-			}
-		}
+            if (layer) 
+            {
+                delete layer;
+                layer = NULL;
+            }
+        }
 
-		// Iterate through all of the layers and delete each of them.
-		vector< ImageLayer* >::iterator ilIter;
-		for (ilIter = image_layers.begin(); ilIter != image_layers.end(); ++ilIter) 
-		{
-			ImageLayer *layer = (*ilIter);
+        // Iterate through all of the layers and delete each of them.
+        vector< ImageLayer* >::iterator ilIter;
+        for (ilIter = image_layers.begin(); ilIter != image_layers.end(); ++ilIter) 
+        {
+            ImageLayer *layer = (*ilIter);
 
-			if (layer) 
-			{
-				delete layer;
-				layer = NULL;
-			}
-		}
+            if (layer) 
+            {
+                delete layer;
+                layer = NULL;
+            }
+        }
 
-		// Iterate through all of the tilesets and delete each of them.
-		vector< Tileset* >::iterator tsIter;
-		for (tsIter = tilesets.begin(); tsIter != tilesets.end(); ++tsIter) 
-		{
-			Tileset *tileset = (*tsIter);
-			
-			if (tileset) 
-			{
-				delete tileset;
-				tileset = NULL;
-			}
-		}
-	}
+        // Iterate through all of the tilesets and delete each of them.
+        vector< Tileset* >::iterator tsIter;
+        for (tsIter = tilesets.begin(); tsIter != tilesets.end(); ++tsIter) 
+        {
+            Tileset *tileset = (*tsIter);
+            
+            if (tileset) 
+            {
+                delete tileset;
+                tileset = NULL;
+            }
+        }
+    }
 
-	void Map::ParseFile(const string &fileName) 
-	{
-		file_name = fileName;
+    void Map::ParseFile(const string &fileName) 
+    {
+        file_name = fileName;
 
-		int lastSlash = fileName.find_last_of("/");
+        int lastSlash = fileName.find_last_of("/");
 
-		// Get the directory of the file using substring.
-		if (lastSlash > 0) 
-		{
-			file_path = fileName.substr(0, lastSlash + 1);
-		} 
-		else 
-		{
-			file_path = "";
-		}
+        // Get the directory of the file using substring.
+        if (lastSlash > 0) 
+        {
+            file_path = fileName.substr(0, lastSlash + 1);
+        } 
+        else 
+        {
+            file_path = "";
+        }
 
-		char* fileText;
-		int fileSize;
+        char* fileText;
+        int fileSize;
 
-		// Open the file for reading.
+        // Open the file for reading.
 #ifdef USE_SDL2_LOAD
-		SDL_RWops * file = SDL_RWFromFile (fileName.c_str(), "rb");
+        SDL_RWops * file = SDL_RWFromFile (fileName.c_str(), "rb");
 #else
-		FILE *file = fopen(fileName.c_str(), "rb");
+        FILE *file = fopen(fileName.c_str(), "rb");
 #endif
 
-		// Check if the file could not be opened.
-		if (!file) 
-		{
-			has_error = true;
-			error_code = TMX_COULDNT_OPEN;
-			error_text = "Could not open the file.";
-			return;
-		}
-	
-		// Find out the file size.	
+        // Check if the file could not be opened.
+        if (!file) 
+        {
+            has_error = true;
+            error_code = TMX_COULDNT_OPEN;
+            error_text = "Could not open the file.";
+            return;
+        }
+    
+        // Find out the file size.  
 #ifdef USE_SDL2_LOAD
-		fileSize = file->size(file);
+        fileSize = file->size(file);
 #else
-		fseek(file, 0, SEEK_END);
-		fileSize = ftell(file);
-		fseek(file, 0, SEEK_SET);
+        fseek(file, 0, SEEK_END);
+        fileSize = ftell(file);
+        fseek(file, 0, SEEK_SET);
 #endif
-		
-		// Check if the file size is valid.
-		if (fileSize <= 0)
-		{
-			has_error = true;
-			error_code = TMX_INVALID_FILE_SIZE;
-			error_text = "The size of the file is invalid.";
-			return;
-		}
+        
+        // Check if the file size is valid.
+        if (fileSize <= 0)
+        {
+            has_error = true;
+            error_code = TMX_INVALID_FILE_SIZE;
+            error_text = "The size of the file is invalid.";
+            return;
+        }
 
-		// Allocate memory for the file and read it into the memory.
-		fileText = new char[fileSize + 1];
-		fileText[fileSize] = 0;
+        // Allocate memory for the file and read it into the memory.
+        fileText = new char[fileSize + 1];
+        fileText[fileSize] = 0;
 #ifdef USE_SDL2_LOAD
-		file->read(file, fileText, 1, fileSize);
+        file->read(file, fileText, 1, fileSize);
 #else
-		fread(fileText, 1, fileSize, file);
-#endif
-
-#ifdef USE_SDL2_LOAD
-		file->close(file);
-#else
-		fclose(file);
+        fread(fileText, 1, fileSize, file);
 #endif
 
-		// Copy the contents into a C++ string and delete it from memory.
-		std::string text(fileText, fileText+fileSize);
-		delete [] fileText;
+#ifdef USE_SDL2_LOAD
+        file->close(file);
+#else
+        fclose(file);
+#endif
 
-		ParseText(text);		
-	}
+        // Copy the contents into a C++ string and delete it from memory.
+        std::string text(fileText, fileText+fileSize);
+        delete [] fileText;
 
-	void Map::ParseText(const string &text) 
-	{
-		// Create a tiny xml document and use it to parse the text.
-		TiXmlDocument doc;
-		doc.Parse(text.c_str());
-	
-		// Check for parsing errors.
-		if (doc.Error()) 
-		{
-			has_error = true;
-			error_code = TMX_PARSING_ERROR;
-			error_text = doc.ErrorDesc();
-			return;
-		}
+        ParseText(text);        
+    }
 
-		TiXmlNode *mapNode = doc.FirstChild("map");
-		TiXmlElement* mapElem = mapNode->ToElement();
+    void Map::ParseText(const string &text) 
+    {
+        // Create a tiny xml document and use it to parse the text.
+        TiXmlDocument doc;
+        doc.Parse(text.c_str());
+    
+        // Check for parsing errors.
+        if (doc.Error()) 
+        {
+            has_error = true;
+            error_code = TMX_PARSING_ERROR;
+            error_text = doc.ErrorDesc();
+            return;
+        }
 
-		// Read the map attributes.
-		mapElem->Attribute("version", &version);
-		mapElem->Attribute("width", &width);
-		mapElem->Attribute("height", &height);
-		mapElem->Attribute("tilewidth", &tile_width);
-		mapElem->Attribute("tileheight", &tile_height);
+        TiXmlNode *mapNode = doc.FirstChild("map");
+        TiXmlElement* mapElem = mapNode->ToElement();
 
-		// Read the orientation
-		std::string orientationStr = mapElem->Attribute("orientation");
+        // Read the map attributes.
+        mapElem->Attribute("version", &version);
+        mapElem->Attribute("width", &width);
+        mapElem->Attribute("height", &height);
+        mapElem->Attribute("tilewidth", &tile_width);
+        mapElem->Attribute("tileheight", &tile_height);
 
-		if (!orientationStr.compare("orthogonal")) 
-		{
-			orientation = TMX_MO_ORTHOGONAL;
-		} 
-		else if (!orientationStr.compare("isometric")) 
-		{
-			orientation = TMX_MO_ISOMETRIC;
-		}
-		else if (!orientationStr.compare("staggered")) 
-		{
-			orientation = TMX_MO_STAGGERED;
-		}
-		
+        // Read the orientation
+        std::string orientationStr = mapElem->Attribute("orientation");
 
-		const TiXmlNode *node = mapElem->FirstChild();
-		int zOrder = 0;
-		while( node )
-		{
-			// Read the map properties.
-			if( strcmp( node->Value(), "properties" ) == 0 )
-			{
-				properties.Parse(node);			
-			}
+        if (!orientationStr.compare("orthogonal")) 
+        {
+            orientation = TMX_MO_ORTHOGONAL;
+        } 
+        else if (!orientationStr.compare("isometric")) 
+        {
+            orientation = TMX_MO_ISOMETRIC;
+        }
+        else if (!orientationStr.compare("staggered")) 
+        {
+            orientation = TMX_MO_STAGGERED;
+        }
+        
 
-			// Iterate through all of the tileset elements.
-			if( strcmp( node->Value(), "tileset" ) == 0 )
-			{
-				// Allocate a new tileset and parse it.
-				Tileset *tileset = new Tileset();
-				tileset->Parse(node->ToElement());
+        const TiXmlNode *node = mapElem->FirstChild();
+        int zOrder = 0;
+        while( node )
+        {
+            // Read the map properties.
+            if( strcmp( node->Value(), "properties" ) == 0 )
+            {
+                properties.Parse(node);         
+            }
 
-				// Add the tileset to the list.
-				tilesets.push_back(tileset);
-			}
+            // Iterate through all of the tileset elements.
+            if( strcmp( node->Value(), "tileset" ) == 0 )
+            {
+                // Allocate a new tileset and parse it.
+                Tileset *tileset = new Tileset();
+                tileset->Parse(node->ToElement());
 
-			// Iterate through all of the layer elements.			
-			if( strcmp( node->Value(), "layer" ) == 0 )
-			{
-				// Allocate a new layer and parse it.
-				Layer *layer = new Layer(this);
-				layer->Parse(node);
-				layer->SetZOrder( zOrder );
-				++zOrder;
+                // Add the tileset to the list.
+                tilesets.push_back(tileset);
+            }
 
-				// Add the layer to the list.
-				layers.push_back(layer);
-			}
+            // Iterate through all of the layer elements.           
+            if( strcmp( node->Value(), "layer" ) == 0 )
+            {
+                // Allocate a new layer and parse it.
+                Layer *layer = new Layer(this);
+                layer->Parse(node);
+                layer->SetZOrder( zOrder );
+                ++zOrder;
 
-			// Iterate through all of the imagen layer elements.			
-			if( strcmp( node->Value(), "imagelayer" ) == 0 )
-			{
-				// Allocate a new layer and parse it.
-				ImageLayer *imageLayer = new ImageLayer(this);
-				imageLayer->Parse(node);
-				imageLayer->SetZOrder( zOrder );
-				++zOrder;
+                // Add the layer to the list.
+                layers.push_back(layer);
+            }
 
-				// Add the layer to the list.
-				image_layers.push_back(imageLayer);
-			}
+            // Iterate through all of the imagen layer elements.            
+            if( strcmp( node->Value(), "imagelayer" ) == 0 )
+            {
+                // Allocate a new layer and parse it.
+                ImageLayer *imageLayer = new ImageLayer(this);
+                imageLayer->Parse(node);
+                imageLayer->SetZOrder( zOrder );
+                ++zOrder;
 
-			// Iterate through all of the objectgroup elements.
-			if( strcmp( node->Value(), "objectgroup" ) == 0 )
-			{
-				// Allocate a new object group and parse it.
-				ObjectGroup *objectGroup = new ObjectGroup();
-				objectGroup->Parse(node);
-				objectGroup->SetZOrder( zOrder );
-				++zOrder;
-		
-				// Add the object group to the list.
-				object_groups.push_back(objectGroup);
-			}
+                // Add the layer to the list.
+                image_layers.push_back(imageLayer);
+            }
 
-			node = node->NextSibling();
-		}
-	}
+            // Iterate through all of the objectgroup elements.
+            if( strcmp( node->Value(), "objectgroup" ) == 0 )
+            {
+                // Allocate a new object group and parse it.
+                ObjectGroup *objectGroup = new ObjectGroup();
+                objectGroup->Parse(node);
+                objectGroup->SetZOrder( zOrder );
+                ++zOrder;
+        
+                // Add the object group to the list.
+                object_groups.push_back(objectGroup);
+            }
 
-	int Map::FindTilesetIndex(int gid) const
-	{
-		// Clean up the flags from the gid (thanks marwes91).
-		gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
+            node = node->NextSibling();
+        }
+    }
 
-		for (int i = tilesets.size() - 1; i > -1; --i) 
-		{
-			// If the gid beyond the tileset gid return its index.
-			if (gid >= tilesets[i]->GetFirstGid()) 
-			{
-				return i;
-			}
-		}
-		
-		return -1;
-	}
+    int Map::FindTilesetIndex(int gid) const
+    {
+        // Clean up the flags from the gid (thanks marwes91).
+        gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
 
-	const Tileset *Map::FindTileset(int gid) const 
-	{
-		for (int i = tilesets.size() - 1; i > -1; --i) 
-		{
-			// If the gid beyond the tileset gid return it.
-			if (gid >= tilesets[i]->GetFirstGid()) 
-			{
-				return tilesets[i];
-			}
-		}
-		
-		return NULL;
-	}
+        for (int i = tilesets.size() - 1; i > -1; --i) 
+        {
+            // If the gid beyond the tileset gid return its index.
+            if (gid >= tilesets[i]->GetFirstGid()) 
+            {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+
+    const Tileset *Map::FindTileset(int gid) const 
+    {
+        for (int i = tilesets.size() - 1; i > -1; --i) 
+        {
+            // If the gid beyond the tileset gid return it.
+            if (gid >= tilesets[i]->GetFirstGid()) 
+            {
+                return tilesets[i];
+            }
+        }
+        
+        return NULL;
+    }
 }

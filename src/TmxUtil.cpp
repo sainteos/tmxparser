@@ -32,76 +32,76 @@
 #include "base64/base64.h"
 
 namespace Tmx {
-	std::string Util::DecodeBase64(const std::string &str) 
-	{
-		return base64_decode(str);
-	}
+    std::string Util::DecodeBase64(const std::string &str) 
+    {
+        return base64_decode(str);
+    }
 
-	char *Util::DecompressGZIP(const char *data, int dataSize, int expectedSize) 
-	{
-		int bufferSize = expectedSize;
-		int ret;
-		z_stream strm;
-		char *out = (char*)malloc(bufferSize);
+    char *Util::DecompressGZIP(const char *data, int dataSize, int expectedSize) 
+    {
+        int bufferSize = expectedSize;
+        int ret;
+        z_stream strm;
+        char *out = (char*)malloc(bufferSize);
 
-		strm.zalloc = Z_NULL;
-		strm.zfree = Z_NULL;
-		strm.opaque = Z_NULL;
-		strm.next_in = (Bytef*)data;
-		strm.avail_in = dataSize;
-		strm.next_out = (Bytef*)out;
-		strm.avail_out = bufferSize;
+        strm.zalloc = Z_NULL;
+        strm.zfree = Z_NULL;
+        strm.opaque = Z_NULL;
+        strm.next_in = (Bytef*)data;
+        strm.avail_in = dataSize;
+        strm.next_out = (Bytef*)out;
+        strm.avail_out = bufferSize;
 
-		ret = inflateInit2(&strm, 15 + 32);
+        ret = inflateInit2(&strm, 15 + 32);
 
-		if (ret != Z_OK) 
-		{
-			free(out);
-			return NULL;
-		}
+        if (ret != Z_OK) 
+        {
+            free(out);
+            return NULL;
+        }
 
-		do 
-		{
-			ret = inflate(&strm, Z_SYNC_FLUSH);
+        do 
+        {
+            ret = inflate(&strm, Z_SYNC_FLUSH);
 
-			switch (ret) 
-			{
-				case Z_NEED_DICT:
-				case Z_STREAM_ERROR:
-					ret = Z_DATA_ERROR;
-				case Z_DATA_ERROR:
-				case Z_MEM_ERROR:
-					inflateEnd(&strm);
-					free(out);
-					return NULL;
-			}
+            switch (ret) 
+            {
+                case Z_NEED_DICT:
+                case Z_STREAM_ERROR:
+                    ret = Z_DATA_ERROR;
+                case Z_DATA_ERROR:
+                case Z_MEM_ERROR:
+                    inflateEnd(&strm);
+                    free(out);
+                    return NULL;
+            }
 
-			if (ret != Z_STREAM_END) 
-			{
-				out = (char *) realloc(out, bufferSize * 2);
+            if (ret != Z_STREAM_END) 
+            {
+                out = (char *) realloc(out, bufferSize * 2);
 
-				if (!out) 
-				{
-					inflateEnd(&strm);
-					free(out);
-					return NULL;
-				}
+                if (!out) 
+                {
+                    inflateEnd(&strm);
+                    free(out);
+                    return NULL;
+                }
 
-				strm.next_out = (Bytef *)(out + bufferSize);
-				strm.avail_out = bufferSize;
-				bufferSize *= 2;
-			}
-		}
-		while (ret != Z_STREAM_END);
+                strm.next_out = (Bytef *)(out + bufferSize);
+                strm.avail_out = bufferSize;
+                bufferSize *= 2;
+            }
+        }
+        while (ret != Z_STREAM_END);
 
-		if (strm.avail_in != 0) 
-		{
-			free(out);
-			return NULL;
-		}
+        if (strm.avail_in != 0) 
+        {
+            free(out);
+            return NULL;
+        }
 
-		inflateEnd(&strm);
+        inflateEnd(&strm);
 
-		return out;
-	}
+        return out;
+    }
 }

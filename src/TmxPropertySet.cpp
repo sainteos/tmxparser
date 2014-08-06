@@ -34,61 +34,61 @@ using std::map;
 
 namespace Tmx 
 {
-		
-	PropertySet::PropertySet() : properties()  
-	{}
+        
+    PropertySet::PropertySet() : properties()  
+    {}
 
-	PropertySet::~PropertySet()
-	{
-		properties.clear();
-	}
+    PropertySet::~PropertySet()
+    {
+        properties.clear();
+    }
 
-	void PropertySet::Parse(const TiXmlNode *propertiesNode) 
-	{
-		// Iterate through all of the property nodes.
-		const TiXmlNode *propertyNode = propertiesNode->FirstChild("property");
-		string propertyName;
-		string propertyValue;
+    void PropertySet::Parse(const TiXmlNode *propertiesNode) 
+    {
+        // Iterate through all of the property nodes.
+        const TiXmlNode *propertyNode = propertiesNode->FirstChild("property");
+        string propertyName;
+        string propertyValue;
 
-		while (propertyNode) 
-		{
-			const TiXmlElement* propertyElem = propertyNode->ToElement();
+        while (propertyNode) 
+        {
+            const TiXmlElement* propertyElem = propertyNode->ToElement();
 
-			// Read the attributes of the property and add it to the map
-			propertyName = string(propertyElem->Attribute("name"));
-			propertyValue = string(propertyElem->Attribute("value"));
-			properties[propertyName] = propertyValue;
-			
-			propertyNode = propertiesNode->IterateChildren(
-				"property", propertyNode);
-		}
-	}
+            // Read the attributes of the property and add it to the map
+            propertyName = string(propertyElem->Attribute("name"));
+            propertyValue = string(propertyElem->Attribute("value"));
+            properties[propertyName] = propertyValue;
+            
+            propertyNode = propertiesNode->IterateChildren(
+                "property", propertyNode);
+        }
+    }
 
-	string PropertySet::GetLiteralProperty(const string &name) const 
-	{
-		// Find the property in the map.
-		map< string, string >::const_iterator iter = properties.find(name);
+    string PropertySet::GetLiteralProperty(const string &name) const 
+    {
+        // Find the property in the map.
+        map< string, string >::const_iterator iter = properties.find(name);
 
-		if (iter == properties.end())
-			return std::string("No such property!");
+        if (iter == properties.end())
+            return std::string("No such property!");
 
-		return iter->second;
-	}
+        return iter->second;
+    }
 
-	int PropertySet::GetNumericProperty(const string &name) const 
-	{
-		return atoi(GetLiteralProperty(name).c_str());
-	}
+    int PropertySet::GetNumericProperty(const string &name) const 
+    {
+        return atoi(GetLiteralProperty(name).c_str());
+    }
 
-	float PropertySet::GetFloatProperty(const string &name) const 
-	{
-		return float(atof(GetLiteralProperty(name).c_str()));
-	}
+    float PropertySet::GetFloatProperty(const string &name) const 
+    {
+        return float(atof(GetLiteralProperty(name).c_str()));
+    }
 
-	bool PropertySet::HasProperty( const string& name ) const
-	{
-		if( properties.empty() ) return false;
-		return ( properties.find(name) != properties.end() );
-	}
+    bool PropertySet::HasProperty( const string& name ) const
+    {
+        if( properties.empty() ) return false;
+        return ( properties.find(name) != properties.end() );
+    }
 
 }

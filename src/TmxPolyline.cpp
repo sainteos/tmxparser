@@ -31,26 +31,26 @@
 
 namespace Tmx 
 {
-	Polyline::Polyline()
-		: points()
-	{
-	}
+    Polyline::Polyline()
+        : points()
+    {
+    }
 
-	void Polyline::Parse(const TiXmlNode *polylineNode)
-	{
-		char *pointsLine = strdup(polylineNode->ToElement()->Attribute("points"));
-		
-		char *token = strtok(pointsLine, " ");
-		while (token)
-		{
-			Point point;
-			sscanf(token, "%d,%d", &point.x, &point.y);
+    void Polyline::Parse(const TiXmlNode *polylineNode)
+    {
+        char *pointsLine = strdup(polylineNode->ToElement()->Attribute("points"));
+        
+        char *token = strtok(pointsLine, " ");
+        while (token)
+        {
+            Point point;
+            sscanf(token, "%d,%d", &point.x, &point.y);
 
-			points.push_back(point);
+            points.push_back(point);
 
-			token = strtok(0, " ");
-		}
+            token = strtok(0, " ");
+        }
 
-		free(pointsLine);
-	}
+        free(pointsLine);
+    }
 }
