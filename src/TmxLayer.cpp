@@ -1,6 +1,4 @@
 //-----------------------------------------------------------------------------
-// TmxLayer.cpp
-//
 // Copyright (c) 2010-2014, Tamir Atias
 // All rights reserved.
 //
@@ -22,8 +20,6 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// Author: Tamir Atias
 //-----------------------------------------------------------------------------
 #include <tinyxml.h>
 #include <zlib.h>

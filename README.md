@@ -18,6 +18,7 @@ This project is forked from https://code.google.com/p/tmx-parser/ because:
  * Drop support for Android and Windows. If you want a Windows build, use
    [mxe](https://github.com/mxe/mxe).
  * Resolving the open issues: https://code.google.com/p/tmx-parser/issues/list
+ * More robust tests.
 
 ## Features
 
