@@ -32,10 +32,10 @@
 using std::string;
 using std::map;
 
-namespace Tmx 
+namespace Tmx
 {
-        
-    PropertySet::PropertySet() : properties()  
+
+    PropertySet::PropertySet() : properties()
     {}
 
     PropertySet::~PropertySet()
@@ -43,14 +43,14 @@ namespace Tmx
         properties.clear();
     }
 
-    void PropertySet::Parse(const TiXmlNode *propertiesNode) 
+    void PropertySet::Parse(const TiXmlNode *propertiesNode)
     {
         // Iterate through all of the property nodes.
         const TiXmlNode *propertyNode = propertiesNode->FirstChild("property");
         string propertyName;
         string propertyValue;
 
-        while (propertyNode) 
+        while (propertyNode)
         {
             const TiXmlElement* propertyElem = propertyNode->ToElement();
 
@@ -58,31 +58,32 @@ namespace Tmx
             propertyName = string(propertyElem->Attribute("name"));
             propertyValue = string(propertyElem->Attribute("value"));
             properties[propertyName] = propertyValue;
-            
+
             propertyNode = propertiesNode->IterateChildren(
                 "property", propertyNode);
         }
     }
 
-    string PropertySet::GetLiteralProperty(const string &name) const 
+    string PropertySet::GetStringProperty(const string &name) const
     {
-        // Find the property in the map.
         map< string, string >::const_iterator iter = properties.find(name);
 
         if (iter == properties.end())
-            return std::string("No such property!");
+            return std::string();
 
         return iter->second;
     }
 
-    int PropertySet::GetNumericProperty(const string &name) const 
+    int PropertySet::GetIntProperty(const string &name, int defaultValue) const
     {
-        return atoi(GetLiteralProperty(name).c_str());
+        std::string str = GetStringProperty(name);
+        return (str.size() == 0) ? defaultValue : atoi(GetStringProperty(name).c_str());
     }
 
-    float PropertySet::GetFloatProperty(const string &name) const 
+    float PropertySet::GetFloatProperty(const string &name, float defaultValue) const
     {
-        return float(atof(GetLiteralProperty(name).c_str()));
+        std::string str = GetStringProperty(name);
+        return (str.size() == 0) ? defaultValue : atof(GetStringProperty(name).c_str());
     }
 
     bool PropertySet::HasProperty( const string& name ) const
