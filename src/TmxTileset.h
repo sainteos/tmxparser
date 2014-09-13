@@ -31,6 +31,7 @@
 #include <vector>
 
 #include "TmxPropertySet.h"
+#include "TmxMap.h"
 
 class TiXmlNode;
 
@@ -51,7 +52,7 @@ namespace Tmx
         ~Tileset();
 
         // Parse a tileset element.
-        void Parse(const TiXmlNode *tilesetNode);
+        void Parse(Tmx::Map* map, const TiXmlNode *tilesetNode);
 
         // Returns the global id of the first tile.
         int GetFirstGid() const { return first_gid; }
@@ -88,7 +89,7 @@ namespace Tmx
         int first_gid;
         
         std::string name;
-        
+
         int tile_width;
         int tile_height;
         int margin;

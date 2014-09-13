@@ -30,6 +30,7 @@
 #include "TmxTileset.h"
 #include "TmxImage.h"
 #include "TmxTile.h"
+#include "TmxMap.h"
 
 using std::vector;
 using std::string;
@@ -71,44 +72,37 @@ namespace Tmx
         }
     }
 
-    void Tileset::Parse(const TiXmlNode *tilesetNode) 
+    void Tileset::Parse(Tmx::Map* map, const TiXmlNode *tilesetNode) 
     {
-        const TiXmlElement *tilesetElem = tilesetNode->ToElement();
+		const TiXmlElement *tilesetElem = tilesetNode->ToElement();
 
         // Read all the attributes into local variables.
-        tilesetElem->Attribute("firstgid", &first_gid);
-		
+		tilesetElem->Attribute("firstgid", &first_gid);
+
 		// Read a source attribute if we have one
 		const char* source = tilesetElem->Attribute("source");
-		
-		// may be unnecessary - but create new pointers that we need to assign to the new document
 		TiXmlNode *newNode;
 		TiXmlElement* newElem;
 		TiXmlDocument newDoc;
-		
-		// If there's a source attribute then we need to redirect tilesetNode and tilesetElem to point to the new xml file
 		if (source)
 		{
 			std::string szSource(source);
-			szSource = "../maps/" + szSource;
+			szSource = map->GetFilepath() + szSource;
 			// Check if the file could not be opened.
 			if (newDoc.LoadFile(szSource.c_str()))
 			{
 				newDoc.Parse(szSource.c_str());
-				
-				// File loaded with no issues
 				if (!newDoc.Error())
 				{
 					newNode = newDoc.FirstChild("tileset");
 					newElem = newNode->ToElement();
 
-					// assign to the new node/element in the new xml file
 					tilesetNode = newNode;
 					tilesetElem = newElem;
 				}
 			}
 		}
-		
+
         tilesetElem->Attribute("tilewidth", &tile_width);
         tilesetElem->Attribute("tileheight", &tile_height);
         tilesetElem->Attribute("margin", &margin);
@@ -117,7 +111,7 @@ namespace Tmx
         name = tilesetElem->Attribute("name");
 
         // Parse the image.
-        const TiXmlNode *imageNode = tilesetNode->FirstChild("image");
+		const TiXmlNode *imageNode = tilesetNode->FirstChild("image");
         
         if (imageNode) 
         {
@@ -138,7 +132,7 @@ namespace Tmx
 
 
         // Iterate through all of the tile elements and parse each.
-        const TiXmlNode *tileNode = tilesetNode->FirstChild("tile");
+		const TiXmlNode *tileNode = tilesetNode->FirstChild("tile");
         while (tileNode)
         {
             // Parse it to get the tile id.
@@ -153,7 +147,7 @@ namespace Tmx
 
         
         // Parse the properties if any.
-        const TiXmlNode *propertiesNode = tilesetNode->FirstChild("properties");
+		const TiXmlNode *propertiesNode = tilesetNode->FirstChild("properties");
         
         if (propertiesNode) 
         {

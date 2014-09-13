@@ -113,9 +113,9 @@ namespace Tmx
 
     void Map::ParseFile(const string &fileName) 
     {
-        file_name = fileName;
+		file_name = fileName;
 
-        int lastSlash = fileName.find_last_of("/");
+		int lastSlash = fileName.find_last_of("/");
 
         // Get the directory of the file using substring.
         if (lastSlash > 0) 
@@ -131,7 +131,7 @@ namespace Tmx
         int fileSize;
 
         // Open the file for reading.
-        FILE *file = fopen(fileName.c_str(), "rb");
+		FILE *file = fopen(fileName.c_str(), "rb");
 
         // Check if the file could not be opened.
         if (!file) 
@@ -227,7 +227,7 @@ namespace Tmx
             {
                 // Allocate a new tileset and parse it.
                 Tileset *tileset = new Tileset();
-                tileset->Parse(node->ToElement());
+                tileset->Parse(this, node->ToElement());
 
                 // Add the tileset to the list.
                 tilesets.push_back(tileset);
