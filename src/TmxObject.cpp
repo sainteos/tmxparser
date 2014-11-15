@@ -42,6 +42,7 @@ namespace Tmx
         , width(0)
         , height(0)
         , gid(0)
+        , rotation(0.0)
         , ellipse(0)
         , polygon(0)
         , polyline(0)
@@ -83,6 +84,7 @@ namespace Tmx
         objectElem->Attribute("width", &width);
         objectElem->Attribute("height", &height);
         objectElem->Attribute("gid", &gid);
+        objectElem->Attribute("rotation", &rotation);
 
         // Read the ellipse of the object if there are any.
         const TiXmlNode *ellipseNode = objectNode->FirstChild("ellipse");
