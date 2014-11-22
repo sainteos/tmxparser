@@ -25,7 +25,8 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include <tinyxml.h>
+#include <tinyxml2.h>
+#include <cstdlib> 
 
 #include "TmxPolygon.h"
 
@@ -36,7 +37,7 @@ namespace Tmx
     {
     }
 
-    void Polygon::Parse(const TiXmlNode *polygonNode)
+    void Polygon::Parse(const tinyxml2::XMLNode *polygonNode)
     {
         char *pointsLine = strdup(polygonNode->ToElement()->Attribute("points"));
         

@@ -31,7 +31,9 @@
 
 #include "TmxPropertySet.h"
 
-class TiXmlNode;
+namespace tinyxml2 {
+    class XMLNode;
+}
 
 namespace Tmx 
 {
@@ -49,7 +51,7 @@ namespace Tmx
         ~Object();
 
         // Parse an object node.
-        void Parse(const TiXmlNode *objectNode);
+        void Parse(const tinyxml2::XMLNode *objectNode);
     
         // Get the name of the object.
         const std::string &GetName() const { return name; }

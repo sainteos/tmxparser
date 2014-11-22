@@ -32,7 +32,9 @@
 #include "TmxPropertySet.h"
 #include "TmxMapTile.h"
 
-class TiXmlNode;
+namespace tinyxml2 {
+    class XMLNode;
+}
 
 namespace Tmx 
 {
@@ -73,7 +75,7 @@ namespace Tmx
         ~Layer();
 
         // Parse a layer node.
-        void Parse(const TiXmlNode *layerNode);
+        void Parse(const tinyxml2::XMLNode *layerNode);
 
         // Get the name of the layer.
         const std::string &GetName() const { return name; }
@@ -129,7 +131,7 @@ namespace Tmx
         bool GetVisible() const { return visible; }
 
     private:
-        void ParseXML(const TiXmlNode *dataNode);
+        void ParseXML(const tinyxml2::XMLNode *dataNode);
         void ParseBase64(const std::string &innerText);
         void ParseCSV(const std::string &innerText);
 

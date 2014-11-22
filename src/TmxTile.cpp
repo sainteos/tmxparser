@@ -25,7 +25,7 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 #include "TmxTile.h"
 
@@ -40,15 +40,15 @@ namespace Tmx
     Tile::~Tile() 
     {}
 
-    void Tile::Parse(const TiXmlNode *tileNode) 
+    void Tile::Parse(const tinyxml2::XMLNode *tileNode) 
     {
-        const TiXmlElement *tileElem = tileNode->ToElement();
+        const tinyxml2::XMLElement *tileElem = tileNode->ToElement();
 
         // Parse the attributes.
-        tileElem->Attribute("id", &id);
+        id = tileElem->IntAttribute("id");
 
         // Parse the properties if any.
-        const TiXmlNode *propertiesNode = tileNode->FirstChild("properties");
+        const tinyxml2::XMLNode *propertiesNode = tileNode->FirstChildElement("properties");
         
         if (propertiesNode) 
         {

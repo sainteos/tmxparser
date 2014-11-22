@@ -25,6 +25,10 @@
 
 #include "TmxPropertySet.h"
 
+namespace tinyxml2 {
+    class XMLNode;
+}
+
 namespace Tmx 
 {
     //-------------------------------------------------------------------------
@@ -42,7 +46,7 @@ namespace Tmx
         ~Tile();
     
         // Parse a tile node.
-        void Parse(const TiXmlNode *tileNode);
+        void Parse(const tinyxml2::XMLNode *tileNode);
         
         // Get the Id. (relative to the tilset)
         int GetId() const { return id; }

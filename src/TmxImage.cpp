@@ -25,7 +25,7 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 #include "TmxImage.h"
 
@@ -41,15 +41,15 @@ namespace Tmx
     Image::~Image() 
     {}
 
-    void Image::Parse(const TiXmlNode *imageNode) 
+    void Image::Parse(const tinyxml2::XMLNode *imageNode) 
     {
-        const TiXmlElement* imageElem = imageNode->ToElement();
+        const tinyxml2::XMLElement* imageElem = imageNode->ToElement();
         
         // Read all the attribute into member variables.
         source = imageElem->Attribute("source");
 
-        imageElem->Attribute("width", &width);
-        imageElem->Attribute("height", &height);
+        width = imageElem->IntAttribute("width");
+        height = imageElem->IntAttribute("height");
 
         const char *trans = imageElem->Attribute("trans");
         if (trans) 

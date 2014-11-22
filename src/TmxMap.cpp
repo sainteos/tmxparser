@@ -25,7 +25,7 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include <tinyxml.h>
+#include <tinyxml2.h>
 #include <stdio.h>
 
 #include "TmxMap.h"
@@ -173,7 +173,7 @@ namespace Tmx
     void Map::ParseText(const string &text) 
     {
         // Create a tiny xml document and use it to parse the text.
-        TiXmlDocument doc;
+        tinyxml2::XMLDocument doc;
         doc.Parse(text.c_str());
     
         // Check for parsing errors.
@@ -181,19 +181,19 @@ namespace Tmx
         {
             has_error = true;
             error_code = TMX_PARSING_ERROR;
-            error_text = doc.ErrorDesc();
+            error_text = doc.GetErrorStr1();
             return;
         }
 
-        TiXmlNode *mapNode = doc.FirstChild("map");
-        TiXmlElement* mapElem = mapNode->ToElement();
+        tinyxml2::XMLNode *mapNode = doc.FirstChildElement("map");
+        tinyxml2::XMLElement* mapElem = mapNode->ToElement();
 
         // Read the map attributes.
-        mapElem->Attribute("version", &version);
-        mapElem->Attribute("width", &width);
-        mapElem->Attribute("height", &height);
-        mapElem->Attribute("tilewidth", &tile_width);
-        mapElem->Attribute("tileheight", &tile_height);
+        version = mapElem->IntAttribute("version");
+        width = mapElem->IntAttribute("width");
+        height = mapElem->IntAttribute("height");
+        tile_width = mapElem->IntAttribute("tilewidth");
+        tile_height = mapElem->IntAttribute("tileheight");
 
         // Read the orientation
         std::string orientationStr = mapElem->Attribute("orientation");
@@ -212,7 +212,7 @@ namespace Tmx
         }
         
 
-        const TiXmlNode *node = mapElem->FirstChild();
+        const tinyxml2::XMLNode *node = mapElem->FirstChild();
         int zOrder = 0;
         while( node )
         {

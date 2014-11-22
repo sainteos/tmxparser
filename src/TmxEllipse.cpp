@@ -25,8 +25,6 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include <tinyxml.h>
-
 #include "TmxEllipse.h"
 
 namespace Tmx 

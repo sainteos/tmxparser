@@ -28,7 +28,7 @@
 
 #include "TmxPropertySet.h"
 
-class TiXmlNode;
+//class TiXmlNode;
 
 namespace Tmx 
 {
@@ -47,7 +47,7 @@ namespace Tmx
         ~ImageLayer();
 
         // Parse a ImageLayer element.
-        void Parse(const TiXmlNode *imageLayerNode);
+        void Parse(const tinyxml2::XMLNode *imageLayerNode);
 
         // Returns the name of the ImageLayer.
         const std::string &GetName() const { return name; }

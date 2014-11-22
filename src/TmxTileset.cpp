@@ -25,7 +25,7 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 #include "TmxTileset.h"
 #include "TmxImage.h"
@@ -71,21 +71,21 @@ namespace Tmx
         }
     }
 
-    void Tileset::Parse(const TiXmlNode *tilesetNode) 
+    void Tileset::Parse(const tinyxml2::XMLNode *tilesetNode) 
     {
-        const TiXmlElement *tilesetElem = tilesetNode->ToElement();
+        const tinyxml2::XMLElement *tilesetElem = tilesetNode->ToElement();
 
         // Read all the attributes into local variables.
-        tilesetElem->Attribute("firstgid", &first_gid);
-        tilesetElem->Attribute("tilewidth", &tile_width);
-        tilesetElem->Attribute("tileheight", &tile_height);
-        tilesetElem->Attribute("margin", &margin);
-        tilesetElem->Attribute("spacing", &spacing);
+        first_gid = tilesetElem->IntAttribute("firstgid");
+        tile_width = tilesetElem->IntAttribute("tilewidth");
+        tile_height = tilesetElem->IntAttribute("tileheight");
+        margin = tilesetElem->IntAttribute("margin");
+        spacing = tilesetElem->IntAttribute("spacing");
 
         name = tilesetElem->Attribute("name");
 
         // Parse the image.
-        const TiXmlNode *imageNode = tilesetNode->FirstChild("image");
+        const tinyxml2::XMLNode *imageNode = tilesetNode->FirstChildElement("image");
         
         if (imageNode) 
         {
@@ -106,7 +106,7 @@ namespace Tmx
 
 
         // Iterate through all of the tile elements and parse each.
-        const TiXmlNode *tileNode = tilesetNode->FirstChild("tile");
+        const tinyxml2::XMLNode *tileNode = tilesetNode->FirstChildElement("tile");
         while (tileNode)
         {
             // Parse it to get the tile id.
@@ -116,12 +116,13 @@ namespace Tmx
             // Using the ID in the temporary tile get the real tile and parse for real.
             tiles[tile.GetId()]->Parse(tileNode);
 
-            tileNode = tilesetNode->IterateChildren("tile", tileNode);
+            //tileNode = tilesetNode->IterateChildren("tile", tileNode); FIXME MAYBE
+            tileNode = tileNode->NextSiblingElement("tile");
         }
 
         
         // Parse the properties if any.
-        const TiXmlNode *propertiesNode = tilesetNode->FirstChild("properties");
+        const tinyxml2::XMLNode *propertiesNode = tilesetNode->FirstChildElement("properties");
         
         if (propertiesNode) 
         {
