@@ -91,8 +91,8 @@ namespace Tmx
         // Allocate memory for reading the tiles.
         tile_map = new MapTile[width * height];
 
-        const tinyxml2::XMLNode *dataNode = layerNode->FirstChildElement("data");
-        const tinyxml2::XMLElement *dataElem = dataNode->ToElement();
+        //const tinyxml2::XMLNode *dataNode = layerNode->FirstChildElement("data");
+        const tinyxml2::XMLElement *dataElem = layerNode->FirstChildElement("data");
 
         const char *encodingStr = dataElem->Attribute("encoding");
         const char *compressionStr = dataElem->Attribute("compression");
@@ -127,7 +127,7 @@ namespace Tmx
         switch (encoding) 
         {
         case TMX_ENCODING_XML:
-            ParseXML(dataNode);
+            ParseXML(dataElem);
             break;
 
         case TMX_ENCODING_BASE64:
@@ -179,7 +179,10 @@ namespace Tmx
 
     void Layer::ParseBase64(const std::string &innerText) 
     {
+    	printf("LAYER STRING: '%s'\n", innerText.c_str());
+
         const std::string &text = Util::DecodeBase64(innerText);
+		//printf("LAYER STRING DECODED: %s\n", text.c_str());
 
         // Temporary array of gids to be converted to map tiles.
         unsigned *out = 0;
