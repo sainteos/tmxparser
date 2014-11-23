@@ -21,7 +21,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
-#include <tinyxml.h>
+#include <tinyxml2.h>
+#include <cstdlib>
 
 #include "TmxImageLayer.h"
 #include "TmxImage.h"
@@ -49,15 +50,15 @@ namespace Tmx
         delete image;
     }
 
-    void ImageLayer::Parse(const TiXmlNode *imageLayerNode) 
+    void ImageLayer::Parse(const tinyxml2::XMLNode *imageLayerNode) 
     {
-        const TiXmlElement *imagenLayerElem = imageLayerNode->ToElement();
+        const tinyxml2::XMLElement *imagenLayerElem = imageLayerNode->ToElement();
 
         // Read all the attributes into local variables.
         name = imagenLayerElem->Attribute("name");
 
-        imagenLayerElem->Attribute("width", &width);
-        imagenLayerElem->Attribute("height", &height);
+        width = imagenLayerElem->IntAttribute("width");
+        height = imagenLayerElem->IntAttribute("height");
 
         const char *opacityStr = imagenLayerElem->Attribute("opacity");
         if (opacityStr) 
@@ -72,7 +73,7 @@ namespace Tmx
         }
 
         // Parse the image.
-        const TiXmlNode *imageNode = imagenLayerElem->FirstChild("image");
+        const tinyxml2::XMLNode *imageNode = imagenLayerElem->FirstChildElement("image");
         
         if (imageNode) 
         {
@@ -81,7 +82,7 @@ namespace Tmx
         }
 
         // Parse the properties if any.
-        const TiXmlNode *propertiesNode = imagenLayerElem->FirstChild("properties");
+        const tinyxml2::XMLNode *propertiesNode = imagenLayerElem->FirstChildElement("properties");
         
         if (propertiesNode) 
         {

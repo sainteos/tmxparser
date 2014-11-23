@@ -25,7 +25,7 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include <tinyxml.h>
+#include <tinyxml2.h>
 
 #include "TmxObjectGroup.h"
 #include "TmxObject.h"
@@ -48,26 +48,26 @@ namespace Tmx
         }
     }
 
-    void ObjectGroup::Parse(const TiXmlNode *objectGroupNode) 
+    void ObjectGroup::Parse(const tinyxml2::XMLNode *objectGroupNode) 
     {
-        const TiXmlElement *objectGroupElem = objectGroupNode->ToElement();
+        const tinyxml2::XMLElement *objectGroupElem = objectGroupNode->ToElement();
 
         // Read the object group attributes.
         name = objectGroupElem->Attribute("name");
         
-        objectGroupElem->Attribute("width", &width);
-        objectGroupElem->Attribute("height", &height);
-        objectGroupElem->Attribute("visible", &visible);
+        width = objectGroupElem->IntAttribute("width");
+        height = objectGroupElem->IntAttribute("height");
+        visible = objectGroupElem->IntAttribute("visible");
 
         // Read the properties.
-        const TiXmlNode *propertiesNode = objectGroupNode->FirstChild("properties");
+        const tinyxml2::XMLNode *propertiesNode = objectGroupNode->FirstChildElement("properties");
         if (propertiesNode) 
         {
             properties.Parse(propertiesNode);
         }
 
         // Iterate through all of the object elements.
-        const TiXmlNode *objectNode = objectGroupNode->FirstChild("object");
+        const tinyxml2::XMLNode *objectNode = objectGroupNode->FirstChildElement("object");
         while (objectNode) 
         {
             // Allocate a new object and parse it.
@@ -77,7 +77,8 @@ namespace Tmx
             // Add the object to the list.
             objects.push_back(object);
 
-            objectNode = objectGroupNode->IterateChildren("object", objectNode);
+            //objectNode = objectGroupNode->IterateChildren("object", objectNode); -- FIXME MAYBE
+            objectNode = objectNode->NextSiblingElement("object");
         }
     }
 

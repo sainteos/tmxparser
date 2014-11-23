@@ -27,6 +27,7 @@
 //-----------------------------------------------------------------------------
 #include <stdlib.h>
 #include <zlib.h>
+#include <stdio.h>
 
 #include "TmxUtil.h"
 #include "base64/base64.h"
