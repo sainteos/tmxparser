@@ -22,6 +22,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
 #include <tinyxml2.h>
+#include <algorithm>
 #include <zlib.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -179,10 +180,10 @@ namespace Tmx
 
     void Layer::ParseBase64(const std::string &innerText) 
     {
-    	printf("LAYER STRING: '%s'\n", innerText.c_str());
+    	std::string testText = innerText;
+    	testText.erase(std::remove_if(testText.begin(), testText.end(), isspace));
 
-        const std::string &text = Util::DecodeBase64(innerText);
-		//printf("LAYER STRING DECODED: %s\n", text.c_str());
+        const std::string &text = Util::DecodeBase64(testText);
 
         // Temporary array of gids to be converted to map tiles.
         unsigned *out = 0;
