@@ -25,8 +25,9 @@
 //
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
+#define MINIZ_HEADER_FILE_ONLY
+#include "miniz.c"
 #include <stdlib.h>
-#include <zlib.h>
 #include <stdio.h>
 
 #include "TmxUtil.h"

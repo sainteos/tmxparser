@@ -11,26 +11,26 @@ message("Configuring tmxparser version ${VERSION}")
 
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/src/*.h)
+set(MINIZ ${PROJECT_SOURCE_DIR}/src/miniz.c)
 
 find_package(TinyXML2)
-find_package(ZLIB)
 
 set(LIB_CFLAGS "-pedantic -Werror -Wall -Werror=strict-prototypes -Werror=old-style-definition -Werror=missing-prototypes")
 set(EXAMPLE_CFLAGS "-pedantic -Werror -Wall")
 #include_directories("${PROJECT_SOURCE_DIR}/include")
 
-add_library(tmxparser_static STATIC ${SOURCES} ${HEADERS})
+add_library(tmxparser_static STATIC ${SOURCES} ${HEADERS} ${MINIZ})
 set_target_properties(tmxparser_static PROPERTIES
   OUTPUT_NAME tmxparser
   COMPILE_FLAGS ${LIB_CFLAGS})
 
-add_library(tmxparser SHARED ${SOURCES} ${HEADERS})
+add_library(tmxparser SHARED ${SOURCES} ${HEADERS} ${MINIZ})
 set_target_properties(tmxparser PROPERTIES
   SOVERSION ${VERSION_MAJOR}
   VERSION ${VERSION}
   COMPILE_FLAGS ${LIB_CFLAGS})
-target_link_libraries(tmxparser ${TINYXML2_LIBRARIES} ${ZLIB_LIBRARIES})
-include_directories(${TINYXML2_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS})
+target_link_libraries(tmxparser ${TINYXML2_LIBRARIES})
+include_directories(${TINYXML2_INCLUDE_DIR})
 
 add_executable(test test/test.cpp)
 set_target_properties(test PROPERTIES
