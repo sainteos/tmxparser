@@ -27,6 +27,7 @@ This project is forked from https://code.google.com/p/tmx-parser/ because:
  * Can parse properties as both integers, real numbers and literals (strings).
  * Can parse the map file when stored in memory.
  * Does not rely on any graphics library.
+ * Animated tile support.
 
 ## Dependencies
 

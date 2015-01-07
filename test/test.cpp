@@ -67,6 +67,17 @@ int main() {
 			for (iter = list.begin(); iter != list.end(); ++iter) {
 				printf("%s = %s\n", iter->first.c_str(), iter->second.c_str());
 			}
+
+			if(tile->IsAnimated()) {
+				printf("Tile is animated: %d frames with total duration of %dms.\n", tile->GetFrameCount(), tile->GetTotalDuration());
+
+				const std::vector<Tmx::AnimationFrame> &frames = tile->getFrames();
+
+				int i = 0;
+				for(std::vector<Tmx::AnimationFrame>::const_iterator it = frames.begin(); it != frames.end(); it++, i++) {
+					printf("\tFrame %d: Tile ID = %d, Duration = %dms\n", i, it->GetTileID(), it->GetDuration());
+				}
+			}
 		}
 	}
 
@@ -76,7 +87,7 @@ int main() {
 		printf("====================================\n");
 		printf("Layer : %02d/%s \n", i, map->GetLayer(i)->GetName().c_str());
 		printf("====================================\n");
-	
+
 		// Get a layer.
 		const Tmx::Layer *layer = map->GetLayer(i);
 
