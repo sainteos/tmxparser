@@ -1,8 +1,3 @@
-### 1.1.0
-
-* Add support for animated tiles in tilesets (Ashley Davis (SgtCoDFish))
-
-
 ### 1.0.0
 
  * Initial fork from https://code.google.com/p/tmx-parser/
