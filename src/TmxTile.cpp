@@ -31,14 +31,18 @@
 
 namespace Tmx
 {
-    Tile::Tile() : id(0), properties(), isAnimated(false), totalDuration(0)
-    {}
-    Tile::Tile(int id) : id(id), properties(), isAnimated(false), totalDuration(0)
-    {}
-
+    Tile::Tile() :
+            id(0), properties(), isAnimated(false), totalDuration(0)
+    {
+    }
+    Tile::Tile(int id) :
+            id(id), properties(), isAnimated(false), totalDuration(0)
+    {
+    }
 
     Tile::~Tile()
-    {}
+    {
+    }
 
     void Tile::Parse(const tinyxml2::XMLNode *tileNode)
     {
@@ -48,7 +52,8 @@ namespace Tmx
         id = tileElem->IntAttribute("id");
 
         // Parse the properties if any.
-        const tinyxml2::XMLNode *propertiesNode = tileNode->FirstChildElement("properties");
+        const tinyxml2::XMLNode *propertiesNode = tileNode->FirstChildElement(
+                "properties");
 
         if (propertiesNode)
         {
@@ -56,28 +61,33 @@ namespace Tmx
         }
 
         // Parse the animation if there is one.
-        const tinyxml2::XMLNode *animationNode = tileNode->FirstChildElement("animation");
+        const tinyxml2::XMLNode *animationNode = tileNode->FirstChildElement(
+                "animation");
 
-        if(animationNode)
+        if (animationNode)
         {
-        	isAnimated = true;
+            isAnimated = true;
 
-        	const tinyxml2::XMLNode *frameNode = animationNode->FirstChildElement("frame");
-        	unsigned int durationSum = 0;
+            const tinyxml2::XMLNode *frameNode =
+                    animationNode->FirstChildElement("frame");
+            unsigned int durationSum = 0;
 
-        	while(frameNode != NULL) {
-        		const tinyxml2::XMLElement *frameElement = frameNode->ToElement();
+            while (frameNode != NULL)
+            {
+                const tinyxml2::XMLElement *frameElement =
+                        frameNode->ToElement();
 
-        		const int tileID = frameElement->IntAttribute("tileid");
-        		const unsigned int duration = frameElement->IntAttribute("duration");
+                const int tileID = frameElement->IntAttribute("tileid");
+                const unsigned int duration = frameElement->IntAttribute(
+                        "duration");
 
-        		frames.push_back(AnimationFrame(tileID, duration));
-        		durationSum += duration;
+                frames.push_back(AnimationFrame(tileID, duration));
+                durationSum += duration;
 
-        		frameNode = frameNode->NextSiblingElement("frame");
-        	}
+                frameNode = frameNode->NextSiblingElement("frame");
+            }
 
-        	totalDuration = durationSum;
+            totalDuration = durationSum;
         }
     }
 }
