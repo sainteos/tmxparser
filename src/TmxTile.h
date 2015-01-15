@@ -27,13 +27,14 @@
 
 #include "TmxPropertySet.h"
 
-namespace tinyxml2 {
+namespace tinyxml2
+{
     class XMLNode;
 }
 
 namespace Tmx
 {
-	class AnimationFrame;
+    class AnimationFrame;
 
     //-------------------------------------------------------------------------
     // Class to contain information about every tile in the tileset/tiles
@@ -53,23 +54,41 @@ namespace Tmx
         void Parse(const tinyxml2::XMLNode *tileNode);
 
         // Get the Id. (relative to the tileset)
-        int GetId() const { return id; }
+        int GetId() const
+        {
+            return id;
+        }
 
         // Returns true if the tile is animated (has one or more animation frames)
-        bool IsAnimated() const { return isAnimated; }
+        bool IsAnimated() const
+        {
+            return isAnimated;
+        }
 
         // Returns the number of frames of the animation. If the tile is not animated, returns 0.
-        int GetFrameCount() const { return frames.size(); }
+        int GetFrameCount() const
+        {
+            return frames.size();
+        }
 
         // Returns the total duration of the animation, in milliseconds,
         // or 0 if the tile is not animated.
-        unsigned int GetTotalDuration() const { return totalDuration; }
+        unsigned int GetTotalDuration() const
+        {
+            return totalDuration;
+        }
 
         // Returns the frames of the animation.
-        const std::vector<AnimationFrame> &getFrames() const { return frames; }
+        const std::vector<AnimationFrame> &GetFrames() const
+        {
+            return frames;
+        }
 
         // Get a set of properties regarding the tile.
-        const Tmx::PropertySet &GetProperties() const { return properties; }
+        const Tmx::PropertySet &GetProperties() const
+        {
+            return properties;
+        }
 
     private:
         int id;
@@ -82,32 +101,39 @@ namespace Tmx
     };
 
     //-------------------------------------------------------------------------
-	// Class containing information about an animated tile. This includes the
+    // Class containing information about an animated tile. This includes the
     // duration of each frame and the various ids of each frame in the
     // animation.
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     class AnimationFrame
-    	{
-    	public:
-    		// This constructor shouldn't be used, ideally.
-    		AnimationFrame() : tileID(-1), duration(0) {}
+    {
+    public:
+        // This constructor shouldn't be used, ideally.
+        AnimationFrame() :
+                tileID(-1), duration(0)
+        {
+        }
 
-    		// Create a new animation frame with a specified tile id and duration.
-    		AnimationFrame(int tileID, unsigned int duration)
-    			: tileID(tileID), duration(duration) {}
+        // Create a new animation frame with a specified tile id and duration.
+        AnimationFrame(int tileID, unsigned int duration) :
+                tileID(tileID), duration(duration)
+        {
+        }
 
-    		// Get the tile id of this frame, relative to the containing tileset.
-    		int GetTileID() const {
-    			return tileID;
-    		}
+        // Get the tile id of this frame, relative to the containing tileset.
+        int GetTileID() const
+        {
+            return tileID;
+        }
 
-    		// Get the duration of this frame in milliseconds.
-    		unsigned int GetDuration() const {
-    			return duration;
-    		}
+        // Get the duration of this frame in milliseconds.
+        unsigned int GetDuration() const
+        {
+            return duration;
+        }
 
-    	private:
-    		int tileID;
-    		unsigned int duration;
-    	};
+    private:
+        int tileID;
+        unsigned int duration;
+    };
 }
