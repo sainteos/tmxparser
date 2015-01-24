@@ -39,3 +39,6 @@ target_link_libraries(test tmxparser ${TINYXML2_LIBRARIES})
 
 install(FILES ${HEADERS} DESTINATION include/tmxparser)
 install(TARGETS tmxparser tmxparser_static DESTINATION lib)
+
+configure_file(src/tmxparser.pc.in tmxparser.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/tmxparser.pc DESTINATION lib/pkgconfig)
