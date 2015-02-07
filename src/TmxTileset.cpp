@@ -47,6 +47,7 @@ namespace Tmx
         , tile_height(0)
         , margin(0)
         , spacing(0)
+        , tileOffset(NULL)
         , image(NULL)
         , tiles()
     {
