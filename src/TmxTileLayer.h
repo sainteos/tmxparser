@@ -77,12 +77,6 @@ namespace Tmx
         // Parse a tile layer node.
         void Parse(const tinyxml2::XMLNode *tileLayerNode);
 
-        // Get the visibility of the tile layer
-        bool IsVisible() const { return visible; }
-
-        // Get the property set.
-        const Tmx::PropertySet &GetProperties() const { return properties; }
-
         // Pick a specific tile from the list.
         unsigned GetTileId(int x, int y) const { return tile_map[y * width + x].id; }
 

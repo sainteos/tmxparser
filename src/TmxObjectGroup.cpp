@@ -34,7 +34,7 @@
 namespace Tmx 
 {
     ObjectGroup::ObjectGroup(const Tmx::Map *_map)
-        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, Layer::TMX_LAYERTYPE_OBJECTGROUP)
+        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, TMX_LAYERTYPE_OBJECTGROUP)
         , color()
         , objects()
     {}

@@ -21,58 +21,52 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
-#include <tinyxml2.h>
-#include <cstdlib>
+#pragma once
 
-#include "TmxLayer.h"
-#include "TmxImageLayer.h"
-#include "TmxImage.h"
+#include <vector>
 
-using std::vector;
-using std::string;
+#include "TmxPropertySet.h"
 
-namespace Tmx 
+namespace tinyxml2
 {
-    ImageLayer::ImageLayer(const Tmx::Map *_map) 
-        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, TMX_LAYERTYPE_IMAGE_LAYER)
-        , image(NULL)
+    class XMLNode;
+}
+
+namespace Tmx
+{
+    //-------------------------------------------------------------------------
+    // Class to contain information about every terrain in the
+    // tileset/terraintypes element.
+    // This class also contains a property set.
+    //-------------------------------------------------------------------------
+    class Terrain
     {
-    }
+    public:
+        Terrain();
+        ~Terrain();
 
-    ImageLayer::~ImageLayer() 
-    {
-        delete image;
-    }
+        // Parse a terrain type node.
+        void Parse(const tinyxml2::XMLNode *terrainNode);
 
-    void ImageLayer::Parse(const tinyxml2::XMLNode *imageLayerNode) 
-    {
-        const tinyxml2::XMLElement *imageLayerElem = imageLayerNode->ToElement();
+        // Get the name of the terrain type.
+        const std::string &GetName() const { return name; }
 
-        // Read all the attributes into local variables.
-        name = imageLayerElem->Attribute("name");
-
-        imageLayerElem->QueryIntAttribute("x", &x);
-        imageLayerElem->QueryIntAttribute("y", &y);
-
-        imageLayerElem->QueryFloatAttribute("opacity", &opacity);
-        imageLayerElem->QueryBoolAttribute("visible", &visible);
-
-        // Parse the image.
-        const tinyxml2::XMLNode *imageNode = imageLayerElem->FirstChildElement("image");
-        
-        if (imageNode) 
+        // Get the local tile-id of the tile that represents the terrain type visually.
+        int GetTileId() const
         {
-            image = new Image();
-            image->Parse(imageNode);
+            return tileID;
         }
 
-        // Parse the properties if any.
-        const tinyxml2::XMLNode *propertiesNode = imageLayerElem->FirstChildElement("properties");
-        
-        if (propertiesNode) 
+        // Get a set of properties regarding the terrain type.
+        const Tmx::PropertySet &GetProperties() const
         {
-            properties.Parse(propertiesNode);
+            return properties;
         }
-    }
 
+    private:
+        std::string name;
+        int tileID;
+
+        Tmx::PropertySet properties;
+    };
 }

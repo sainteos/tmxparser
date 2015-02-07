@@ -1,4 +1,6 @@
 //-----------------------------------------------------------------------------
+// TmxTileOffset.cpp
+//
 // Copyright (c) 2010-2014, Tamir Atias
 // All rights reserved.
 //
@@ -20,59 +22,29 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Author: Tamir Atias
 //-----------------------------------------------------------------------------
 #include <tinyxml2.h>
-#include <cstdlib>
 
-#include "TmxLayer.h"
-#include "TmxImageLayer.h"
-#include "TmxImage.h"
-
-using std::vector;
-using std::string;
+#include "TmxTileOffset.h"
 
 namespace Tmx 
-{
-    ImageLayer::ImageLayer(const Tmx::Map *_map) 
-        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, TMX_LAYERTYPE_IMAGE_LAYER)
-        , image(NULL)
+{   
+    TileOffset::TileOffset() 
+        : x(0)
+        , y(0)
+    {}
+
+    TileOffset::~TileOffset() 
+    {}
+
+    void TileOffset::Parse(const tinyxml2::XMLNode *tileOffsetNode) 
     {
-    }
-
-    ImageLayer::~ImageLayer() 
-    {
-        delete image;
-    }
-
-    void ImageLayer::Parse(const tinyxml2::XMLNode *imageLayerNode) 
-    {
-        const tinyxml2::XMLElement *imageLayerElem = imageLayerNode->ToElement();
-
-        // Read all the attributes into local variables.
-        name = imageLayerElem->Attribute("name");
-
-        imageLayerElem->QueryIntAttribute("x", &x);
-        imageLayerElem->QueryIntAttribute("y", &y);
-
-        imageLayerElem->QueryFloatAttribute("opacity", &opacity);
-        imageLayerElem->QueryBoolAttribute("visible", &visible);
-
-        // Parse the image.
-        const tinyxml2::XMLNode *imageNode = imageLayerElem->FirstChildElement("image");
+        const tinyxml2::XMLElement* tileOffsetElem = tileOffsetNode->ToElement();
         
-        if (imageNode) 
-        {
-            image = new Image();
-            image->Parse(imageNode);
-        }
-
-        // Parse the properties if any.
-        const tinyxml2::XMLNode *propertiesNode = imageLayerElem->FirstChildElement("properties");
-        
-        if (propertiesNode) 
-        {
-            properties.Parse(propertiesNode);
-        }
+        // Read all the attribute into member variables.
+        tileOffsetElem->QueryIntAttribute("x", &x);
+        tileOffsetElem->QueryIntAttribute("y", &y);
     }
-
 }

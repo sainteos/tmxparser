@@ -25,10 +25,11 @@
 #include <cstdio>
 #include <stdlib.h>
 
-int main()
+int main(int argc, char * argv[])
 {
     Tmx::Map *map = new Tmx::Map();
-    map->ParseFile("./example/example.tmx");
+    std::string fileName = (argc > 1) ? argv[1] : "./example/example.tmx";
+    map->ParseFile(fileName);
 
     if (map->HasError())
     {

@@ -1,4 +1,6 @@
 //-----------------------------------------------------------------------------
+// TmxTerrainArray.cpp
+//
 // Copyright (c) 2010-2014, Tamir Atias
 // All rights reserved.
 //
@@ -20,59 +22,40 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Author: Tamir Atias
 //-----------------------------------------------------------------------------
 #include <tinyxml2.h>
 #include <cstdlib>
 
-#include "TmxLayer.h"
-#include "TmxImageLayer.h"
-#include "TmxImage.h"
+#include "TmxTerrainArray.h"
+#include "TmxTerrain.h"
 
-using std::vector;
 using std::string;
+using std::map;
 
-namespace Tmx 
+namespace Tmx
 {
-    ImageLayer::ImageLayer(const Tmx::Map *_map) 
-        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, TMX_LAYERTYPE_IMAGE_LAYER)
-        , image(NULL)
+    TerrainArray::TerrainArray()
+    {}
+
+    TerrainArray::~TerrainArray()
     {
     }
 
-    ImageLayer::~ImageLayer() 
+    void TerrainArray::Parse(std::vector< Tmx::Terrain* > *terrainTypes, const tinyxml2::XMLNode *terrainArrayNode)
     {
-        delete image;
-    }
+        // Iterate through all of the terrain nodes.
+        const tinyxml2::XMLNode *terrainNode = terrainArrayNode->FirstChildElement("terrain");
 
-    void ImageLayer::Parse(const tinyxml2::XMLNode *imageLayerNode) 
-    {
-        const tinyxml2::XMLElement *imageLayerElem = imageLayerNode->ToElement();
-
-        // Read all the attributes into local variables.
-        name = imageLayerElem->Attribute("name");
-
-        imageLayerElem->QueryIntAttribute("x", &x);
-        imageLayerElem->QueryIntAttribute("y", &y);
-
-        imageLayerElem->QueryFloatAttribute("opacity", &opacity);
-        imageLayerElem->QueryBoolAttribute("visible", &visible);
-
-        // Parse the image.
-        const tinyxml2::XMLNode *imageNode = imageLayerElem->FirstChildElement("image");
-        
-        if (imageNode) 
+        while (terrainNode)
         {
-            image = new Image();
-            image->Parse(imageNode);
-        }
+            // Read the attributes of the terrain and add it the terrainTypes vector.
+            Terrain *terrainType = new Terrain();
+            terrainType->Parse(terrainNode);
+            terrainTypes->push_back(terrainType);
 
-        // Parse the properties if any.
-        const tinyxml2::XMLNode *propertiesNode = imageLayerElem->FirstChildElement("properties");
-        
-        if (propertiesNode) 
-        {
-            properties.Parse(propertiesNode);
+            terrainNode = terrainNode->NextSiblingElement("terrain");
         }
     }
-
 }

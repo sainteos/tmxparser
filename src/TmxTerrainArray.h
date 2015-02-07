@@ -1,4 +1,6 @@
 //-----------------------------------------------------------------------------
+// TmxTerrainArray.h
+//
 // Copyright (c) 2010-2014, Tamir Atias
 // All rights reserved.
 //
@@ -20,59 +22,35 @@
 // ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Author: Tamir Atias
 //-----------------------------------------------------------------------------
-#include <tinyxml2.h>
-#include <cstdlib>
+#pragma once
 
-#include "TmxLayer.h"
-#include "TmxImageLayer.h"
-#include "TmxImage.h"
+#include <map>
+#include <string>
+#include <vector>
 
-using std::vector;
-using std::string;
+namespace tinyxml2 {
+    class XMLNode;
+}
 
-namespace Tmx 
+namespace Tmx
 {
-    ImageLayer::ImageLayer(const Tmx::Map *_map) 
-        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, TMX_LAYERTYPE_IMAGE_LAYER)
-        , image(NULL)
+    class Terrain;
+
+    //-----------------------------------------------------------------------------
+    // Class to parse terrain types, which can be referenced from the
+    // terrain attribute of the tileset/tile element.
+    //-----------------------------------------------------------------------------
+    class TerrainArray
     {
-    }
+    public:
+        TerrainArray();
+        ~TerrainArray();
 
-    ImageLayer::~ImageLayer() 
-    {
-        delete image;
-    }
+        // Parse a node containing all the terrain nodes.
+        void Parse(std::vector< Tmx::Terrain* > *terrainTypes, const tinyxml2::XMLNode *terrainArrayNode);
 
-    void ImageLayer::Parse(const tinyxml2::XMLNode *imageLayerNode) 
-    {
-        const tinyxml2::XMLElement *imageLayerElem = imageLayerNode->ToElement();
-
-        // Read all the attributes into local variables.
-        name = imageLayerElem->Attribute("name");
-
-        imageLayerElem->QueryIntAttribute("x", &x);
-        imageLayerElem->QueryIntAttribute("y", &y);
-
-        imageLayerElem->QueryFloatAttribute("opacity", &opacity);
-        imageLayerElem->QueryBoolAttribute("visible", &visible);
-
-        // Parse the image.
-        const tinyxml2::XMLNode *imageNode = imageLayerElem->FirstChildElement("image");
-        
-        if (imageNode) 
-        {
-            image = new Image();
-            image->Parse(imageNode);
-        }
-
-        // Parse the properties if any.
-        const tinyxml2::XMLNode *propertiesNode = imageLayerElem->FirstChildElement("properties");
-        
-        if (propertiesNode) 
-        {
-            properties.Parse(propertiesNode);
-        }
-    }
-
+    };
 }

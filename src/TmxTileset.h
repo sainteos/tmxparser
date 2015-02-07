@@ -39,6 +39,8 @@ namespace tinyxml2 {
 namespace Tmx 
 {
     class Image;
+    class TileOffset;
+    class Terrain;
     class Tile;
 
     //-------------------------------------------------------------------------
@@ -96,8 +98,10 @@ namespace Tmx
         int margin;
         int spacing;
         
+        Tmx::TileOffset* tileOffset;
         Tmx::Image* image;
 
+        std::vector< Tmx::Terrain* > terrainTypes;
         std::vector< Tmx::Tile* > tiles;
         
         Tmx::PropertySet properties;
