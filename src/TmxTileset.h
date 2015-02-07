@@ -43,8 +43,7 @@ namespace Tmx
 
     //-------------------------------------------------------------------------
     // A class used for storing information about each of the tilesets.
-    // A tileset is a collection of tiles, of whom each may contain properties.
-    // The tileset class itself does not have properties.
+    // This class has a property set.
     //-------------------------------------------------------------------------
     class Tileset 
     {

@@ -95,49 +95,56 @@ int main()
         }
     }
 
-    // Iterate through the layers.
-    for (int i = 0; i < map->GetNumLayers(); ++i)
+    // Iterate through the tile layers.
+    for (int i = 0; i < map->GetNumTileLayers(); ++i)
     {
         printf("                                    \n");
         printf("====================================\n");
-        printf("Layer : %02d/%s \n", i, map->GetLayer(i)->GetName().c_str());
+        printf("Layer : %02d/%s \n", i, map->GetTileLayer(i)->GetName().c_str());
         printf("====================================\n");
 
         // Get a layer.
-        const Tmx::Layer *layer = map->GetLayer(i);
+        const Tmx::TileLayer *tileLayer = map->GetTileLayer(i);
 
-        for (int y = 0; y < layer->GetHeight(); ++y)
+        for (int y = 0; y < tileLayer->GetHeight(); ++y)
         {
-            for (int x = 0; x < layer->GetWidth(); ++x)
+            for (int x = 0; x < tileLayer->GetWidth(); ++x)
             {
-                // Get the tile's id.
-                printf("%03d", layer->GetTileId(x, y));
-
-                // Find a tileset for that id.
-                //const Tmx::Tileset *tileset = map->FindTileset(layer->GetTileId(x, y));
-                if (layer->IsTileFlippedHorizontally(x, y))
+                if (tileLayer->GetTileTilesetIndex(x, y) == -1)
                 {
-                    printf("h");
+                    printf("...    ");
                 }
                 else
                 {
-                    printf(" ");
-                }
-                if (layer->IsTileFlippedVertically(x, y))
-                {
-                    printf("v");
-                }
-                else
-                {
-                    printf(" ");
-                }
-                if (layer->IsTileFlippedDiagonally(x, y))
-                {
-                    printf("d ");
-                }
-                else
-                {
-                    printf("  ");
+                    // Get the tile's id.
+                    printf("%03d", tileLayer->GetTileId(x, y));
+                
+                    // Find a tileset for that id.
+                    //const Tmx::Tileset *tileset = map->FindTileset(layer->GetTileId(x, y));
+                    if (tileLayer->IsTileFlippedHorizontally(x, y))
+                    {
+                        printf("h");
+                    }
+                    else
+                    {
+                        printf(" ");
+                    }
+                    if (tileLayer->IsTileFlippedVertically(x, y))
+                    {
+                        printf("v");
+                    }
+                    else
+                    {
+                        printf(" ");
+                    }
+                    if (tileLayer->IsTileFlippedDiagonally(x, y))
+                    {
+                        printf("d ");
+                    }
+                    else
+                    {
+                        printf("  ");
+                    }
                 }
             }
 

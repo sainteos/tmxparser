@@ -35,6 +35,7 @@
 namespace Tmx 
 {
     class Layer;
+    class TileLayer;
     class ImageLayer;
     class ObjectGroup;
     class Tileset;
@@ -71,6 +72,18 @@ namespace Tmx
     };
 
     //-------------------------------------------------------------------------
+    // The order in which tiles on tile layers are rendered.
+    //-------------------------------------------------------------------------
+    enum MapRenderOrder
+    {
+        // The default is TMX_RIGHT_DOWN.
+        TMX_RIGHT_DOWN = 0x01,
+        TMX_RIGHT_UP = 0x02,
+        TMX_LEFT_DOWN = 0x03,
+        TMX_LEFT_UP= 0x03
+    };
+
+    //-------------------------------------------------------------------------
     // This class is the root class of the parser.
     // It has all of the information in regard to the TMX file.
     // This class has a property set.
@@ -98,11 +111,17 @@ namespace Tmx
         // Get a path to the directory of the map file if any.
         const std::string &GetFilepath() const { return file_path; }
 
+        // Get the background color of the map file if any.
+        const std::string &GetBackgroundColor() const { return background_color; }
+
         // Get the version of the map.
         double GetVersion() const { return version; }
 
         // Get the orientation of the map.
         Tmx::MapOrientation GetOrientation() const { return orientation; }
+
+        // Get the render order of the map.
+        Tmx::MapRenderOrder GetRenderOrder() const { return render_order; }
 
         // Get the width of the map, in tiles.
         int GetWidth() const { return width; }
@@ -125,22 +144,31 @@ namespace Tmx
         // Get the whole layers collection.
         const std::vector< Tmx::Layer* > &GetLayers() const { return layers; }
 
+        // Get the tile layer at a certain index.
+        const Tmx::TileLayer *GetTileLayer(int index) const { return tile_layers.at(index); }
+
+        // Get the amount of tile layers.
+        int GetNumTileLayers() const { return tile_layers.size(); }
+
+        // Get the whole collection of tile layers.
+        const std::vector< Tmx::TileLayer* > &GetTileLayers() const { return tile_layers; }
+
         // Get the object group at a certain index.
         const Tmx::ObjectGroup *GetObjectGroup(int index) const { return object_groups.at(index); }
 
         // Get the amount of object groups.
         int GetNumObjectGroups() const { return object_groups.size(); }
 
-        // Get the whole object group collection.
+        // Get the whole collection of object groups.
         const std::vector< Tmx::ObjectGroup* > &GetObjectGroups() const { return object_groups; }
 
-        // Get the layer at a certain index.
+        // Get the image layer at a certain index.
         const Tmx::ImageLayer *GetImageLayer(int index) const { return image_layers.at(index); }
 
-        // Get the amount of layers.
+        // Get the amount of image layers.
         int GetNumImageLayers() const { return image_layers.size(); }
 
-        // Get the whole layers collection.
+        // Get the whole collection of image layers.
         const std::vector< Tmx::ImageLayer* > &GetImageLayers() const { return image_layers; }
 
         // Find the tileset index for a tileset using a tile gid.
@@ -174,8 +202,11 @@ namespace Tmx
         std::string file_name;
         std::string file_path;
 
+        std::string background_color;
+
         double version;
         Tmx::MapOrientation orientation;
+        Tmx::MapRenderOrder render_order;
 
         int width;
         int height;
@@ -183,6 +214,7 @@ namespace Tmx
         int tile_height;
 
         std::vector< Tmx::Layer* > layers;
+        std::vector< Tmx::TileLayer* > tile_layers;
         std::vector< Tmx::ImageLayer* > image_layers;
         std::vector< Tmx::ObjectGroup* > object_groups;
         std::vector< Tmx::Tileset* > tilesets;

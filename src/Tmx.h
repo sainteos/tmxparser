@@ -32,6 +32,7 @@
 #include "TmxTile.h"
 #include "TmxImage.h"
 #include "TmxLayer.h"
+#include "TmxTileLayer.h"
 #include "TmxObject.h"
 #include "TmxObjectGroup.h"
 #include "TmxEllipse.h"

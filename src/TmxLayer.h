@@ -41,28 +41,7 @@ namespace Tmx
     class Map;
 
     //-------------------------------------------------------------------------
-    // Type used for the encoding of the layer data.
-    //-------------------------------------------------------------------------
-    enum LayerEncodingType 
-    {
-        TMX_ENCODING_XML,
-        TMX_ENCODING_BASE64,
-        TMX_ENCODING_CSV
-    };
-
-    //-------------------------------------------------------------------------
-    // Type used for the compression of the layer data.
-    //-------------------------------------------------------------------------
-    enum LayerCompressionType 
-    {
-        TMX_COMPRESSION_NONE,
-        TMX_COMPRESSION_ZLIB,
-        TMX_COMPRESSION_GZIP
-    };
-
-    //-------------------------------------------------------------------------
-    // Used for storing information about the tile ids for every layer.
-    // This class also have a property set.
+    // Base class for other layer types.
     //-------------------------------------------------------------------------
     class Layer 
     {
@@ -71,20 +50,38 @@ namespace Tmx
         Layer(const Layer &_layer);
 
     public:
-        Layer(const Tmx::Map *_map);
-        ~Layer();
+        enum LayerType
+        {
+            TMX_LAYERTYPE_TILE        = 0X01,
+            TMX_LAYERTYPE_OBJECTGROUP = 0X02,
+            TMX_LAYERTYPE_IMAGE_LAYER = 0X04
+        };
 
-        // Parse a layer node.
-        void Parse(const tinyxml2::XMLNode *layerNode);
+        Layer(const Tmx::Map *_map, const std::string _name, const int _x, const int _y, const int _width, const int _height, const float _opacity, const bool _visible, const LayerType _layerType);
+        virtual ~Layer();
+
+        // Parse a layer element.
+        virtual void Parse(const tinyxml2::XMLNode *layerNode) = 0;
+
+        // Get the pointer to the parent map.
+        const Tmx::Map *mapGetMap() const { return map; }
 
         // Get the name of the layer.
         const std::string &GetName() const { return name; }
 
-        // Get the width of the layer, in tiles.
+        // Get the value of the x attribute of the layer. Means different things for different layer types.
+        int GetX() const { return x; }
+
+        // Get the value of the y attribute of the layer. Means different things for different layer types.
+        int GetY() const { return y; }
+
+        // Get the width of the layer, in tiles. Only used in tile layers.
         int GetWidth() const { return width; }
 
-        // Get the height of the layer, in tiles.
+        // Get the height of the layer, in tiles. Only used in tile layers.
         int GetHeight() const { return height; }
+
+        float GetOpacity() const { return opacity; }
 
         // Get the visibility of the layer
         bool IsVisible() const { return visible; }
@@ -92,65 +89,37 @@ namespace Tmx
         // Get the property set.
         const Tmx::PropertySet &GetProperties() const { return properties; }
 
-        // Pick a specific tile from the list.
-        unsigned GetTileId(int x, int y) const { return tile_map[y * width + x].id; }
-
-        // Get the tileset index for a tileset from the list.
-        int GetTileTilesetIndex(int x, int y) const { return tile_map[y * width + x].tilesetId; }
-
-        // Get whether a tile is flipped horizontally.
-        bool IsTileFlippedHorizontally(int x, int y) const 
-        { return tile_map[y * width + x].flippedHorizontally; }
-
-        // Get whether a tile is flipped vertically.
-        bool IsTileFlippedVertically(int x, int y) const 
-        { return tile_map[y * width + x].flippedVertically; }
-
-        // Get whether a tile is flipped diagonally.
-        bool IsTileFlippedDiagonally(int x, int y) const
-        { return tile_map[y * width + x].flippedDiagonally; }
-
-        // Get a tile specific to the map.
-        const Tmx::MapTile& GetTile(int x, int y) const { return tile_map[y * width + x]; }
-
-        // Get the type of encoding that was used for parsing the layer data.
-        // See: LayerEncodingType
-        Tmx::LayerEncodingType GetEncoding() const { return encoding; }
-
-        // Get the type of compression that was used for parsing the layer data.
-        // See: LayerCompressionType
-        Tmx::LayerCompressionType GetCompression() const { return compression; }
-
         // Get the zorder of the layer.
         int GetZOrder() const { return zOrder; }
-        
+
         // Set the zorder of the layer.
         void SetZOrder( int z ) { zOrder = z; }
 
-        float GetOpacity() const { return opacity; }
-        bool GetVisible() const { return visible; }
+        // Get the parse order of the layer.
+        int GetParseOrder() const { return parseOrder; }
 
-    private:
-        void ParseXML(const tinyxml2::XMLNode *dataNode);
-        void ParseBase64(const std::string &innerText);
-        void ParseCSV(const std::string &innerText);
+        // Get the type of the layer.
+        LayerType GetLayerType() const { return layerType; }
 
+    protected:
         const Tmx::Map *map;
 
         std::string name;
         
+        int x;
+        int y;
         int width;
         int height;
     
         float opacity;
         bool visible;
         int zOrder;
+        const int parseOrder;
+
+        const LayerType layerType;
 
         Tmx::PropertySet properties;
 
-        Tmx::MapTile *tile_map;
-
-        Tmx::LayerEncodingType encoding;
-        Tmx::LayerCompressionType compression;
+        static int nextParseOrder;
     };
 }

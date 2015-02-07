@@ -34,7 +34,7 @@
 namespace Tmx
 {
     //-------------------------------------------------------------------------
-    // Class to store a Polygon of an Object.
+    // Class to store an Ellipse of an Object.
     //-------------------------------------------------------------------------
     class Ellipse
     {
