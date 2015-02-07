@@ -77,6 +77,9 @@ namespace Tmx
         // Get the Global ID of the tile associated with this object.
         int GetGid() const { return gid; }
 
+        // Get the visibility of the object.
+        bool IsVisible() const { return visible; }
+
         // Get the ellipse.
         const Tmx::Ellipse *GetEllipse() const { return ellipse; }
 
@@ -100,6 +103,7 @@ namespace Tmx
         int gid;
 
         double rotation;
+        bool visible;
 
         Tmx::Ellipse *ellipse;
         Tmx::Polygon *polygon;

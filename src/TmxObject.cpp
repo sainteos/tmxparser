@@ -43,6 +43,7 @@ namespace Tmx
         , height(0)
         , gid(0)
         , rotation(0.0)
+        , visible(true)
         , ellipse(0)
         , polygon(0)
         , polyline(0)
@@ -85,6 +86,7 @@ namespace Tmx
         height = objectElem->IntAttribute("height");
         gid = objectElem->IntAttribute("gid");
         rotation = objectElem->IntAttribute("rotation");
+        objectElem->QueryBoolAttribute("visible", &visible);
 
         // Read the ellipse of the object if there are any.
         const tinyxml2::XMLNode *ellipseNode = objectNode->FirstChildElement("ellipse");

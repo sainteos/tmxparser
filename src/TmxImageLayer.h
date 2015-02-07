@@ -26,6 +26,7 @@
 #include <string>
 #include <vector>
 
+#include "TmxLayer.h"
 #include "TmxPropertySet.h"
 
 //class TiXmlNode;
@@ -36,11 +37,10 @@ namespace Tmx
     class Image;
 
     //-------------------------------------------------------------------------
-    // A class used for storing information about each of the tilesets.
-    // A tileset is a collection of tiles, of whom each may contain properties.
-    // The tileset class itself does not have properties.
+    // A class used for holding information about a background image.
+    // This class has a property set.
     //-------------------------------------------------------------------------
-    class ImageLayer 
+    class ImageLayer : public Tmx::Layer
     {
     public:
         ImageLayer(const Tmx::Map *_map);
@@ -49,45 +49,11 @@ namespace Tmx
         // Parse a ImageLayer element.
         void Parse(const tinyxml2::XMLNode *imageLayerNode);
 
-        // Returns the name of the ImageLayer.
-        const std::string &GetName() const { return name; }
-
-        // Get the width of the ImageLayer.
-        int GetWidth() const { return width; } 
-
-        // Get the height of the ImageLayer.
-        int GetHeight() const { return height; }
-
-        // Get the visibility of the ImageLayer.
-        bool IsVisible() const { return visible; }
-
         // Returns a variable containing information 
         // about the image of the ImageLayer.
         const Tmx::Image* GetImage() const { return image; }
 
-        // Get a set of properties regarding the ImageLayer.
-        const Tmx::PropertySet &GetProperties() const { return properties; }
-
-        // Get the zorder of the ImageLayer.
-        int GetZOrder() const { return zOrder; }
-        
-        // Set the zorder of the ImageLayer.
-        void SetZOrder( int z ) { zOrder = z; }
-
     private:
-        const Tmx::Map *map;
-
-        std::string name;
-        
-        int width;
-        int height;
-
-        float opacity;
-        bool visible;
-        int zOrder;
-        
         Tmx::Image* image;
-
-        Tmx::PropertySet properties;
     };
 }

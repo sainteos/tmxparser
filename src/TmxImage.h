@@ -36,7 +36,7 @@ namespace tinyxml2 {
 namespace Tmx 
 {
     //-------------------------------------------------------------------------
-    // An image within a tileset.
+    // A class used for storing information about an image within a tileset.
     //-------------------------------------------------------------------------
     class Image 
     {

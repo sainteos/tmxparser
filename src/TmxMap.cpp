@@ -31,6 +31,7 @@
 #include "TmxMap.h"
 #include "TmxTileset.h"
 #include "TmxLayer.h"
+#include "TmxTileLayer.h"
 #include "TmxObjectGroup.h"
 #include "TmxImageLayer.h"
 
@@ -42,6 +43,7 @@ namespace Tmx
     Map::Map() 
         : file_name()
         , file_path()
+        , background_color()
         , version(0.0)
         , orientation(TMX_MO_ORTHOGONAL)
         , width(0)
@@ -49,6 +51,7 @@ namespace Tmx
         , tile_width(0)
         , tile_height(0)
         , layers()
+        , tile_layers()
         , object_groups()
         , tilesets() 
         , has_error(false)
@@ -71,11 +74,11 @@ namespace Tmx
             }
         }
 
-        // Iterate through all of the layers and delete each of them.
-        vector< Layer* >::iterator lIter;
-        for (lIter = layers.begin(); lIter != layers.end(); ++lIter) 
+        // Iterate through all of the tile layers and delete each of them.
+        vector< TileLayer* >::iterator tlIter;
+        for (tlIter = tile_layers.begin(); tlIter != tile_layers.end(); ++tlIter) 
         {
-            Layer *layer = (*lIter);
+            TileLayer *layer = (*tlIter);
 
             if (layer) 
             {
@@ -84,7 +87,7 @@ namespace Tmx
             }
         }
 
-        // Iterate through all of the layers and delete each of them.
+        // Iterate through all of the image layers and delete each of them.
         vector< ImageLayer* >::iterator ilIter;
         for (ilIter = image_layers.begin(); ilIter != image_layers.end(); ++ilIter) 
         {
@@ -195,6 +198,11 @@ namespace Tmx
         tile_width = mapElem->IntAttribute("tilewidth");
         tile_height = mapElem->IntAttribute("tileheight");
 
+        if (mapElem->Attribute("background_color"))
+        {
+            background_color = mapElem->Attribute("background_color");
+        }
+
         // Read the orientation
         std::string orientationStr = mapElem->Attribute("orientation");
 
@@ -212,8 +220,29 @@ namespace Tmx
         }
         
 
+        // Read the render order
+        if (mapElem->Attribute("renderorder"))
+        {
+            std::string renderorderStr = mapElem->Attribute("renderorder");
+            if (!renderorderStr.compare("right-down")) 
+            {
+                render_order = TMX_RIGHT_DOWN;
+            } 
+            else if (!renderorderStr.compare("right-up")) 
+            {
+                render_order = TMX_RIGHT_UP;
+            }
+            else if (!renderorderStr.compare("left-down")) 
+            {
+                render_order = TMX_LEFT_DOWN;
+            }
+            else if (!renderorderStr.compare("left-down")) 
+            {
+                render_order = TMX_LEFT_UP;
+            }        
+        }
+
         const tinyxml2::XMLNode *node = mapElem->FirstChild();
-        int zOrder = 0;
         while( node )
         {
             // Read the map properties.
@@ -233,43 +262,40 @@ namespace Tmx
                 tilesets.push_back(tileset);
             }
 
-            // Iterate through all of the layer elements.           
+            // Iterate through all of the "layer" (tile layer) elements.           
             if( strcmp( node->Value(), "layer" ) == 0 )
             {
-                // Allocate a new layer and parse it.
-                Layer *layer = new Layer(this);
-                layer->Parse(node);
-                layer->SetZOrder( zOrder );
-                ++zOrder;
+                // Allocate a new tile layer and parse it.
+                TileLayer *tileLayer = new TileLayer(this);
+                tileLayer->Parse(node);
 
-                // Add the layer to the list.
-                layers.push_back(layer);
+                // Add the tile layer to the lists.
+                tile_layers.push_back(tileLayer);
+                layers.push_back(tileLayer);
             }
 
-            // Iterate through all of the imagen layer elements.            
+            // Iterate through all of the "imagelayer" (image layer) elements.            
             if( strcmp( node->Value(), "imagelayer" ) == 0 )
             {
-                // Allocate a new layer and parse it.
+                // Allocate a new image layer and parse it.
                 ImageLayer *imageLayer = new ImageLayer(this);
                 imageLayer->Parse(node);
-                imageLayer->SetZOrder( zOrder );
-                ++zOrder;
 
-                // Add the layer to the list.
+                // Add the image layer to the lists.
                 image_layers.push_back(imageLayer);
+                layers.push_back(imageLayer);
             }
 
-            // Iterate through all of the objectgroup elements.
+            // Iterate through all of the "objectgroup" (object layer) elements.
             if( strcmp( node->Value(), "objectgroup" ) == 0 )
             {
                 // Allocate a new object group and parse it.
-                ObjectGroup *objectGroup = new ObjectGroup();
+                ObjectGroup *objectGroup = new ObjectGroup(this);
                 objectGroup->Parse(node);
-                objectGroup->SetZOrder( zOrder );
-                ++zOrder;
         
-                // Add the object group to the list.
+                // Add the object group to the lists.
                 object_groups.push_back(objectGroup);
+                layers.push_back(objectGroup);
             }
 
             node = node->NextSibling();

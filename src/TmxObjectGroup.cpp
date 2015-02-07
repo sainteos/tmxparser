@@ -27,16 +27,16 @@
 //-----------------------------------------------------------------------------
 #include <tinyxml2.h>
 
+#include "TmxLayer.h"
 #include "TmxObjectGroup.h"
 #include "TmxObject.h"
 
 namespace Tmx 
 {
-    ObjectGroup::ObjectGroup()
-        : name()
-        , width(0)
-        , height(0)
-        , zOrder(0)
+    ObjectGroup::ObjectGroup(const Tmx::Map *_map)
+        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, Layer::TMX_LAYERTYPE_OBJECTGROUP)
+        , color()
+        , objects()
     {}
 
     ObjectGroup::~ObjectGroup() 
@@ -54,10 +54,14 @@ namespace Tmx
 
         // Read the object group attributes.
         name = objectGroupElem->Attribute("name");
+
+        if (objectGroupElem->Attribute("color"))
+        {
+            color = objectGroupElem->Attribute("color");
+        }
         
-        width = objectGroupElem->IntAttribute("width");
-        height = objectGroupElem->IntAttribute("height");
-        visible = objectGroupElem->IntAttribute("visible");
+        objectGroupElem->QueryFloatAttribute("opacity", &opacity);
+        objectGroupElem->QueryBoolAttribute("visible", &visible);
 
         // Read the properties.
         const tinyxml2::XMLNode *propertiesNode = objectGroupNode->FirstChildElement("properties");

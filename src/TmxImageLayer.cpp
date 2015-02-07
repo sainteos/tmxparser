@@ -24,6 +24,7 @@
 #include <tinyxml2.h>
 #include <cstdlib>
 
+#include "TmxLayer.h"
 #include "TmxImageLayer.h"
 #include "TmxImage.h"
 
@@ -33,15 +34,8 @@ using std::string;
 namespace Tmx 
 {
     ImageLayer::ImageLayer(const Tmx::Map *_map) 
-        : map(_map)
-        , name()
-        , width(0)
-        , height(0)
-        , opacity(0)
-        , visible(0)
-        , zOrder(0)
+        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, Layer::TMX_LAYERTYPE_IMAGE_LAYER)
         , image(NULL)
-
     {
     }
 
@@ -52,28 +46,19 @@ namespace Tmx
 
     void ImageLayer::Parse(const tinyxml2::XMLNode *imageLayerNode) 
     {
-        const tinyxml2::XMLElement *imagenLayerElem = imageLayerNode->ToElement();
+        const tinyxml2::XMLElement *imageLayerElem = imageLayerNode->ToElement();
 
         // Read all the attributes into local variables.
-        name = imagenLayerElem->Attribute("name");
+        name = imageLayerElem->Attribute("name");
 
-        width = imagenLayerElem->IntAttribute("width");
-        height = imagenLayerElem->IntAttribute("height");
+        imageLayerElem->QueryIntAttribute("x", &x);
+        imageLayerElem->QueryIntAttribute("y", &y);
 
-        const char *opacityStr = imagenLayerElem->Attribute("opacity");
-        if (opacityStr) 
-        {
-            opacity = (float)atof(opacityStr);
-        }
-
-        const char *visibleStr = imagenLayerElem->Attribute("visible");
-        if (visibleStr) 
-        {
-            visible = atoi(visibleStr) != 0; // to prevent visual c++ from complaining..
-        }
+        imageLayerElem->QueryFloatAttribute("opacity", &opacity);
+        imageLayerElem->QueryBoolAttribute("visible", &visible);
 
         // Parse the image.
-        const tinyxml2::XMLNode *imageNode = imagenLayerElem->FirstChildElement("image");
+        const tinyxml2::XMLNode *imageNode = imageLayerElem->FirstChildElement("image");
         
         if (imageNode) 
         {
@@ -82,7 +67,7 @@ namespace Tmx
         }
 
         // Parse the properties if any.
-        const tinyxml2::XMLNode *propertiesNode = imagenLayerElem->FirstChildElement("properties");
+        const tinyxml2::XMLNode *propertiesNode = imageLayerElem->FirstChildElement("properties");
         
         if (propertiesNode) 
         {
