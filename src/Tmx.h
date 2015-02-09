@@ -29,7 +29,10 @@
 
 #include "TmxMap.h"
 #include "TmxTileset.h"
+#include "TmxTerrainArray.h"
+#include "TmxTerrain.h"
 #include "TmxTile.h"
+#include "TmxTileOffset.h"
 #include "TmxImage.h"
 #include "TmxLayer.h"
 #include "TmxTileLayer.h"

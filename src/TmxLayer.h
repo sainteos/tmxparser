@@ -40,6 +40,13 @@ namespace Tmx
 {
     class Map;
 
+    enum LayerType
+    {
+        TMX_LAYERTYPE_TILE        = 0X01,
+        TMX_LAYERTYPE_OBJECTGROUP = 0X02,
+        TMX_LAYERTYPE_IMAGE_LAYER = 0X04
+    };
+
     //-------------------------------------------------------------------------
     // Base class for other layer types.
     //-------------------------------------------------------------------------
@@ -50,13 +57,6 @@ namespace Tmx
         Layer(const Layer &_layer);
 
     public:
-        enum LayerType
-        {
-            TMX_LAYERTYPE_TILE        = 0X01,
-            TMX_LAYERTYPE_OBJECTGROUP = 0X02,
-            TMX_LAYERTYPE_IMAGE_LAYER = 0X04
-        };
-
         Layer(const Tmx::Map *_map, const std::string _name, const int _x, const int _y, const int _width, const int _height, const float _opacity, const bool _visible, const LayerType _layerType);
         virtual ~Layer();
 
@@ -99,7 +99,7 @@ namespace Tmx
         int GetParseOrder() const { return parseOrder; }
 
         // Get the type of the layer.
-        LayerType GetLayerType() const { return layerType; }
+        Tmx::LayerType GetLayerType() const { return layerType; }
 
     protected:
         const Tmx::Map *map;
@@ -116,7 +116,7 @@ namespace Tmx
         int zOrder;
         const int parseOrder;
 
-        const LayerType layerType;
+        const Tmx::LayerType layerType;
 
         Tmx::PropertySet properties;
 

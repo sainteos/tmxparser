@@ -28,8 +28,12 @@
 #include <tinyxml2.h>
 
 #include "TmxTileset.h"
+#include "TmxTileOffset.h"
+#include "TmxTerrainArray.h"
+#include "TmxTerrain.h"
 #include "TmxImage.h"
 #include "TmxTile.h"
+#include "TmxMap.h"
 
 using std::vector;
 using std::string;
@@ -43,6 +47,7 @@ namespace Tmx
         , tile_height(0)
         , margin(0)
         , spacing(0)
+        , tileOffset(NULL)
         , image(NULL)
         , tiles()
     {
@@ -50,14 +55,34 @@ namespace Tmx
 
     Tileset::~Tileset() 
     {
+        // Delete the tile offset from memory if allocated.
+        if (tileOffset)
+        {
+            delete tileOffset;
+            tileOffset = NULL;
+        }
+
         // Delete the image from memory if allocated.
-        if (image) 
+        if (image)
         {
             delete image;
             image = NULL;
         }
-        
-        // Iterate through all of the tiles in the set and delete each of them.
+
+        // Iterate through all of the terrain types in the tileset and delete each of them.
+        vector< Terrain* >::iterator ttIter;
+        for (ttIter = terrainTypes.begin(); ttIter != terrainTypes.end(); ++ttIter) 
+        {
+            Terrain *terrainType = (*ttIter);
+            
+            if (terrainType) 
+            {
+                delete terrainType;
+                terrainType = NULL;
+            }
+        }
+
+        // Iterate through all of the tiles in the tileset and delete each of them.
         vector< Tile* >::iterator tIter;
         for (tIter = tiles.begin(); tIter != tiles.end(); ++tIter) 
         {
@@ -83,6 +108,24 @@ namespace Tmx
         spacing = tilesetElem->IntAttribute("spacing");
 
         name = tilesetElem->Attribute("name");
+
+        // Parse the tile offset, if it exists.
+        const tinyxml2::XMLNode *tileOffsetNode = tilesetNode->FirstChildElement("tileoffset");
+        
+        if (tileOffsetNode) 
+        {
+            tileOffset = new TileOffset();
+            tileOffset->Parse(tileOffsetNode);
+        }
+
+        // Parse the terrain types if any.
+        const tinyxml2::XMLNode *terrainTypesNode = tilesetNode->FirstChildElement("terraintypes");
+        
+        if (terrainTypesNode) 
+        {
+            TerrainArray terrainArray;
+            terrainArray.Parse(&terrainTypes, terrainTypesNode);
+        }
 
         // Parse the image.
         const tinyxml2::XMLNode *imageNode = tilesetNode->FirstChildElement("image");

@@ -198,9 +198,9 @@ namespace Tmx
         tile_width = mapElem->IntAttribute("tilewidth");
         tile_height = mapElem->IntAttribute("tileheight");
 
-        if (mapElem->Attribute("background_color"))
+        if (mapElem->Attribute("backgroundcolor"))
         {
-            background_color = mapElem->Attribute("background_color");
+            background_color = mapElem->Attribute("backgroundcolor");
         }
 
         // Read the orientation
