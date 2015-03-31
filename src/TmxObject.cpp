@@ -42,6 +42,7 @@ namespace Tmx
         , width(0)
         , height(0)
         , gid(0)
+        , id(0)
         , rotation(0.0)
         , visible(true)
         , ellipse(0)
@@ -80,6 +81,7 @@ namespace Tmx
         if (tempName) name = tempName;
         if (tempType) type = tempType;
         
+        id = objectElem->IntAttribute("id");
         x = objectElem->IntAttribute("x");
         y = objectElem->IntAttribute("y");
         width = objectElem->IntAttribute("width");

@@ -77,6 +77,9 @@ namespace Tmx
         // Get the Global ID of the tile associated with this object.
         int GetGid() const { return gid; }
 
+        // Get the ID of this object.
+        int GetId() const { return id; }
+
         // Get the visibility of the object.
         bool IsVisible() const { return visible; }
 
@@ -101,6 +104,7 @@ namespace Tmx
         int width;
         int height;
         int gid;
+        int id;
 
         double rotation;
         bool visible;
