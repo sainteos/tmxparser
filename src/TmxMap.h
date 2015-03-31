@@ -135,6 +135,9 @@ namespace Tmx
         // Get the height of a tile, in pixels.
         int GetTileHeight() const { return tile_height; }
 
+        // Get the next object id.
+        int GetNextObjectId() const { return next_object_id; }
+
         // Get the layer at a certain index.
         const Tmx::Layer *GetLayer(int index) const { return layers.at(index); }
 
@@ -212,6 +215,7 @@ namespace Tmx
         int height;
         int tile_width;
         int tile_height;
+        int next_object_id;
 
         std::vector< Tmx::Layer* > layers;
         std::vector< Tmx::TileLayer* > tile_layers;
