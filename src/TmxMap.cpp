@@ -50,6 +50,7 @@ namespace Tmx
         , height(0)
         , tile_width(0)
         , tile_height(0)
+        , next_object_id(0)
         , layers()
         , tile_layers()
         , object_groups()
@@ -197,6 +198,7 @@ namespace Tmx
         height = mapElem->IntAttribute("height");
         tile_width = mapElem->IntAttribute("tilewidth");
         tile_height = mapElem->IntAttribute("tileheight");
+        next_object_id = mapElem->IntAttribute("nextobjectid");
 
         if (mapElem->Attribute("backgroundcolor"))
         {
