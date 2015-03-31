@@ -27,6 +27,9 @@
 //-----------------------------------------------------------------------------
 #pragma once
 
+#define TMX_PARSER_VERSION_MAJOR 1
+#define TMX_PARSER_VERSION_MINOR 0
+
 #include "TmxMap.h"
 #include "TmxTileset.h"
 #include "TmxTerrainArray.h"
