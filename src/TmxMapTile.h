@@ -59,7 +59,8 @@ namespace Tmx
             , flippedVertically((_gid & FlippedVerticallyFlag) != 0)
             , flippedDiagonally((_gid & FlippedDiagonallyFlag) != 0)
         {
-            //id -= _tilesetFirstGid;
+            gid = id;
+            id -= _tilesetFirstGid;
         }
 
         // Tileset id.
@@ -67,6 +68,9 @@ namespace Tmx
 
         // Id.
         unsigned id;
+
+        // Gid.
+        unsigned gid;
 
         // True when the tile should be drawn flipped horizontally.
         bool flippedHorizontally;

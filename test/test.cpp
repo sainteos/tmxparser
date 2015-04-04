@@ -56,6 +56,7 @@ int main(int argc, char * argv[])
         printf("Name: %s\n", tileset->GetName().c_str());
         printf("Margin: %d\n", tileset->GetMargin());
         printf("Spacing: %d\n", tileset->GetSpacing());
+        printf("First gid: %d\n", tileset->GetFirstGid());
         printf("Image Width: %d\n", tileset->GetImage()->GetWidth());
         printf("Image Height: %d\n", tileset->GetImage()->GetHeight());
         printf("Image Source: %s\n", tileset->GetImage()->GetSource().c_str());
@@ -113,12 +114,12 @@ int main(int argc, char * argv[])
             {
                 if (tileLayer->GetTileTilesetIndex(x, y) == -1)
                 {
-                    printf("...    ");
+                    printf("........    ");
                 }
                 else
                 {
-                    // Get the tile's id.
-                    printf("%03d", tileLayer->GetTileId(x, y));
+                    // Get the tile's id and gid.
+                    printf("%03d(%03d)", tileLayer->GetTileId(x, y), tileLayer->GetTileGid(x, y));
                 
                     // Find a tileset for that id.
                     //const Tmx::Tileset *tileset = map->FindTileset(layer->GetTileId(x, y));
