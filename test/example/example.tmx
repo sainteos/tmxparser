@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="4">
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1">
   <image source="tmw_desert_spacing.png" trans="ffffff" width="265" height="199"/>
   <tile id="0">
@@ -51,13 +51,13 @@
   </data>
  </layer>
  <objectgroup name="Polygon Testing">
-  <object x="93" y="49">
+  <object id="1" x="93" y="49">
    <polygon points="0,0 51,6 9,56"/>
   </object>
-  <object x="114" y="176">
+  <object id="2" x="114" y="176">
    <polygon points="0,0 51,-24 60,33"/>
   </object>
-  <object x="228" y="88">
+  <object id="3" x="228" y="88">
    <polyline points="0,0 54,95 -3,183 -131,201"/>
   </object>
  </objectgroup>

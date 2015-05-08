@@ -77,8 +77,11 @@ namespace Tmx
         // Parse a tile layer node.
         void Parse(const tinyxml2::XMLNode *tileLayerNode);
 
-        // Pick a specific tile from the list.
+        // Pick a specific tile id from the list.
         unsigned GetTileId(int x, int y) const { return tile_map[y * width + x].id; }
+
+        // Pick a specific tile gid from the list.
+        unsigned GetTileGid(int x, int y) const { return tile_map[y * width + x].gid; }
 
         // Get the tileset index for a tileset from the list.
         int GetTileTilesetIndex(int x, int y) const { return tile_map[y * width + x].tilesetId; }
