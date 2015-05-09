@@ -26,7 +26,13 @@
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
 #include <stdlib.h>
+
+#ifdef USE_MINIZ
+#include "miniz.c"
+#else
 #include <zlib.h>
+#endif
+
 #include <stdio.h>
 
 #include "TmxUtil.h"

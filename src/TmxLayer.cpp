@@ -23,7 +23,13 @@
 //-----------------------------------------------------------------------------
 #include <tinyxml2.h>
 #include <algorithm>
+
+#ifdef USE_MINIZ
+#include "miniz.c"
+#else
 #include <zlib.h>
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 

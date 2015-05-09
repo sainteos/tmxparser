@@ -34,8 +34,14 @@ set_target_properties(tmxparser PROPERTIES
   SOVERSION ${VERSION_MAJOR}
   VERSION ${VERSION}
   COMPILE_FLAGS ${LIB_CFLAGS})
-target_link_libraries(tmxparser ${TINYXML2_LIBRARIES} ${ZLIB_LIBRARIES})
-include_directories(${TINYXML2_INCLUDE_DIR} ${ZLIB_INCLUDE_DIRS})
+
+target_link_libraries(tmxparser ${TINYXML2_LIBRARIES})
+include_directories(${TINYXML2_INCLUDE_DIR})
+
+if (NOT USE_MINIZ)
+    target_link_libraries(tmxparser ${ZLIB_LIBRARIES})
+    include_directories(${ZLIB_INCLUDE_DIRS})
+endif (NOT USE_MINIZ)
 
 add_executable(test test/test.cpp)
 set_target_properties(test PROPERTIES
