@@ -11,6 +11,10 @@ message("Configuring tmxparser version ${VERSION}")
 
 option(USE_MINIZ "Use miniz.c instead of zlib" OFF)
 
+if (USE_MINIZ)
+    add_definitions(-DUSE_MINIZ)
+endif (USE_MINIZ)
+
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/src/*.h)
 
