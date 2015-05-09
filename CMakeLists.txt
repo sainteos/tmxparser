@@ -9,11 +9,16 @@ set(VERSION_PATCH 0)
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 message("Configuring tmxparser version ${VERSION}")
 
+option(USE_MINIZ "Use miniz.c instead of zlib" OFF)
+
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/src/*.h)
 
 find_package(TinyXML2)
-find_package(ZLIB)
+
+if (NOT USE_MINIZ)
+    find_package(ZLIB)
+endif (NOT USE_MINIZ)
 
 set(LIB_CFLAGS "-pedantic -Werror -Wall -Werror=strict-prototypes -Werror=old-style-definition -Werror=missing-prototypes")
 set(EXAMPLE_CFLAGS "-pedantic -Werror -Wall")
