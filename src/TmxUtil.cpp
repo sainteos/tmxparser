@@ -28,6 +28,7 @@
 #include <stdlib.h>
 
 #ifdef USE_MINIZ
+#define MINIZ_HEADER_FILE_ONLY
 #include "miniz.c"
 #else
 #include <zlib.h>
