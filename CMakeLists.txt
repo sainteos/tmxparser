@@ -18,13 +18,22 @@ endif (USE_MINIZ)
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/src/*.h)
 
+if (USE_MINIZ)
+    set(SOURCES ${SOURCES} ${PROJECT_SOURCE_DIR}/src/miniz.c)
+endif (USE_MINIZ)
+
 find_package(TinyXML2)
 
 if (NOT USE_MINIZ)
     find_package(ZLIB)
 endif (NOT USE_MINIZ)
 
-set(LIB_CFLAGS "-pedantic -Werror -Wall -Werror=strict-prototypes -Werror=old-style-definition -Werror=missing-prototypes")
+set(LIB_CFLAGS "-pedantic -Wall -Werror=strict-prototypes -Werror=old-style-definition -Werror=missing-prototypes")
+
+if (NOT USE_MINIZ)
+set(LIB_CFLAGS ${LIB_CFLAGS} "-Werror")
+endif (NOT USE_MINIZ)
+
 set(EXAMPLE_CFLAGS "-pedantic -Werror -Wall")
 #include_directories("${PROJECT_SOURCE_DIR}/include")
 
