@@ -31,7 +31,7 @@ endif (NOT USE_MINIZ)
 set(LIB_CFLAGS "-pedantic -Wall -Werror=strict-prototypes -Werror=old-style-definition -Werror=missing-prototypes")
 
 if (NOT USE_MINIZ)
-set(LIB_CFLAGS ${LIB_CFLAGS} "-Werror")
+    list(APPEND ${LIB_CFLAGS} "-Werror")
 endif (NOT USE_MINIZ)
 
 set(EXAMPLE_CFLAGS "-pedantic -Werror -Wall")
