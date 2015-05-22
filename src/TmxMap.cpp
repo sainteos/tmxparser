@@ -131,47 +131,21 @@ namespace Tmx
             file_path = "";
         }
 
-        char* fileText;
-        int fileSize;
+        // Create a tiny xml document and use it to parse the text.
+        tinyxml2::XMLDocument doc;
+        doc.LoadFile( fileName.c_str() );
 
-        // Open the file for reading.
-        FILE *file = fopen(fileName.c_str(), "rb");
-
-        // Check if the file could not be opened.
-        if (!file) 
+        // Check for parsing errors.
+        if (doc.Error())
         {
             has_error = true;
-            error_code = TMX_COULDNT_OPEN;
-            error_text = "Could not open the file.";
-            return;
-        }
-    
-        // Find out the file size.  
-        fseek(file, 0, SEEK_END);
-        fileSize = ftell(file);
-        fseek(file, 0, SEEK_SET);
-        
-        // Check if the file size is valid.
-        if (fileSize <= 0)
-        {
-            has_error = true;
-            error_code = TMX_INVALID_FILE_SIZE;
-            error_text = "The size of the file is invalid.";
+            error_code = TMX_PARSING_ERROR;
+            error_text = doc.GetErrorStr1();
             return;
         }
 
-        // Allocate memory for the file and read it into the memory.
-        fileText = new char[fileSize + 1];
-        fileText[fileSize] = 0;
-        fread(fileText, 1, fileSize, file);
-
-        fclose(file);
-
-        // Copy the contents into a C++ string and delete it from memory.
-        std::string text(fileText, fileText+fileSize);
-        delete [] fileText;
-
-        ParseText(text);        
+        tinyxml2::XMLNode *mapNode = doc.FirstChildElement("map");
+        Parse( mapNode );
     }
 
     void Map::ParseText(const string &text) 
@@ -190,6 +164,42 @@ namespace Tmx
         }
 
         tinyxml2::XMLNode *mapNode = doc.FirstChildElement("map");
+        Parse( mapNode );
+    }
+
+    int Map::FindTilesetIndex(int gid) const
+    {
+        // Clean up the flags from the gid (thanks marwes91).
+        gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
+
+        for (int i = tilesets.size() - 1; i > -1; --i) 
+        {
+            // If the gid beyond the tileset gid return its index.
+            if (gid >= tilesets[i]->GetFirstGid()) 
+            {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+
+    const Tileset *Map::FindTileset(int gid) const 
+    {
+        for (int i = tilesets.size() - 1; i > -1; --i) 
+        {
+            // If the gid beyond the tileset gid return it.
+            if (gid >= tilesets[i]->GetFirstGid()) 
+            {
+                return tilesets[i];
+            }
+        }
+        
+        return NULL;
+    }
+
+    void Map::Parse(tinyxml2::XMLNode *mapNode)
+    {
         tinyxml2::XMLElement* mapElem = mapNode->ToElement();
 
         // Read the map attributes.
@@ -258,7 +268,7 @@ namespace Tmx
             {
                 // Allocate a new tileset and parse it.
                 Tileset *tileset = new Tileset();
-                tileset->Parse(node->ToElement());
+                tileset->Parse(node->ToElement(), file_path);
 
                 // Add the tileset to the list.
                 tilesets.push_back(tileset);
@@ -302,36 +312,5 @@ namespace Tmx
 
             node = node->NextSibling();
         }
-    }
-
-    int Map::FindTilesetIndex(int gid) const
-    {
-        // Clean up the flags from the gid (thanks marwes91).
-        gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
-
-        for (int i = tilesets.size() - 1; i > -1; --i) 
-        {
-            // If the gid beyond the tileset gid return its index.
-            if (gid >= tilesets[i]->GetFirstGid()) 
-            {
-                return i;
-            }
-        }
-        
-        return -1;
-    }
-
-    const Tileset *Map::FindTileset(int gid) const 
-    {
-        for (int i = tilesets.size() - 1; i > -1; --i) 
-        {
-            // If the gid beyond the tileset gid return it.
-            if (gid >= tilesets[i]->GetFirstGid()) 
-            {
-                return tilesets[i];
-            }
-        }
-        
-        return NULL;
     }
 }

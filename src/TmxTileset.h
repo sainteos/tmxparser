@@ -55,7 +55,7 @@ namespace Tmx
         ~Tileset();
 
         // Parse a tileset element.
-        void Parse(const tinyxml2::XMLNode *tilesetNode);
+        void Parse(const tinyxml2::XMLNode *tilesetNode, const std::string& file_path);
 
         // Returns the global id of the first tile.
         int GetFirstGid() const { return first_gid; }
