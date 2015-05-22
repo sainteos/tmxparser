@@ -96,12 +96,39 @@ namespace Tmx
         }
     }
 
-    void Tileset::Parse(const tinyxml2::XMLNode *tilesetNode) 
+    void Tileset::Parse(const tinyxml2::XMLNode *tilesetNode, const std::string& file_path)
     {
         const tinyxml2::XMLElement *tilesetElem = tilesetNode->ToElement();
 
         // Read all the attributes into local variables.
+
+        // The firstgid and source attribute are kept in the TMX map,
+        // since they are map specific.
         first_gid = tilesetElem->IntAttribute("firstgid");
+
+        // If the <tileset> node contains a 'source' tag,
+        // the tileset config should be loaded from an external
+        // TSX (Tile Set XML) file. That file has the same structure
+        // as the <tileset> element in the TMX map.
+        const char* source_name = tilesetElem->Attribute("source");
+
+        tinyxml2::XMLDocument tileset_doc;
+        if ( source_name )
+        {
+            std::string filename = file_path + source_name;
+            tileset_doc.LoadFile( filename.c_str() );
+
+            if ( tileset_doc.ErrorID() != 0)
+            {
+                fprintf(stderr, "failed to load tileset file '%s'\n", filename.c_str());
+                return;
+            }
+
+            // Update node and element references to the new node
+            tilesetNode = tileset_doc.FirstChildElement("tileset");
+            tilesetElem = tilesetNode->ToElement();
+        }
+
         tile_width = tilesetElem->IntAttribute("tilewidth");
         tile_height = tilesetElem->IntAttribute("tileheight");
         margin = tilesetElem->IntAttribute("margin");
