@@ -228,5 +228,8 @@ namespace Tmx
         std::string error_text;
 
         Tmx::PropertySet properties;
+
+        // Parse a 'map' node.
+        void Parse(tinyxml2::XMLNode *mapNode);
     };
 }
