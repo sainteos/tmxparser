@@ -172,7 +172,7 @@ namespace Tmx
     void TileLayer::ParseBase64(const std::string &innerText) 
     {
     	std::string testText = innerText;
-    	testText.erase(std::remove_if(testText.begin(), testText.end(), isspace));
+    	Util::Trim( testText );
 
         const std::string &text = Util::DecodeBase64(testText);
 
