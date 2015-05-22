@@ -115,12 +115,12 @@ namespace Tmx
         tinyxml2::XMLDocument tileset_doc;
         if ( source_name )
         {
-            std::string filename = file_path + source_name;
-            tileset_doc.LoadFile( filename.c_str() );
+            std::string fileName = file_path + source_name;
+            tileset_doc.LoadFile( fileName.c_str() );
 
             if ( tileset_doc.ErrorID() != 0)
             {
-                fprintf(stderr, "failed to load tileset file '%s'\n", filename.c_str());
+                fprintf(stderr, "failed to load tileset file '%s'\n", fileName.c_str());
                 return;
             }
 
