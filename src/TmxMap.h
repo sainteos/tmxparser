@@ -68,7 +68,10 @@ namespace Tmx
         TMX_MO_ISOMETRIC = 0x02,
 
         // This map is an isometric staggered map.
-        TMX_MO_STAGGERED = 0x03
+        TMX_MO_STAGGERED = 0x03,
+
+        // This map is an hexagonal staggered map.
+        TMX_MO_HEXAGONAL = 0x04
     };
 
     //-------------------------------------------------------------------------
@@ -81,6 +84,26 @@ namespace Tmx
         TMX_RIGHT_UP = 0x02,
         TMX_LEFT_DOWN = 0x03,
         TMX_LEFT_UP= 0x03
+    };
+
+    //-------------------------------------------------------------------------
+    // The stagger axis for the map. (only applies to hexagonal maps)
+    //-------------------------------------------------------------------------
+    enum MapStaggerAxis
+    {
+        TMX_SA_NONE = 0x00,  // if the map is not hexagonal
+        TMX_SA_X = 0x01,
+        TMX_SA_Y = 0x02
+    };
+
+    //-------------------------------------------------------------------------
+    // The stagger index for the map. (applies to hexagonal AND isometric staggered maps)
+    //-------------------------------------------------------------------------
+    enum MapStaggerIndex
+    {
+        TMX_SI_NONE = 0x00,  // if the map is not hexagonal
+        TMX_SI_EVEN = 0x01,
+        TMX_SI_ODD = 0x02
     };
 
     //-------------------------------------------------------------------------
@@ -123,6 +146,12 @@ namespace Tmx
         // Get the render order of the map.
         Tmx::MapRenderOrder GetRenderOrder() const { return render_order; }
 
+        // Get the stagger axis of the map.
+        Tmx::MapStaggerAxis GetStaggerAxis() const { return stagger_axis; }
+
+        // Get the stagger index of the map.
+        Tmx::MapStaggerIndex GetStaggerIndex() const { return stagger_index; }
+
         // Get the width of the map, in tiles.
         int GetWidth() const { return width; }
 
@@ -137,6 +166,9 @@ namespace Tmx
 
         // Get the next object id.
         int GetNextObjectId() const { return next_object_id; }
+
+        // Get the hexside length.
+        int GetHexsideLength() const { return hexside_length; }
 
         // Get the layer at a certain index.
         const Tmx::Layer *GetLayer(int index) const { return layers.at(index); }
@@ -210,12 +242,15 @@ namespace Tmx
         double version;
         Tmx::MapOrientation orientation;
         Tmx::MapRenderOrder render_order;
+        Tmx::MapStaggerAxis stagger_axis;
+        Tmx::MapStaggerIndex stagger_index;
 
         int width;
         int height;
         int tile_width;
         int tile_height;
         int next_object_id;
+        int hexside_length;
 
         std::vector< Tmx::Layer* > layers;
         std::vector< Tmx::TileLayer* > tile_layers;
