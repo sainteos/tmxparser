@@ -1,3 +1,8 @@
+### 2.0.1
+
+ * georgerbr:
+   - Fix incorrect version number reported.
+
 ### 2.0.0
 
  * georgerbr:
