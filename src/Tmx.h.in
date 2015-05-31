@@ -27,8 +27,9 @@
 //-----------------------------------------------------------------------------
 #pragma once
 
-#define TMX_PARSER_VERSION_MAJOR 1
-#define TMX_PARSER_VERSION_MINOR 0
+#define TMX_PARSER_VERSION_MAJOR @VERSION_MAJOR@
+#define TMX_PARSER_VERSION_MINOR @VERSION_MINOR@
+#define TMX_PARSER_VERSION_PATCH @VERSION_PATCH@
 
 #include "TmxMap.h"
 #include "TmxTileset.h"

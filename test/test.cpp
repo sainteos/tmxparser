@@ -21,9 +21,9 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
-#include "../src/Tmx.h"
+#include "Tmx.h"
 #include <cstdio>
-#include <stdlib.h>
+#include <cstdlib>
 
 int main(int argc, char * argv[])
 {
