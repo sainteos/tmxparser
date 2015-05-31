@@ -46,11 +46,15 @@ namespace Tmx
         , background_color()
         , version(0.0)
         , orientation(TMX_MO_ORTHOGONAL)
+        , render_order(TMX_RIGHT_DOWN)
+        , stagger_axis(TMX_SA_NONE)
+        , stagger_index(TMX_SI_NONE)
         , width(0)
         , height(0)
         , tile_width(0)
         , tile_height(0)
         , next_object_id(0)
+        , hexside_length(0)
         , layers()
         , tile_layers()
         , object_groups()
@@ -218,19 +222,22 @@ namespace Tmx
         // Read the orientation
         std::string orientationStr = mapElem->Attribute("orientation");
 
-        if (!orientationStr.compare("orthogonal")) 
+        if (!orientationStr.compare("orthogonal"))
         {
             orientation = TMX_MO_ORTHOGONAL;
         } 
-        else if (!orientationStr.compare("isometric")) 
+        else if (!orientationStr.compare("isometric"))
         {
             orientation = TMX_MO_ISOMETRIC;
         }
-        else if (!orientationStr.compare("staggered")) 
+        else if (!orientationStr.compare("staggered"))
         {
             orientation = TMX_MO_STAGGERED;
         }
-        
+        else if (!orientationStr.compare("hexagonal"))
+        {
+            orientation = TMX_MO_HEXAGONAL;
+        }
 
         // Read the render order
         if (mapElem->Attribute("renderorder"))
@@ -254,6 +261,41 @@ namespace Tmx
             }        
         }
 
+        // Read the stagger axis
+        if (mapElem->Attribute("staggeraxis"))
+        {
+            std::string staggerAxisStr = mapElem->Attribute("staggeraxis");
+            if (!staggerAxisStr.compare("x"))
+            {
+                stagger_axis = TMX_SA_X;
+            }
+            else if (!staggerAxisStr.compare("y"))
+            {
+                stagger_axis = TMX_SA_Y;
+            }
+        }
+
+        // Read the stagger index
+        if (mapElem->Attribute("staggerindex"))
+        {
+            std::string staggerIndexStr = mapElem->Attribute("staggerindex");
+            if (!staggerIndexStr.compare("even"))
+            {
+                stagger_index = TMX_SI_EVEN;
+            }
+            else if (!staggerIndexStr.compare("odd"))
+            {
+                stagger_index = TMX_SI_ODD;
+            }
+        }
+
+        // read the hexside length
+        if (mapElem->IntAttribute("hexsidelength"))
+        {
+            hexside_length = mapElem->IntAttribute("hexsidelength");
+        }
+
+        // read all other attributes
         const tinyxml2::XMLNode *node = mapElem->FirstChild();
         while( node )
         {

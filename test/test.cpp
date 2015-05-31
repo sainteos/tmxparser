@@ -36,10 +36,28 @@ int main(int argc, char * argv[])
         printf("error code: %d\n", map->GetErrorCode());
         printf("error text: %s\n", map->GetErrorText().c_str());
 
-        system("PAUSE");
-
         return map->GetErrorCode();
     }
+
+    printf("                                    \n");
+    printf("====================================\n");
+    printf("Map\n");
+    printf("====================================\n");
+
+    printf("Version: %1.1f\n", map->GetVersion());
+    printf("Orientation: %d\n", map->GetOrientation());
+    if (!map->GetBackgroundColor().empty())
+        printf("Background Color (hex): %s\n",
+               map->GetBackgroundColor().c_str());
+    printf("Render Order: %d\n", map->GetRenderOrder());
+    if (map->GetStaggerAxis())
+        printf("Stagger Axis: %d\n", map->GetStaggerAxis());
+    if (map->GetStaggerIndex())
+        printf("Stagger Index: %d\n", map->GetStaggerIndex());
+    printf("Width: %d\n", map->GetWidth());
+    printf("Height: %d\n", map->GetHeight());
+    printf("Tile Width: %d\n", map->GetTileWidth());
+    printf("Tile Height: %d\n", map->GetTileHeight());
 
     // Iterate through the tilesets.
     for (int i = 0; i < map->GetNumTilesets(); ++i)
@@ -60,8 +78,9 @@ int main(int argc, char * argv[])
         printf("Image Width: %d\n", tileset->GetImage()->GetWidth());
         printf("Image Height: %d\n", tileset->GetImage()->GetHeight());
         printf("Image Source: %s\n", tileset->GetImage()->GetSource().c_str());
-        printf("Transparent Color (hex): %s\n",
-                tileset->GetImage()->GetTransparentColor().c_str());
+        if (!tileset->GetImage()->GetTransparentColor().empty())
+            printf("Transparent Color (hex): %s\n",
+                   tileset->GetImage()->GetTransparentColor().c_str());
 
         if (tileset->GetTiles().size() > 0)
         {
@@ -207,8 +226,6 @@ int main(int argc, char * argv[])
     }
 
     delete map;
-
-    system("PAUSE");
 
     return 0;
 }
