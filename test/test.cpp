@@ -39,7 +39,6 @@ int main(int argc, char * argv[])
         return map->GetErrorCode();
     }
 
-    printf("                                    \n");
     printf("====================================\n");
     printf("Map\n");
     printf("====================================\n");
