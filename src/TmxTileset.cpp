@@ -163,8 +163,8 @@ namespace Tmx
         for (int tId = 0; tileNode; ++tId)
         {
             Tile* tile = new Tile(tId);
+            tile->Parse(tileNode);
             tiles.push_back(tile);
-            tiles[tId]->Parse(tileNode);
 
             tileNode = tileNode->NextSiblingElement("tile");
         }
