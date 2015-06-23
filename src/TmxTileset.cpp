@@ -111,7 +111,6 @@ namespace Tmx
         // TSX (Tile Set XML) file. That file has the same structure
         // as the <tileset> element in the TMX map.
         const char* source_name = tilesetElem->Attribute("source");
-
         tinyxml2::XMLDocument tileset_doc;
         if ( source_name )
         {
@@ -133,13 +132,11 @@ namespace Tmx
         tile_height = tilesetElem->IntAttribute("tileheight");
         margin = tilesetElem->IntAttribute("margin");
         spacing = tilesetElem->IntAttribute("spacing");
-
         name = tilesetElem->Attribute("name");
 
         // Parse the tile offset, if it exists.
         const tinyxml2::XMLNode *tileOffsetNode = tilesetNode->FirstChildElement("tileoffset");
-        
-        if (tileOffsetNode) 
+        if (tileOffsetNode)
         {
             tileOffset = new TileOffset();
             tileOffset->Parse(tileOffsetNode);
@@ -147,7 +144,6 @@ namespace Tmx
 
         // Parse the terrain types if any.
         const tinyxml2::XMLNode *terrainTypesNode = tilesetNode->FirstChildElement("terraintypes");
-        
         if (terrainTypesNode) 
         {
             TerrainArray terrainArray;
@@ -156,45 +152,26 @@ namespace Tmx
 
         // Parse the image.
         const tinyxml2::XMLNode *imageNode = tilesetNode->FirstChildElement("image");
-        
         if (imageNode) 
         {
             image = new Image();
             image->Parse(imageNode);
         }
 
-        // Populate the tile list
-        int tileCount = (image->GetWidth() / tile_width) * (image->GetHeight() / tile_height);
-
-        int tId = tiles.size();
-        while (tId < tileCount)
-        {
-            Tile* tile = new Tile(tId);
-            tiles.push_back(tile);
-            tId++;
-        }
-
-
         // Iterate through all of the tile elements and parse each.
         const tinyxml2::XMLNode *tileNode = tilesetNode->FirstChildElement("tile");
-        while (tileNode)
+        for (int tId = 0; tileNode; ++tId)
         {
-            // Parse it to get the tile id.
-            Tile tile;
-            tile.Parse(tileNode);
+            Tile* tile = new Tile(tId);
+            tile->Parse(tileNode);
+            tiles.push_back(tile);
 
-            // Using the ID in the temporary tile get the real tile and parse for real.
-            tiles[tile.GetId()]->Parse(tileNode);
-
-            //tileNode = tilesetNode->IterateChildren("tile", tileNode); FIXME MAYBE
             tileNode = tileNode->NextSiblingElement("tile");
         }
 
-        
         // Parse the properties if any.
         const tinyxml2::XMLNode *propertiesNode = tilesetNode->FirstChildElement("properties");
-        
-        if (propertiesNode) 
+        if (propertiesNode)
         {
             properties.Parse(propertiesNode);
         }
@@ -205,9 +182,7 @@ namespace Tmx
         for (unsigned int i = 0; i < tiles.size(); ++i) 
         {
             if (tiles.at(i)->GetId() == index) 
-            {
                 return tiles.at(i);
-            }
         }
 
         return NULL;
