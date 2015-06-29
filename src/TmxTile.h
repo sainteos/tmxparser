@@ -35,6 +35,7 @@ namespace tinyxml2
 namespace Tmx
 {
     class AnimationFrame;
+    class Object;
 
     //-------------------------------------------------------------------------
     // Class to contain information about every tile in the tileset/tiles
@@ -90,12 +91,38 @@ namespace Tmx
             return properties;
         }
 
+        // Get set of Collision Objects
+        const std::vector<Tmx::Object*> GetObjects() const
+        {
+            return objects;
+        }
+
+        // Returns true if tile has Collision Objects
+        const bool HasObjects() const
+        {
+            return hasObjects;
+        }
+
+        // Get a single object.
+        const Tmx::Object *GetObject(int index) const
+        {
+            return objects.at(index);
+        }
+
+        // Get the number of objects in the list.
+        int GetNumObjects() const
+        {
+            return objects.size();
+        }
+
     private:
         int id;
 
         Tmx::PropertySet properties;
 
         bool isAnimated;
+        bool hasObjects;
+        std::vector<Tmx::Object*> objects;
         unsigned int totalDuration;
         std::vector<AnimationFrame> frames;
     };
