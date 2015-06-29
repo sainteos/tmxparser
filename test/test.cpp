@@ -112,6 +112,52 @@ int main(int argc, char * argv[])
                             it->GetTileID(), it->GetDuration());
                 }
             }
+
+            if(tile->HasObjects())
+            {
+                printf(
+                        "Tile has objects.\n");
+
+
+                // Iterate through all Collision objects in the tile.
+                for (int j = 0; j < tile->GetNumObjects(); ++j)
+                {
+                    // Get an object.
+                    const Tmx::Object *object = tile->GetObject(j);
+
+                    // Print information about the object.
+                    printf("Object Name: %s\n", object->GetName().c_str());
+                    printf("Object Position: (%03d, %03d)\n", object->GetX(),
+                           object->GetY());
+                    printf("Object Size: (%03d, %03d)\n", object->GetWidth(),
+                           object->GetHeight());
+
+                    // Print Polygon points.
+                    const Tmx::Polygon *polygon = object->GetPolygon();
+                    if (polygon != 0)
+                    {
+                        for (int i = 0; i < polygon->GetNumPoints(); i++)
+                        {
+                            const Tmx::Point &point = polygon->GetPoint(i);
+                            printf("Object Polygon: Point %d: (%d, %d)\n", i, point.x,
+                                   point.y);
+                        }
+                    }
+
+                    // Print Polyline points.
+                    const Tmx::Polyline *polyline = object->GetPolyline();
+                    if (polyline != 0)
+                    {
+                        for (int i = 0; i < polyline->GetNumPoints(); i++)
+                        {
+                            const Tmx::Point &point = polyline->GetPoint(i);
+                            printf("Object Polyline: Point %d: (%d, %d)\n", i, point.x,
+                                   point.y);
+                        }
+                    }
+                }
+
+            }
         }
     }
 

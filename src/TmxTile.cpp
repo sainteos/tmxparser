@@ -28,15 +28,16 @@
 #include <tinyxml2.h>
 
 #include "TmxTile.h"
+#include "TmxObject.h"
 
 namespace Tmx
 {
     Tile::Tile() :
-            id(0), properties(), isAnimated(false), totalDuration(0)
+            id(0), properties(), isAnimated(false),hasObjects(false), totalDuration(0)
     {
     }
     Tile::Tile(int id) :
-            id(id), properties(), isAnimated(false), totalDuration(0)
+            id(id), properties(), isAnimated(false),hasObjects(false), totalDuration(0)
     {
     }
 
@@ -89,5 +90,28 @@ namespace Tmx
 
             totalDuration = durationSum;
         }
+
+        const tinyxml2::XMLNode *collisionNode = tileNode->FirstChildElement(
+                "objectgroup");
+        if (collisionNode)
+        {
+            const tinyxml2::XMLNode *objectNode =
+                    collisionNode->FirstChildElement("object");
+            hasObjects = true;
+
+            while (objectNode != NULL)
+            {
+                const tinyxml2::XMLElement *objectElement =
+                        objectNode->ToElement();
+
+                Object *object = new Object();
+                object->Parse(objectElement);
+
+                objects.push_back(object);
+
+                objectNode = objectNode->NextSiblingElement("object");
+            }
+        }
+
     }
 }
