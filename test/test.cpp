@@ -139,7 +139,7 @@ int main(int argc, char * argv[])
                         for (int i = 0; i < polygon->GetNumPoints(); i++)
                         {
                             const Tmx::Point &point = polygon->GetPoint(i);
-                            printf("Object Polygon: Point %d: (%d, %d)\n", i, point.x,
+                            printf("Object Polygon: Point %d: (%f, %f)\n", i, point.x,
                                    point.y);
                         }
                     }
@@ -151,7 +151,7 @@ int main(int argc, char * argv[])
                         for (int i = 0; i < polyline->GetNumPoints(); i++)
                         {
                             const Tmx::Point &point = polyline->GetPoint(i);
-                            printf("Object Polyline: Point %d: (%d, %d)\n", i, point.x,
+                            printf("Object Polyline: Point %d: (%f, %f)\n", i, point.x,
                                    point.y);
                         }
                     }
@@ -251,7 +251,7 @@ int main(int argc, char * argv[])
                 for (int i = 0; i < polygon->GetNumPoints(); i++)
                 {
                     const Tmx::Point &point = polygon->GetPoint(i);
-                    printf("Object Polygon: Point %d: (%d, %d)\n", i, point.x,
+                    printf("Object Polygon: Point %d: (%f, %f)\n", i, point.x,
                             point.y);
                 }
             }
@@ -263,7 +263,7 @@ int main(int argc, char * argv[])
                 for (int i = 0; i < polyline->GetNumPoints(); i++)
                 {
                     const Tmx::Point &point = polyline->GetPoint(i);
-                    printf("Object Polyline: Point %d: (%d, %d)\n", i, point.x,
+                    printf("Object Polyline: Point %d: (%f, %f)\n", i, point.x,
                             point.y);
                 }
             }
