@@ -45,7 +45,7 @@ namespace Tmx
         while (token)
         {
             Point point;
-            sscanf(token, "%d,%d", &point.x, &point.y);
+            sscanf(token, "%f,%f", &point.x, &point.y);
 
             points.push_back(point);
 
