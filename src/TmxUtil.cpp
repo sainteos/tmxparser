@@ -27,6 +27,8 @@
 //-----------------------------------------------------------------------------
 #include <stdlib.h>
 #include <algorithm>
+#include <cctype>
+#include <functional>
 
 #ifdef USE_MINIZ
 #define MINIZ_HEADER_FILE_ONLY
