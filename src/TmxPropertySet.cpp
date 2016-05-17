@@ -78,7 +78,7 @@ namespace Tmx
     int PropertySet::GetIntProperty(const string &name, int defaultValue) const
     {
         std::string str = GetStringProperty(name);
-        return (str.size() == 0) ? defaultValue : atoi(GetStringProperty(name).c_str());
+        return (str.size() == 0) ? defaultValue : atoi(str.c_str());
     }
 
     bool PropertySet::GetBoolProperty(const string &name, bool defaultValue) const
@@ -90,7 +90,7 @@ namespace Tmx
     float PropertySet::GetFloatProperty(const string &name, float defaultValue) const
     {
         std::string str = GetStringProperty(name);
-        return (str.size() == 0) ? defaultValue : atof(GetStringProperty(name).c_str());
+        return (str.size() == 0) ? defaultValue : atof(str.c_str());
     }
 
     bool PropertySet::HasProperty( const string& name ) const
