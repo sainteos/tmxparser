@@ -81,6 +81,12 @@ namespace Tmx
         return (str.size() == 0) ? defaultValue : atoi(GetStringProperty(name).c_str());
     }
 
+    bool PropertySet::GetBoolProperty(const string &name, bool defaultValue) const
+    {
+        std::string str = GetStringProperty(name);
+        return (str.size() == 0) ? defaultValue : str == "true";
+    }
+
     float PropertySet::GetFloatProperty(const string &name, float defaultValue) const
     {
         std::string str = GetStringProperty(name);
