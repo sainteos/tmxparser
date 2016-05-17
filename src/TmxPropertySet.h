@@ -52,9 +52,8 @@ namespace Tmx
         int GetIntProperty(const std::string &name, int defaultValue = 0) const;
         // Get a float property.
         float GetFloatProperty(const std::string &name, float defaultValue = 0.0f) const;
-
         // Get a string property. Returns "" if no value.
-        std::string GetStringProperty(const std::string &name) const;
+        std::string GetStringProperty(const std::string &name, std::string defaultValue = "") const;
 
         // Returns the amount of properties.
         int GetSize() const { return properties.size(); }
