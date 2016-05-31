@@ -24,6 +24,7 @@
 #include "Tmx.h"
 #include <cstdio>
 #include <cstdlib>
+#include <cassert>
 
 int main(int argc, char * argv[])
 {
@@ -57,6 +58,48 @@ int main(int argc, char * argv[])
     printf("Height: %d\n", map->GetHeight());
     printf("Tile Width: %d\n", map->GetTileWidth());
     printf("Tile Height: %d\n", map->GetTileHeight());
+
+    // Iterate through map properties and print the type, name and value of each property.
+    const std::unordered_map<std::string, Tmx::Property> &mapProperties = map->GetProperties().GetPropertyMap();
+    for (auto &pair : mapProperties)
+    {
+        auto &property = pair.second;
+
+        std::string type;
+
+        if (property.GetType() == Tmx::TMX_PROPERTY_STRING)
+        {
+            type = "String";
+        }
+        else if (property.GetType() == Tmx::TMX_PROPERTY_FLOAT)
+        {
+            type = "Float";
+        }
+        else if (property.GetType() == Tmx::TMX_PROPERTY_INT)
+        {
+            type = "Integer";
+        }
+        else if (property.GetType() == Tmx::TMX_PROPERTY_BOOL)
+        {
+            type = "Boolean";
+        }
+        else
+        {
+            type = "Unknown (string)";
+        }
+
+        printf("Map property %s (%s) = %s\n", pair.first.c_str(), type.c_str(),  property.GetValue().c_str());
+    }
+
+    // Make sure property parsing works correctly across the library.
+    assert(mapProperties.at("StringProperty").GetValue() == map->GetProperties().GetStringProperty("StringProperty"));
+    assert(mapProperties.at("IntProperty").GetIntValue() == map->GetProperties().GetIntProperty("IntProperty"));
+    assert(mapProperties.at("NegativeIntProperty").GetIntValue() == map->GetProperties().GetIntProperty("NegativeIntProperty"));
+    assert(mapProperties.at("FloatProperty").GetFloatValue() == map->GetProperties().GetFloatProperty("FloatProperty"));
+    assert(mapProperties.at("NegativeFloatProperty").GetFloatValue() == map->GetProperties().GetFloatProperty("NegativeFloatProperty"));
+    assert(mapProperties.at("BigInteger").GetIntValue() == map->GetProperties().GetIntProperty("BigInteger"));
+    assert(mapProperties.at("FalseProperty").GetBoolValue() == map->GetProperties().GetBoolProperty("FalseProperty"));
+    assert(mapProperties.at("TrueProperty").GetBoolValue() == map->GetProperties().GetBoolProperty("TrueProperty"));
 
     // Iterate through the tilesets.
     for (int i = 0; i < map->GetNumTilesets(); ++i)
