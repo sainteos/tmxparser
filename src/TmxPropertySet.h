@@ -39,7 +39,7 @@ namespace tinyxml2 {
 
 namespace Tmx
 {
-	class Property;
+    class Property;
 
     //-----------------------------------------------------------------------------
     // This class contains a map of properties.
@@ -57,8 +57,8 @@ namespace Tmx
         int GetIntProperty(const std::string &name, int defaultValue = 0) const;
         // Get a float property.
         float GetFloatProperty(const std::string &name, float defaultValue = 0.0f) const;
-		// Get a boolean property.
-		bool GetBoolProperty(const std::string &name, bool defaultValue = false) const;
+        // Get a boolean property.
+        bool GetBoolProperty(const std::string &name, bool defaultValue = false) const;
 
         // Get a string property. Returns "" if no value.
         std::string GetStringProperty(const std::string &name) const;
@@ -66,16 +66,16 @@ namespace Tmx
         // Returns the amount of properties.
         int GetSize() const { return properties.size(); }
 
-		// Checks if a property exists in the set.
+        // Checks if a property exists in the set.
         bool HasProperty( const std::string& name ) const;
 
-		// Returns the unordered map of properties.
-		const std::unordered_map< std::string, Property > &GetPropertyMap() const
-		{ return properties; }
+        // Returns the unordered map of properties.
+        const std::unordered_map< std::string, Property > &GetPropertyMap() const
+        { return properties; }
 
         // Returns the STL map of the properties.
-		// Deprecated, please use GetPropertyMap() instead.
-		std::map< std::string, std::string > GetList() const;
+        // Deprecated, please use GetPropertyMap() instead.
+        std::map< std::string, std::string > GetList() const;
 
         // Returns whether there are no properties.
         bool Empty() const { return properties.empty(); }

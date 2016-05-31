@@ -31,55 +31,55 @@
 
 namespace Tmx
 {
-	Property::Property()
-		: type(TMX_PROPERTY_STRING)
-	{
-	}
+    Property::Property()
+        : type(TMX_PROPERTY_STRING)
+    {
+    }
 
-	void Property::Parse(const tinyxml2::XMLElement *propertyElem)
-	{
-		auto typeAttribute = propertyElem->FindAttribute("type");
+    void Property::Parse(const tinyxml2::XMLElement *propertyElem)
+    {
+        auto typeAttribute = propertyElem->FindAttribute("type");
 
-		if (typeAttribute != nullptr)
-		{
-			auto typeAsCString = typeAttribute->Value();
+        if (typeAttribute != nullptr)
+        {
+            auto typeAsCString = typeAttribute->Value();
 
-			if (strcmp(typeAsCString, "string") == 0)
-			{
-				type = TMX_PROPERTY_STRING;
-			}
-			else if (strcmp(typeAsCString, "bool") == 0)
-			{
-				type = TMX_PROPERTY_BOOL;
-			}
-			else if (strcmp(typeAsCString, "float") == 0)
-			{
-				type = TMX_PROPERTY_FLOAT;
-			}
-			else if (strcmp(typeAsCString, "int") == 0)
-			{
-				type = TMX_PROPERTY_INT;
-			}
-			else
-			{
-				type = TMX_PROPERTY_STRING;
-			}
-		}
-		else
-		{
-			type = TMX_PROPERTY_STRING;
-		}
+            if (strcmp(typeAsCString, "string") == 0)
+            {
+                type = TMX_PROPERTY_STRING;
+            }
+            else if (strcmp(typeAsCString, "bool") == 0)
+            {
+                type = TMX_PROPERTY_BOOL;
+            }
+            else if (strcmp(typeAsCString, "float") == 0)
+            {
+                type = TMX_PROPERTY_FLOAT;
+            }
+            else if (strcmp(typeAsCString, "int") == 0)
+            {
+                type = TMX_PROPERTY_INT;
+            }
+            else
+            {
+                type = TMX_PROPERTY_STRING;
+            }
+        }
+        else
+        {
+            type = TMX_PROPERTY_STRING;
+        }
 
-		auto valueAsCString = propertyElem->Attribute("value");
-		if (valueAsCString)
-		{
-		    value = valueAsCString;
-		}
-		else
-		{
-		    // The value of properties that contain newlines is stored in the element text.
-		    valueAsCString = propertyElem->GetText();
-		    value = valueAsCString ? valueAsCString : std::string(); 
-		}
-	}
+        auto valueAsCString = propertyElem->Attribute("value");
+        if (valueAsCString)
+        {
+            value = valueAsCString;
+        }
+        else
+        {
+            // The value of properties that contain newlines is stored in the element text.
+            valueAsCString = propertyElem->GetText();
+            value = valueAsCString ? valueAsCString : std::string(); 
+        }
+    }
 }

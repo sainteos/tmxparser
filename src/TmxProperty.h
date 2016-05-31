@@ -30,87 +30,87 @@
 #include <string>
 
 namespace tinyxml2 {
-	class XMLElement;
+    class XMLElement;
 }
 
 namespace Tmx
 {
-	//-------------------------------------------------------------------------
-	// The type of a property.
-	//-------------------------------------------------------------------------
-	enum PropertyType
-	{
-		// A string property (default)
-		TMX_PROPERTY_STRING,
+    //-------------------------------------------------------------------------
+    // The type of a property.
+    //-------------------------------------------------------------------------
+    enum PropertyType
+    {
+        // A string property (default)
+        TMX_PROPERTY_STRING,
 
-		// A boolean property
-		TMX_PROPERTY_BOOL,
+        // A boolean property
+        TMX_PROPERTY_BOOL,
 
-		// An integer property
-		TMX_PROPERTY_INT,
+        // An integer property
+        TMX_PROPERTY_INT,
 
-		// A floating point property
-		TMX_PROPERTY_FLOAT,
-	};
+        // A floating point property
+        TMX_PROPERTY_FLOAT,
+    };
 
-	//-------------------------------------------------------------------------
-	// Used to store a (typed) property.
-	//-------------------------------------------------------------------------
-	class Property
-	{
-	public:
-		Property();
+    //-------------------------------------------------------------------------
+    // Used to store a (typed) property.
+    //-------------------------------------------------------------------------
+    class Property
+    {
+    public:
+        Property();
 
-		// Parse the property element.
-		void Parse(const tinyxml2::XMLElement *propertyElem);
+        // Parse the property element.
+        void Parse(const tinyxml2::XMLElement *propertyElem);
 
-		// Get the type of the property (default: TMX_PROPERTY_STRING)
-		PropertyType GetType() const { return type; }
+        // Get the type of the property (default: TMX_PROPERTY_STRING)
+        PropertyType GetType() const { return type; }
 
-		// Check if the property is of a certain type.
-		bool IsOfType(PropertyType type) const { return GetType() == type; }
+        // Check if the property is of a certain type.
+        bool IsOfType(PropertyType type) const { return GetType() == type; }
 
-		// Return the value of the property.
-		const std::string &GetValue() const { return value; }
+        // Return the value of the property.
+        const std::string &GetValue() const { return value; }
 
-		// Return whether the value is empty or was not specified.
-		bool IsValueEmpty() const { return value.empty(); }
+        // Return whether the value is empty or was not specified.
+        bool IsValueEmpty() const { return value.empty(); }
 
-		// Convert the value to a boolean and return it (or the default value if not a boolean.)
-		bool GetBoolValue(bool defaultValue = false) const;
+        // Convert the value to a boolean and return it (or the default value if not a boolean.)
+        bool GetBoolValue(bool defaultValue = false) const;
 
-		// Convert the value to an integer and return it (or the default value if not an integer).
-		int GetIntValue(int defaultValue = 0) const;
+        // Convert the value to an integer and return it (or the default value if not an integer).
+        int GetIntValue(int defaultValue = 0) const;
 
-		// Convert the value to a float and return it (or the default value if not a float).
-		float GetFloatValue(float defaultValue = 0.0f) const;
+        // Convert the value to a float and return it (or the default value if not a float).
+        float GetFloatValue(float defaultValue = 0.0f) const;
 
-	private:
-		PropertyType type;
-		std::string value;
-	};
+    private:
+        PropertyType type;
+        std::string value;
+    };
 
-	inline bool Property::GetBoolValue(bool defaultValue) const
-	{
-		if (!IsOfType(TMX_PROPERTY_BOOL))
-			return defaultValue;
+    inline bool Property::GetBoolValue(bool defaultValue) const
+    {
+        if (!IsOfType(TMX_PROPERTY_BOOL))
+            return defaultValue;
 
-		return value.compare("true") == 0;
-	}
+        return value.compare("true") == 0;
+    }
 
-	inline int Property::GetIntValue(int defaultValue) const
-	{
-		if (!IsOfType(TMX_PROPERTY_INT))
-			return defaultValue;
+    inline int Property::GetIntValue(int defaultValue) const
+    {
+        if (!IsOfType(TMX_PROPERTY_INT))
+            return defaultValue;
 
-		return std::stoi(value);
-	}
+        return std::stoi(value);
+    }
 
-	inline float Property::GetFloatValue(float defaultValue) const
-	{
-		if (!IsOfType(TMX_PROPERTY_FLOAT))
-			return defaultValue;
+    inline float Property::GetFloatValue(float defaultValue) const
+    {
+        if (!IsOfType(TMX_PROPERTY_FLOAT))
+            return defaultValue;
 
-		return std::stof(value);
-	}
+        return std::stof(value);
+    }
 }
