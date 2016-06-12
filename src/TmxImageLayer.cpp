@@ -23,6 +23,7 @@
 //-----------------------------------------------------------------------------
 #include <tinyxml2.h>
 #include <cstdlib>
+#include <cassert> //RJCB
 
 #include "TmxLayer.h"
 #include "TmxImageLayer.h"
@@ -59,6 +60,7 @@ namespace Tmx
 
         // Parse the image.
         const tinyxml2::XMLNode *imageNode = imageLayerElem->FirstChildElement("image");
+        assert(imageNode); //RJCB
         
         if (imageNode) 
         {
