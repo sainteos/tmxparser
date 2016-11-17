@@ -98,13 +98,13 @@ namespace Tmx
         }
 
         // Get set of Collision Objects
-        const std::vector<Tmx::Object*> GetObjects() const
+        std::vector<Tmx::Object*> GetObjects() const
         {
             return objects;
         }
 
         // Returns true if tile has Collision Objects
-        const bool HasObjects() const
+        bool HasObjects() const
         {
             return hasObjects;
         }
