@@ -65,12 +65,12 @@ namespace Tmx
         }
     }
 
-    string PropertySet::GetStringProperty(const string &name) const
+    string PropertySet::GetStringProperty(const string &name, string defaultValue) const
     {
         map< string, string >::const_iterator iter = properties.find(name);
 
         if (iter == properties.end())
-            return std::string();
+            return defaultValue;
 
         return iter->second;
     }
@@ -78,13 +78,19 @@ namespace Tmx
     int PropertySet::GetIntProperty(const string &name, int defaultValue) const
     {
         std::string str = GetStringProperty(name);
-        return (str.size() == 0) ? defaultValue : atoi(GetStringProperty(name).c_str());
+        return (str.size() == 0) ? defaultValue : atoi(str.c_str());
+    }
+
+    bool PropertySet::GetBoolProperty(const string &name, bool defaultValue) const
+    {
+        std::string str = GetStringProperty(name);
+        return (str.size() == 0) ? defaultValue : str == "true";
     }
 
     float PropertySet::GetFloatProperty(const string &name, float defaultValue) const
     {
         std::string str = GetStringProperty(name);
-        return (str.size() == 0) ? defaultValue : atof(GetStringProperty(name).c_str());
+        return (str.size() == 0) ? defaultValue : atof(str.c_str());
     }
 
     bool PropertySet::HasProperty( const string& name ) const
