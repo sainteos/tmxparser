@@ -124,12 +124,12 @@ namespace Tmx
         // Read a file and parse it.
         // Note: use '/' instead of '\\' as it is using '/' to find the path.
         void ParseFile(const std::string &fileName);
-        
+
         // Parse text containing TMX formatted XML.
         void ParseText(const std::string &text);
 
         // Get the filename used to read the map.
-        const std::string &GetFilename() { return file_name; }
+        const std::string &GetFilename() const { return file_name; }
 
         // Get a path to the directory of the map file if any.
         const std::string &GetFilepath() const { return file_path; }
