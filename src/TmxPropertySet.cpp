@@ -53,17 +53,17 @@ namespace Tmx
         {
             const tinyxml2::XMLElement* propertyElem = propertyNode->ToElement();
 
-			auto nameAttrib = propertyElem->FindAttribute("name");
+            auto nameAttrib = propertyElem->FindAttribute("name");
 
-			if (nameAttrib == nullptr || nameAttrib->Value()[0] == 0)
-			{
-				propertyNode = propertyNode->NextSiblingElement("property");
-				continue;
-			}
+            if (nameAttrib == nullptr || nameAttrib->Value()[0] == 0)
+            {
+                propertyNode = propertyNode->NextSiblingElement("property");
+                continue;
+            }
 
             // Read the attributes of the property and add it to the map
-			Property property;
-			property.Parse(propertyElem);
+            Property property;
+            property.Parse(propertyElem);
             properties[nameAttrib->Value()] = property;
 
             //propertyNode = propertiesNode->IterateChildren("property", propertyNode); FIXME MAYBE
@@ -87,41 +87,29 @@ namespace Tmx
         return (str.size() == 0) ? defaultValue : atoi(str.c_str());
     }
 
-    bool PropertySet::GetBoolProperty(const string &name, bool defaultValue) const
-    {
-		auto iter = properties.find(name);
-
-		if (iter == properties.end() || iter->second.IsValueEmpty())
-			return defaultValue;
-
-		// Note that we convert the value here ourselves in order to maintain
-		// compatibility with older versions of the TMX spec.
-		return std::stoi(iter->second.GetValue());
-    }
-
     float PropertySet::GetFloatProperty(const string &name, float defaultValue) const
     {
-		auto iter = properties.find(name);
+        auto iter = properties.find(name);
 
-		if (iter == properties.end() || iter->second.IsValueEmpty())
-			return defaultValue;
+        if (iter == properties.end() || iter->second.IsValueEmpty())
+            return defaultValue;
 
-		// Note that we convert the value here ourselves in order to maintain
-		// compatibility with older versions of the TMX spec.
-		return std::stof(iter->second.GetValue());
+        // Note that we convert the value here ourselves in order to maintain
+        // compatibility with older versions of the TMX spec.
+        return std::stof(iter->second.GetValue());
     }
 
-	bool PropertySet::GetBoolProperty(const string &name, bool defaultValue) const
-	{
-		auto iter = properties.find(name);
+    bool PropertySet::GetBoolProperty(const string &name, bool defaultValue) const
+    {
+        auto iter = properties.find(name);
 
-		if (iter == properties.end() || iter->second.IsValueEmpty())
-			return defaultValue;
+        if (iter == properties.end() || iter->second.IsValueEmpty())
+            return defaultValue;
 
-		// Note that we convert the value here ourselves in order to maintain
-		// compatibility with older versions of the TMX spec.
-		return iter->second.GetValue().compare("true") == 0;
-	}
+        // Note that we convert the value here ourselves in order to maintain
+        // compatibility with older versions of the TMX spec.
+        return iter->second.GetValue().compare("true") == 0;
+    }
 
     bool PropertySet::HasProperty( const string& name ) const
     {
@@ -129,15 +117,15 @@ namespace Tmx
         return ( properties.find(name) != properties.end() );
     }
 
-	std::map< std::string, std::string > PropertySet::GetList() const
-	{
-		std::map< std::string, std::string > orderedProperties;
-		for (auto &pair : properties)
-		{
-			auto &property = pair.second;
-			orderedProperties[pair.first] = property.GetValue();
-		}
-		return orderedProperties;
-	}
+    std::map< std::string, std::string > PropertySet::GetList() const
+    {
+        std::map< std::string, std::string > orderedProperties;
+        for (auto &pair : properties)
+        {
+            auto &property = pair.second;
+            orderedProperties[pair.first] = property.GetValue();
+        }
+        return orderedProperties;
+    }
 
 }
