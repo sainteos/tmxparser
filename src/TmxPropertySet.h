@@ -27,8 +27,11 @@
 //-----------------------------------------------------------------------------
 #pragma once
 
+#include <unordered_map>
 #include <map>
 #include <string>
+
+#include "TmxProperty.h"
 
 namespace tinyxml2 {
     class XMLNode;
@@ -36,6 +39,8 @@ namespace tinyxml2 {
 
 namespace Tmx
 {
+    class Property;
+
     //-----------------------------------------------------------------------------
     // This class contains a map of properties.
     //-----------------------------------------------------------------------------
@@ -60,17 +65,22 @@ namespace Tmx
         // Returns the amount of properties.
         int GetSize() const { return properties.size(); }
 
+        // Checks if a property exists in the set.
         bool HasProperty( const std::string& name ) const;
 
-        // Returns the STL map of the properties.
-        std::map< std::string, std::string > GetList() const
+        // Returns the unordered map of properties.
+        const std::unordered_map< std::string, Property > &GetPropertyMap() const
         { return properties; }
+
+        // Returns the STL map of the properties.
+        // Deprecated, please use GetPropertyMap() instead.
+        std::map< std::string, std::string > GetList() const;
 
         // Returns whether there are no properties.
         bool Empty() const { return properties.empty(); }
 
     private:
-        std::map< std::string, std::string > properties;
+        std::unordered_map< std::string, Property > properties;
 
     };
 }

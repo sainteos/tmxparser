@@ -48,17 +48,23 @@ namespace Tmx
     {
         // Iterate through all of the property nodes.
         const tinyxml2::XMLNode *propertyNode = propertiesNode->FirstChildElement("property");
-        string propertyName;
-        string propertyValue;
 
         while (propertyNode)
         {
             const tinyxml2::XMLElement* propertyElem = propertyNode->ToElement();
 
+            auto nameAttrib = propertyElem->FindAttribute("name");
+
+            if (nameAttrib == nullptr || nameAttrib->Value()[0] == 0)
+            {
+                propertyNode = propertyNode->NextSiblingElement("property");
+                continue;
+            }
+
             // Read the attributes of the property and add it to the map
-            propertyName = string(propertyElem->Attribute("name"));
-            propertyValue = string(propertyElem->Attribute("value"));
-            properties[propertyName] = propertyValue;
+            Property property;
+            property.Parse(propertyElem);
+            properties[nameAttrib->Value()] = property;
 
             //propertyNode = propertiesNode->IterateChildren("property", propertyNode); FIXME MAYBE
             propertyNode = propertyNode->NextSiblingElement("property");
@@ -67,36 +73,65 @@ namespace Tmx
 
     string PropertySet::GetStringProperty(const string &name, string defaultValue) const
     {
-        map< string, string >::const_iterator iter = properties.find(name);
+        std::unordered_map< string, Property >::const_iterator iter = properties.find(name);
 
         if (iter == properties.end())
             return defaultValue;
 
-        return iter->second;
+        return iter->second.GetValue();
     }
 
     int PropertySet::GetIntProperty(const string &name, int defaultValue) const
     {
-        std::string str = GetStringProperty(name);
-        return (str.size() == 0) ? defaultValue : atoi(str.c_str());
-    }
+        auto iter = properties.find(name);
 
-    bool PropertySet::GetBoolProperty(const string &name, bool defaultValue) const
-    {
-        std::string str = GetStringProperty(name);
-        return (str.size() == 0) ? defaultValue : str == "true";
+        if (iter == properties.end() || iter->second.IsValueEmpty())
+            return defaultValue;
+
+        // Note that we convert the value here ourselves in order to maintain
+        // compatibility with older versions of the TMX spec.
+        return std::stoi(iter->second.GetValue());
     }
 
     float PropertySet::GetFloatProperty(const string &name, float defaultValue) const
     {
-        std::string str = GetStringProperty(name);
-        return (str.size() == 0) ? defaultValue : atof(str.c_str());
+        auto iter = properties.find(name);
+
+        if (iter == properties.end() || iter->second.IsValueEmpty())
+            return defaultValue;
+
+        // Note that we convert the value here ourselves in order to maintain
+        // compatibility with older versions of the TMX spec.
+        return std::stof(iter->second.GetValue());
+    }
+
+    bool PropertySet::GetBoolProperty(const string &name, bool defaultValue) const
+    {
+        auto iter = properties.find(name);
+
+        if (iter == properties.end() || iter->second.IsValueEmpty())
+            return defaultValue;
+
+        // Note that we convert the value here ourselves in order to maintain
+        // compatibility with older versions of the TMX spec.
+        return iter->second.GetValue().compare("true") == 0;
     }
 
     bool PropertySet::HasProperty( const string& name ) const
     {
         if( properties.empty() ) return false;
         return ( properties.find(name) != properties.end() );
+    }
+
+    std::map< std::string, std::string > PropertySet::GetList() const
+    {
+        std::map< std::string, std::string > orderedProperties;
+        for (auto &pair : properties)
+        {
+            auto &property = pair.second;
+            orderedProperties[pair.first] = property.GetValue();
+        }
+        return orderedProperties;
     }
 
 }
