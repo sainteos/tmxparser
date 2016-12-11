@@ -7,6 +7,8 @@ set(VERSION_MINOR 0)
 set(VERSION_PATCH 1)
 
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
+set(CMAKE_CXX_STANDARD 11)
+
 message("Configuring tmxparser version ${VERSION}")
 configure_file(
   "${PROJECT_SOURCE_DIR}/src/Tmx.h.in"
