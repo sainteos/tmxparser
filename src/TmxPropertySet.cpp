@@ -71,12 +71,12 @@ namespace Tmx
         }
     }
 
-    string PropertySet::GetStringProperty(const string &name) const
+    string PropertySet::GetStringProperty(const string &name, string defaultValue) const
     {
         std::unordered_map< string, Property >::const_iterator iter = properties.find(name);
 
         if (iter == properties.end())
-            return std::string();
+            return defaultValue;
 
         return iter->second.GetValue();
     }

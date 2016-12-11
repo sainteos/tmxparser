@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "TmxPropertySet.h"
+#include "TmxImage.h"
 
 namespace tinyxml2
 {
@@ -79,6 +80,11 @@ namespace Tmx
             return totalDuration;
         }
 
+        const Tmx::Image* GetImage() const
+        {
+            return image;
+        }
+
         // Returns the frames of the animation.
         const std::vector<AnimationFrame> &GetFrames() const
         {
@@ -92,13 +98,13 @@ namespace Tmx
         }
 
         // Get set of Collision Objects
-        const std::vector<Tmx::Object*> GetObjects() const
+        std::vector<Tmx::Object*> GetObjects() const
         {
             return objects;
         }
 
         // Returns true if tile has Collision Objects
-        const bool HasObjects() const
+        bool HasObjects() const
         {
             return hasObjects;
         }
@@ -125,6 +131,7 @@ namespace Tmx
         std::vector<Tmx::Object*> objects;
         unsigned int totalDuration;
         std::vector<AnimationFrame> frames;
+        Tmx::Image* image;
     };
 
     //-------------------------------------------------------------------------

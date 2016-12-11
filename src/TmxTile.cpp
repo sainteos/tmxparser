@@ -33,16 +33,21 @@
 namespace Tmx
 {
     Tile::Tile() :
-            id(0), properties(), isAnimated(false),hasObjects(false), totalDuration(0)
+            id(0), properties(), isAnimated(false),hasObjects(false), totalDuration(0), image(NULL)
     {
     }
     Tile::Tile(int id) :
-            id(id), properties(), isAnimated(false),hasObjects(false), totalDuration(0)
+            id(id), properties(), isAnimated(false),hasObjects(false), totalDuration(0), image(NULL)
     {
     }
 
     Tile::~Tile()
     {
+        if(image)
+        {
+            delete image;
+            image = NULL;
+        }
     }
 
     void Tile::Parse(const tinyxml2::XMLNode *tileNode)
@@ -111,6 +116,13 @@ namespace Tmx
 
                 objectNode = objectNode->NextSiblingElement("object");
             }
+        }
+
+        const tinyxml2::XMLNode *imageNode = tileNode->FirstChildElement("image");
+        if(imageNode)
+        {
+            image = new Image();
+            image->Parse(imageNode);
         }
 
     }

@@ -26,6 +26,7 @@
 // Author: Tamir Atias
 //-----------------------------------------------------------------------------
 #include <tinyxml2.h>
+#include <cassert> //RJCB
 
 #include "TmxTileset.h"
 #include "TmxTileOffset.h"
@@ -125,6 +126,8 @@ namespace Tmx
 
             // Update node and element references to the new node
             tilesetNode = tileset_doc.FirstChildElement("tileset");
+            assert(tilesetNode); //RJCB
+
             tilesetElem = tilesetNode->ToElement();
         }
 
@@ -152,7 +155,7 @@ namespace Tmx
 
         // Parse the image.
         const tinyxml2::XMLNode *imageNode = tilesetNode->FirstChildElement("image");
-        if (imageNode) 
+        if (imageNode)
         {
             image = new Image();
             image->Parse(imageNode);
