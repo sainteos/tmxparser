@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(tmxparser)
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 set(VERSION_MAJOR 2)
 set(VERSION_MINOR 0)
