@@ -57,15 +57,6 @@ namespace Tmx
         // Parse the attributes.
         id = tileElem->IntAttribute("id");
 
-        // Parse the properties if any.
-        const tinyxml2::XMLNode *propertiesNode = tileNode->FirstChildElement(
-                "properties");
-
-        if (propertiesNode)
-        {
-            properties.Parse(propertiesNode);
-        }
-
         // Parse the animation if there is one.
         const tinyxml2::XMLNode *animationNode = tileNode->FirstChildElement(
                 "animation");
@@ -100,6 +91,15 @@ namespace Tmx
                 "objectgroup");
         if (collisionNode)
         {
+            // Parse the properties if any.
+			const tinyxml2::XMLNode *propertiesNode = collisionNode->FirstChildElement(
+                "properties");
+
+            if (propertiesNode)
+            {
+                properties.Parse(propertiesNode);
+            }
+
             const tinyxml2::XMLNode *objectNode =
                     collisionNode->FirstChildElement("object");
             hasObjects = true;
