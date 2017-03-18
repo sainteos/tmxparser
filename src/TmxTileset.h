@@ -81,6 +81,9 @@ namespace Tmx
         // Get the number of columns in the tileset(since 0.15)
         int GetColumns() const { return columns;}
 
+        // Get the offset of tileset
+        const Tmx::TileOffset* GetTileOffset() const { return tileOffset; }
+
         // Returns a variable containing information 
         // about the image of the tileset.
         const Tmx::Image* GetImage() const { return image; }
