@@ -117,6 +117,16 @@ namespace Tmx
         return iter->second.GetValue().compare("true") == 0;
     }
 
+    Tmx::Color PropertySet::GetColorProperty(const string &name, Tmx::Color defaultValue) const
+    {
+        auto iter = properties.find(name);
+
+        if (iter == properties.end() || iter->second.IsValueEmpty())
+            return defaultValue;
+
+        return iter->second.GetColorValue(defaultValue);
+    }
+
     bool PropertySet::HasProperty( const string& name ) const
     {
         if( properties.empty() ) return false;

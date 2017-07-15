@@ -63,7 +63,7 @@ int main(int argc, char * argv[])
     const std::unordered_map<std::string, Tmx::Property> &mapProperties = map->GetProperties().GetPropertyMap();
     for (auto &pair : mapProperties)
     {
-        auto &property = pair.second;
+        const Tmx::Property &property = pair.second;
 
         std::string type;
 
@@ -83,9 +83,17 @@ int main(int argc, char * argv[])
         {
             type = "Boolean";
         }
+        else if (property.GetType() == Tmx::TMX_PROPERTY_COLOR)
+        {
+            type = "Color";
+        }
+        else if (property.GetType() == Tmx::TMX_PROPERTY_FILE)
+        {
+            type = "File";
+        }
         else
         {
-            type = "Unknown (string)";
+            type = "Unknown";
         }
 
         printf("Map property %s (%s) = %s\n", pair.first.c_str(), type.c_str(),  property.GetValue().c_str());
@@ -100,6 +108,12 @@ int main(int argc, char * argv[])
     assert(mapProperties.at("BigInteger").GetIntValue() == map->GetProperties().GetIntProperty("BigInteger"));
     assert(mapProperties.at("FalseProperty").GetBoolValue() == map->GetProperties().GetBoolProperty("FalseProperty"));
     assert(mapProperties.at("TrueProperty").GetBoolValue() == map->GetProperties().GetBoolProperty("TrueProperty"));
+    assert(mapProperties.at("YellowProperty").GetColorValue() == map->GetProperties().GetColorProperty("YellowProperty"));
+    assert(mapProperties.at("FileProperty").GetBoolValue() == map->GetProperties().GetBoolProperty("FileProperty"));
+
+    // Make sure color can be converted from and to string
+    assert(map->GetProperties().GetColorProperty("YellowProperty").ToString() == map->GetProperties().GetStringProperty("YellowProperty"));
+    assert(Tmx::Color("#ffffff") == Tmx::Color("#ffffffff"));
 
     // Iterate through the tilesets.
     for (int i = 0; i < map->GetNumTilesets(); ++i)

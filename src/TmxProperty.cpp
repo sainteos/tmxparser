@@ -38,11 +38,11 @@ namespace Tmx
 
     void Property::Parse(const tinyxml2::XMLElement *propertyElem)
     {
-        auto typeAttribute = propertyElem->FindAttribute("type");
+        const tinyxml2::XMLAttribute* typeAttribute = propertyElem->FindAttribute("type");
 
         if (typeAttribute != nullptr)
         {
-            auto typeAsCString = typeAttribute->Value();
+            const char* typeAsCString = typeAttribute->Value();
 
             if (strcmp(typeAsCString, "string") == 0)
             {
@@ -60,6 +60,14 @@ namespace Tmx
             {
                 type = TMX_PROPERTY_INT;
             }
+            else if (strcmp(typeAsCString, "color") == 0)
+            {
+                type = TMX_PROPERTY_COLOR;
+            }
+            else if (strcmp(typeAsCString, "file") == 0)
+            {
+                type = TMX_PROPERTY_FILE;
+            }
             else
             {
                 type = TMX_PROPERTY_STRING;
@@ -70,7 +78,7 @@ namespace Tmx
             type = TMX_PROPERTY_STRING;
         }
 
-        auto valueAsCString = propertyElem->Attribute("value");
+        const char* valueAsCString = propertyElem->Attribute("value");
         if (valueAsCString)
         {
             value = valueAsCString;

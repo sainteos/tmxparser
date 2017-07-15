@@ -28,6 +28,7 @@
 #pragma once
 
 #include <string>
+#include "TmxColor.h"
 
 namespace tinyxml2 {
     class XMLElement;
@@ -51,6 +52,12 @@ namespace Tmx
 
         // A floating point property
         TMX_PROPERTY_FLOAT,
+
+        // A color property
+        TMX_PROPERTY_COLOR,
+
+        // A file property
+        TMX_PROPERTY_FILE
     };
 
     //-------------------------------------------------------------------------
@@ -85,6 +92,8 @@ namespace Tmx
         // Convert the value to a float and return it (or the default value if not a float).
         float GetFloatValue(float defaultValue = 0.0f) const;
 
+        // Convert the value to a color and return it (or the default value if not a color).
+        Tmx::Color GetColorValue(Tmx::Color defaultValue = Tmx::Color()) const;
     private:
         PropertyType type;
         std::string value;
@@ -112,5 +121,13 @@ namespace Tmx
             return defaultValue;
 
         return std::stof(value);
+    }
+
+    inline Tmx::Color Property::GetColorValue(Tmx::Color defaultValue) const
+    {
+        if (!IsOfType(TMX_PROPERTY_COLOR))
+            return defaultValue;
+
+        return Tmx::Color(value);
     }
 }
