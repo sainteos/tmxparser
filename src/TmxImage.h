@@ -28,6 +28,7 @@
 #pragma once
 
 #include <string>
+#include "TmxColor.h"
 
 namespace tinyxml2 {
     class XMLNode;
@@ -56,14 +57,14 @@ namespace Tmx
         // Get the height of the image.
         int GetHeight() const { return height; }
 
-        // Get the transparent color used in the image.
-        const std::string &GetTransparentColor() const 
+        // Get the transparent color used in the image. If none is set return a fully transparent color
+        Tmx::Color GetTransparentColor() const
         { return transparent_color; }
 
     private:
         std::string source;
         int width;
         int height;
-        std::string transparent_color;
+        Tmx::Color transparent_color;
     };
 }

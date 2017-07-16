@@ -86,6 +86,11 @@ namespace Tmx
         return (color & 0x000000ff);
     }
 
+    bool Color::IsTransparent() const
+    {
+        return GetAlpha() == 0;
+    }
+
     std::string Color::ToString() const
     {
         char strRep[10];

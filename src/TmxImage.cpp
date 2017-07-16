@@ -54,7 +54,7 @@ namespace Tmx
         const char *trans = imageElem->Attribute("trans");
         if (trans) 
         {
-            transparent_color = trans;
+            transparent_color = Tmx::Color(trans);
         }
     }
 }

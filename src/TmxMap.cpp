@@ -216,7 +216,7 @@ namespace Tmx
 
         if (mapElem->Attribute("backgroundcolor"))
         {
-            background_color = mapElem->Attribute("backgroundcolor");
+            background_color = Tmx::Color(mapElem->Attribute("backgroundcolor"));
         }
 
         // Read the orientation

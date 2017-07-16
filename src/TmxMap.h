@@ -134,8 +134,8 @@ namespace Tmx
         // Get a path to the directory of the map file if any.
         const std::string &GetFilepath() const { return file_path; }
 
-        // Get the background color of the map file if any.
-        const std::string &GetBackgroundColor() const { return background_color; }
+        // Get the background color of the map file. If unset, return a fully transparent color.
+        Tmx::Color GetBackgroundColor() const { return background_color; }
 
         // Get the version of the map.
         double GetVersion() const { return version; }
@@ -237,7 +237,7 @@ namespace Tmx
         std::string file_name;
         std::string file_path;
 
-        std::string background_color;
+        Tmx::Color background_color;
 
         double version;
         Tmx::MapOrientation orientation;
