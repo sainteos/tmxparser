@@ -75,6 +75,15 @@ namespace Tmx
         // Get the spacing of the tileset.
         int GetSpacing() const { return spacing; }
 
+        // Get the number of tiles in this tileset(since 0.13)
+        int GetTileCount() const { return tile_count; }
+
+        // Get the number of columns in the tileset(since 0.15)
+        int GetColumns() const { return columns;}
+
+        // Get the offset of tileset
+        const Tmx::TileOffset* GetTileOffset() const { return tileOffset; }
+
         // Returns a variable containing information 
         // about the image of the tileset.
         const Tmx::Image* GetImage() const { return image; }
@@ -97,6 +106,8 @@ namespace Tmx
         int tile_height;
         int margin;
         int spacing;
+        int tile_count;
+        int columns;
         
         Tmx::TileOffset* tileOffset;
         Tmx::Image* image;

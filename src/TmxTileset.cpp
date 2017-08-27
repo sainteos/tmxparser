@@ -48,6 +48,8 @@ namespace Tmx
         , tile_height(0)
         , margin(0)
         , spacing(0)
+        , tile_count(0)
+        , columns(0)
         , tileOffset(NULL)
         , image(NULL)
         , tiles()
@@ -135,6 +137,8 @@ namespace Tmx
         tile_height = tilesetElem->IntAttribute("tileheight");
         margin = tilesetElem->IntAttribute("margin");
         spacing = tilesetElem->IntAttribute("spacing");
+        tile_count = tilesetElem->IntAttribute("tilecount");
+        columns = tilesetElem->IntAttribute("columns");
         name = tilesetElem->Attribute("name");
 
         // Parse the tile offset, if it exists.
