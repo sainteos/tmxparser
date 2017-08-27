@@ -4,12 +4,14 @@
   <property name="BigInteger" type="int" value="999999999"/>
   <property name="EmptyProperty" value=""/>
   <property name="FalseProperty" type="bool" value="false"/>
+  <property name="FileProperty" type="file" value="torches.png"/>
   <property name="FloatProperty" type="float" value="0.12"/>
   <property name="IntProperty" type="int" value="1234"/>
   <property name="NegativeFloatProperty" type="float" value="-0.12"/>
   <property name="NegativeIntProperty" type="int" value="-1234"/>
   <property name="StringProperty" value="A string value"/>
   <property name="TrueProperty" type="bool" value="true"/>
+  <property name="YellowProperty" type="color" value="#ffffff00"/>
  </properties>
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
   <image source="tmw_desert_spacing.png" trans="ffffff" width="265" height="199"/>
