@@ -39,83 +39,85 @@ namespace Tmx
     class Object;
 
     //-------------------------------------------------------------------------
-    // Class to contain information about every tile in the tileset/tiles
-    // element.
-    // It may expand if there are more elements or attributes added into the
-    // the tile element.
-    // This class also contains a property set.
+    /// Class to contain information about every tile in the tileset/tiles
+    /// element.
+    /// It may expand if there are more elements or attributes added into the
+    /// the tile element.
+    /// This class also contains a property set.
     //-------------------------------------------------------------------------
     class Tile
     {
     public:
+        /// Construct a new tile with the given id.
         Tile(int id);
         Tile();
         ~Tile();
 
-        // Parse a tile node.
+        /// Parse a tile node.
         void Parse(const tinyxml2::XMLNode *tileNode);
 
-        // Get the Id. (relative to the tileset)
+        /// Get the Id. (relative to the tileset)
         int GetId() const
         {
             return id;
         }
 
-        // Returns true if the tile is animated (has one or more animation frames)
+        /// Returns true if the tile is animated (has one or more animation frames)
         bool IsAnimated() const
         {
             return isAnimated;
         }
 
-        // Returns the number of frames of the animation. If the tile is not animated, returns 0.
+        /// Returns the number of frames of the animation. If the tile is not animated, returns 0.
         int GetFrameCount() const
         {
             return frames.size();
         }
 
-        // Returns the total duration of the animation, in milliseconds,
-        // or 0 if the tile is not animated.
+        /// Returns the total duration of the animation, in milliseconds,
+        /// or 0 if the tile is not animated.
         unsigned int GetTotalDuration() const
         {
             return totalDuration;
         }
 
+        /// Retrurns the tile image if defined.
         const Tmx::Image* GetImage() const
         {
             return image;
         }
 
-        // Returns the frames of the animation.
+        /// Returns the frames of the animation.
         const std::vector<AnimationFrame> &GetFrames() const
         {
             return frames;
         }
 
-        // Get a set of properties regarding the tile.
+        /// Get a set of properties regarding the tile.
         const Tmx::PropertySet &GetProperties() const
         {
             return properties;
         }
 
-        // Get set of Collision Objects
+        /// Get set of Collision Objects
         std::vector<Tmx::Object*> GetObjects() const
         {
             return objects;
         }
 
-        // Returns true if tile has Collision Objects
+        /// Returns true if tile has Collision Objects
         bool HasObjects() const
         {
             return hasObjects;
         }
 
-        // Get a single object.
+        /// Get a single object.
         const Tmx::Object *GetObject(int index) const
         {
             return objects.at(index);
         }
 
-        // Get the number of objects in the list.
+        /// Get the number of objects in the list.
         int GetNumObjects() const
         {
             return objects.size();
@@ -135,32 +137,32 @@ namespace Tmx
     };
 
     //-------------------------------------------------------------------------
-    // Class containing information about an animated tile. This includes the
-    // duration of each frame and the various ids of each frame in the
-    // animation.
+    /// Class containing information about an animated tile. This includes the
+    /// duration of each frame and the various ids of each frame in the
+    /// animation.
     //-------------------------------------------------------------------------
     class AnimationFrame
     {
     public:
-        // This constructor shouldn't be used, ideally.
+        /// This constructor shouldn't be used, ideally.
         AnimationFrame() :
                 tileID(-1), duration(0)
         {
         }
 
-        // Create a new animation frame with a specified tile id and duration.
+        /// Create a new animation frame with a specified tile id and duration.
         AnimationFrame(int tileID, unsigned int duration) :
                 tileID(tileID), duration(duration)
         {
         }
 
-        // Get the tile id of this frame, relative to the containing tileset.
+        /// Get the tile id of this frame, relative to the containing tileset.
         int GetTileID() const
         {
             return tileID;
         }
 
-        // Get the duration of this frame in milliseconds.
+        /// Get the duration of this frame in milliseconds.
         unsigned int GetDuration() const
         {
             return duration;

@@ -40,8 +40,8 @@ namespace Tmx
     class Terrain;
 
     //-----------------------------------------------------------------------------
-    // Class to parse terrain types, which can be referenced from the
-    // terrain attribute of the tileset/tile element.
+    /// Class to parse terrain types, which can be referenced from the
+    /// terrain attribute of the tileset/tile element.
     //-----------------------------------------------------------------------------
     class TerrainArray
     {
@@ -49,7 +49,7 @@ namespace Tmx
         TerrainArray();
         ~TerrainArray();
 
-        // Parse a node containing all the terrain nodes.
+        /// Parse a node containing all the terrain nodes.
         void Parse(std::vector< Tmx::Terrain* > *terrainTypes, const tinyxml2::XMLNode *terrainArrayNode);
 
     };

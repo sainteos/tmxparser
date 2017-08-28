@@ -39,7 +39,10 @@
 #include "TmxMap.h"
 #include "TmxTileset.h"
 
+// Avoid nextParseOrder to be included in the documentation as it is an implementation detail that should not be considered as a part of the API.
+/// @cond INTERNAL
 int Tmx::Layer::nextParseOrder = 0;
+/// @endcond
 
 namespace Tmx 
 {
