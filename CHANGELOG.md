@@ -1,5 +1,46 @@
 # Changelog
 
+### Next release
+
+ * georgerbr:
+   - Make tileset parsing not depend on optional attrs of <image>
+
+ * Andrew Kelley:
+   - Add FindTmxParser.cmake example
+
+ * Wasabi2007:
+   - Added support for Collision Tiles
+   - Changed data format in Point from int to float to follow Tiled format (bugfix)
+
+ * Acedio:
+   - Adding missing library dependencies to TmxUtil.cpp
+
+ * Tigran Saluev:
+   - Add support for <image> in <tile>
+
+ * Richel Bilderbeek:
+   - Removed const return types
+
+ * Blazej Floch:
+   - Small changes to TmxPropertySet
+   - Better compatibility with cmake project as subdirectory
+
+ * Tamir Atias:
+   - Add support for typed properties (added in Tiled 0.16)
+
+ * Peter Asplund (AzP):
+   - Add C++11 requirement in CMakeLists.txt
+
+ * Solever Lee:
+   - added 'tilecount' and 'columns' properity for 'tileset' element
+
+ * Guillaume Bertholon (Sakarah):
+   - Add support for color and file property types (added in Tiled 0.17)
+   - Add Doxygen documentation
+
+ * Tardo:
+   - Get tile by index
+
 ### 2.0.1
 
  * georgerbr:
