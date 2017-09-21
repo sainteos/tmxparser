@@ -36,9 +36,9 @@ namespace tinyxml2 {
 namespace Tmx 
 {
     //-------------------------------------------------------------------------
-    // A class used for used to specify an offset in pixels,
-    // to be applied when drawing a tile from the related tileset.
-    // When not present, no offset is applied.
+    /// A class used for used to specify an offset in pixels,
+    /// to be applied when drawing a tile from the related tileset.
+    /// When not present, no offset is applied.
     //-------------------------------------------------------------------------
     class TileOffset
     {
@@ -46,13 +46,13 @@ namespace Tmx
         TileOffset();
         ~TileOffset();
 
-        // Parses a tileoffset element.
+        /// Parses a tileoffset element.
         void Parse(const tinyxml2::XMLNode *tileOffsetNode);
 
-        // Get the value of the x attribute of the tile offset. Horizontal offset in pixels.
+        /// Get the value of the x attribute of the tile offset. Horizontal offset in pixels.
         int GetX() const { return x; }
 
-        // Get the value of the y attribute of the tile offset. Vertical offset in pixels (positive is down).
+        /// Get the value of the y attribute of the tile offset. Vertical offset in pixels (positive is down).
         int GetY() const { return y; }
 
     private:

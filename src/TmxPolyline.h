@@ -38,20 +38,20 @@ namespace tinyxml2 {
 namespace Tmx
 {
     //-------------------------------------------------------------------------
-    // Class to store a Polyline of an Object.
+    /// Class to store a Polyline of an Object.
     //-------------------------------------------------------------------------
     class Polyline
     {
     public:
         Polyline();
 
-        // Parse the polyline node.
+        /// Parse the polyline node.
         void Parse(const tinyxml2::XMLNode *polylineNode);
 
-        // Get one of the vertices.
+        /// Get one of the vertices.
         const Tmx::Point &GetPoint(int index) const { return points[index]; }
 
-        // Get the number of vertices.
+        /// Get the number of vertices.
         int GetNumPoints() const { return points.size(); }
 
     private:

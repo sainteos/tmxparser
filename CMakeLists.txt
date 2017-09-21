@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 project(tmxparser)
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake ${CMAKE_MODULE_PATH})
 
 set(VERSION_MAJOR 2)
-set(VERSION_MINOR 0)
-set(VERSION_PATCH 1)
+set(VERSION_MINOR 1)
+set(VERSION_PATCH 0)
 
 set(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 set(CMAKE_CXX_STANDARD 11)
@@ -75,3 +75,11 @@ install(TARGETS tmxparser tmxparser_static DESTINATION lib)
 
 configure_file(src/tmxparser.pc.in tmxparser.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/tmxparser.pc DESTINATION lib/pkgconfig)
+
+# Build documentation
+find_package(Doxygen)
+
+if(DOXYGEN_FOUND)
+    configure_file(${PROJECT_SOURCE_DIR}/Doxyfile.in ${PROJECT_BINARY_DIR}/doc/Doxyfile @ONLY)
+    add_custom_target(doc ALL ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/doc/Doxyfile  COMMENT "Generating API documentation with Doxygen" VERBATIM)
+endif(DOXYGEN_FOUND)

@@ -37,7 +37,7 @@ namespace tinyxml2 {
 namespace Tmx 
 {
     //-------------------------------------------------------------------------
-    // A class used for storing information about an image within a tileset.
+    /// A class used for storing information about an image within a tileset.
     //-------------------------------------------------------------------------
     class Image 
     {
@@ -45,19 +45,19 @@ namespace Tmx
         Image();
         ~Image();
 
-        // Parses an image element.
+        /// Parses an image element.
         void Parse(const tinyxml2::XMLNode *imageNode);
 
-        // Get the path to the file of the image (relative to the map)
+        /// Get the path to the file of the image (relative to the map)
         const std::string &GetSource() const { return source; }
 
-        // Get the width of the image.
+        /// Get the width of the image.
         int GetWidth() const { return width; }
 
-        // Get the height of the image.
+        /// Get the height of the image.
         int GetHeight() const { return height; }
 
-        // Get the transparent color used in the image. If none is set return a fully transparent color
+        /// Get the transparent color used in the image. If none is set return a fully transparent color
         Tmx::Color GetTransparentColor() const
         { return transparent_color; }
 

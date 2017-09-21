@@ -29,6 +29,7 @@
 
 #include <string>
 
+#include "TmxLayer.h"
 #include "TmxPropertySet.h"
 #include "TmxMapTile.h"
 
@@ -41,7 +42,7 @@ namespace Tmx
     class Map;
 
     //-------------------------------------------------------------------------
-    // Type used for the encoding of the tile layer data.
+    /// Type used for the encoding of the tile layer data.
     //-------------------------------------------------------------------------
     enum TileLayerEncodingType 
     {
@@ -51,7 +52,7 @@ namespace Tmx
     };
 
     //-------------------------------------------------------------------------
-    // Type used for the compression of the tile layer data.
+    /// Type used for the compression of the tile layer data.
     //-------------------------------------------------------------------------
     enum TileLayerCompressionType 
     {
@@ -61,52 +62,56 @@ namespace Tmx
     };
 
     //-------------------------------------------------------------------------
-    // Used for storing information about the tile ids for every tile layer.
-    // This class also have a property set.
+    /// Used for storing information about the tile ids for every tile layer.
+    /// This class also have a property set.
     //-------------------------------------------------------------------------
     class TileLayer : public Tmx::Layer
     {
     private:
-        // Prevent copy constructor.
+        /// Prevent copy constructor.
         TileLayer(const TileLayer &_layer);
 
     public:
+        /// Construct a TileLayer on the given map.
         TileLayer(const Tmx::Map *_map);
         ~TileLayer();
 
-        // Parse a tile layer node.
+        /// Parse a tile layer node.
         void Parse(const tinyxml2::XMLNode *tileLayerNode);
 
-        // Pick a specific tile id from the list.
+        /// Pick a specific tile id from the list.
         unsigned GetTileId(int x, int y) const { return tile_map[y * width + x].id; }
 
-        // Pick a specific tile gid from the list.
+        /// Pick a specific tile gid from the list.
         unsigned GetTileGid(int x, int y) const { return tile_map[y * width + x].gid; }
 
-        // Get the tileset index for a tileset from the list.
+        /// Get the tileset index for a tileset from the list.
         int GetTileTilesetIndex(int x, int y) const { return tile_map[y * width + x].tilesetId; }
 
-        // Get whether a tile is flipped horizontally.
+        /// Get whether a tile is flipped horizontally.
         bool IsTileFlippedHorizontally(int x, int y) const 
         { return tile_map[y * width + x].flippedHorizontally; }
 
-        // Get whether a tile is flipped vertically.
+        /// Get whether a tile is flipped vertically.
         bool IsTileFlippedVertically(int x, int y) const 
         { return tile_map[y * width + x].flippedVertically; }
 
-        // Get whether a tile is flipped diagonally.
+        /// Get whether a tile is flipped diagonally.
         bool IsTileFlippedDiagonally(int x, int y) const
         { return tile_map[y * width + x].flippedDiagonally; }
 
-        // Get a tile specific to the map.
+        /// Get the tile at the given position.
         const Tmx::MapTile& GetTile(int x, int y) const { return tile_map[y * width + x]; }
 
-        // Get the type of encoding that was used for parsing the tile layer data.
-        // See: TileLayerEncodingType
+        /// Get a tile by its index.
+        const Tmx::MapTile& GetTile(int index) const { return tile_map[index]; }
+
+        /// Get the type of encoding that was used for parsing the tile layer data.
+        /// See: TileLayerEncodingType
         Tmx::TileLayerEncodingType GetEncoding() const { return encoding; }
 
-        // Get the type of compression that was used for parsing the tile layer data.
-        // See: TileLayerCompressionType
+        /// Get the type of compression that was used for parsing the tile layer data.
+        /// See: TileLayerCompressionType
         Tmx::TileLayerCompressionType GetCompression() const { return compression; }
 
     private:

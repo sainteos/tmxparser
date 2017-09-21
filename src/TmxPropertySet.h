@@ -42,7 +42,7 @@ namespace Tmx
     class Property;
 
     //-----------------------------------------------------------------------------
-    // This class contains a map of properties.
+    /// This class contains a map of properties.
     //-----------------------------------------------------------------------------
     class PropertySet
     {
@@ -50,35 +50,35 @@ namespace Tmx
         PropertySet();
         ~PropertySet();
 
-        // Parse a node containing all the property nodes.
+        /// Parse a node containing all the property nodes.
         void Parse(const tinyxml2::XMLNode *propertiesNode);
 
-        // Get a int property.
+        /// Get a int property.
         int GetIntProperty(const std::string &name, int defaultValue = 0) const;
-        // Get a float property.
+        /// Get a float property.
         float GetFloatProperty(const std::string &name, float defaultValue = 0.0f) const;
-        // Get a string property.
+        /// Get a string property.
         std::string GetStringProperty(const std::string &name, std::string defaultValue = "") const;
-        // Get a bool property.
+        /// Get a bool property.
         bool GetBoolProperty(const std::string &name, bool defaultValue = false) const;
-        // Get a color property.
+        /// Get a color property.
         Tmx::Color GetColorProperty(const std::string &name, Tmx::Color defaultValue = Tmx::Color()) const;
 
-        // Returns the amount of properties.
+        /// Returns the amount of properties.
         int GetSize() const { return properties.size(); }
 
-        // Checks if a property exists in the set.
+        /// Checks if a property exists in the set.
         bool HasProperty( const std::string& name ) const;
 
-        // Returns the unordered map of properties.
+        /// Returns the unordered map of properties.
         const std::unordered_map< std::string, Property > &GetPropertyMap() const
         { return properties; }
 
-        // Returns the STL map of the properties.
-        // Deprecated, please use GetPropertyMap() instead.
+        /// Returns the STL map of the properties.
+        /// Deprecated, please use GetPropertyMap() instead.
         std::map< std::string, std::string > GetList() const;
 
-        // Returns whether there are no properties.
+        /// Returns whether there are no properties.
         bool Empty() const { return properties.empty(); }
 
     private:

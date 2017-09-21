@@ -37,11 +37,11 @@ namespace Tmx
     const unsigned FlippedDiagonallyFlag   = 0x20000000;
 
     //-------------------------------------------------------------------------
-    // Struct to store information about a specific tile in the map layer.
+    /// Struct to store information about a specific tile in the map layer.
     //-------------------------------------------------------------------------
     struct MapTile 
     {
-        // Default constructor.
+        /// Default constructor.
         MapTile()
             : tilesetId(0)
             , id(0)
@@ -50,8 +50,8 @@ namespace Tmx
             , flippedDiagonally(false)
         {}
 
-        // Will take a gid and read the attributes from the first
-        // two bits of it.
+        /// Will take a gid and read the attributes from the first
+        /// two bits of it.
         MapTile(unsigned _gid, int _tilesetFirstGid, unsigned _tilesetId)
             : tilesetId(_tilesetId)
             , id(_gid & ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag))
@@ -63,22 +63,22 @@ namespace Tmx
             id -= _tilesetFirstGid;
         }
 
-        // Tileset id.
+        /// Tileset id.
         int tilesetId;
 
-        // Id.
+        /// Id.
         unsigned id;
 
-        // Gid.
+        /// Gid.
         unsigned gid;
 
-        // True when the tile should be drawn flipped horizontally.
+        /// True when the tile should be drawn flipped horizontally.
         bool flippedHorizontally;
 
-        // True when the tile should be drawn flipped vertically.
+        /// True when the tile should be drawn flipped vertically.
         bool flippedVertically;
 
-        // True when the tile should be drawn flipped diagonally.
+        /// True when the tile should be drawn flipped diagonally.
         bool flippedDiagonally;
     };
 }

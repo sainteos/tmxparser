@@ -37,62 +37,62 @@ namespace tinyxml2 {
 namespace Tmx
 {
     //-------------------------------------------------------------------------
-    // The type of a property.
+    /// The type of a property.
     //-------------------------------------------------------------------------
     enum PropertyType
     {
-        // A string property (default)
+        /// A string property (default)
         TMX_PROPERTY_STRING,
 
-        // A boolean property
+        /// A boolean property
         TMX_PROPERTY_BOOL,
 
-        // An integer property
+        /// An integer property
         TMX_PROPERTY_INT,
 
-        // A floating point property
+        /// A floating point property
         TMX_PROPERTY_FLOAT,
 
-        // A color property
+        /// A color property
         TMX_PROPERTY_COLOR,
 
-        // A file property
+        /// A file property
         TMX_PROPERTY_FILE
     };
 
     //-------------------------------------------------------------------------
-    // Used to store a (typed) property.
+    /// Used to store a (typed) property.
     //-------------------------------------------------------------------------
     class Property
     {
     public:
         Property();
 
-        // Parse the property element.
+        /// Parse the property element.
         void Parse(const tinyxml2::XMLElement *propertyElem);
 
-        // Get the type of the property (default: TMX_PROPERTY_STRING)
+        /// Get the type of the property (default: TMX_PROPERTY_STRING)
         PropertyType GetType() const { return type; }
 
-        // Check if the property is of a certain type.
+        /// Check if the property is of a certain type.
         bool IsOfType(PropertyType type) const { return GetType() == type; }
 
-        // Return the value of the property.
+        /// Return the value of the property.
         const std::string &GetValue() const { return value; }
 
-        // Return whether the value is empty or was not specified.
+        /// Return whether the value is empty or was not specified.
         bool IsValueEmpty() const { return value.empty(); }
 
-        // Convert the value to a boolean and return it (or the default value if not a boolean.)
+        /// Convert the value to a boolean and return it (or the default value if not a boolean.)
         bool GetBoolValue(bool defaultValue = false) const;
 
-        // Convert the value to an integer and return it (or the default value if not an integer).
+        /// Convert the value to an integer and return it (or the default value if not an integer).
         int GetIntValue(int defaultValue = 0) const;
 
-        // Convert the value to a float and return it (or the default value if not a float).
+        /// Convert the value to a float and return it (or the default value if not a float).
         float GetFloatValue(float defaultValue = 0.0f) const;
 
-        // Convert the value to a color and return it (or the default value if not a color).
+        /// Convert the value to a color and return it (or the default value if not a color).
         Tmx::Color GetColorValue(Tmx::Color defaultValue = Tmx::Color()) const;
     private:
         PropertyType type;

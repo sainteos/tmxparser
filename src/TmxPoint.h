@@ -30,11 +30,11 @@
 namespace Tmx
 {
     //-------------------------------------------------------------------------
-    // Used to store a vertex of a Polygon/Polyline.
+    /// Used to store a vertex of a Polygon/Polyline.
     //-------------------------------------------------------------------------
     struct Point
     {
-        float x;
-        float y;
+        float x; ///< X coordinate
+        float y; ///< Y coordinate
     };
 }
