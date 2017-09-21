@@ -46,9 +46,9 @@ int main(int argc, char * argv[])
 
     printf("Version: %1.1f\n", map->GetVersion());
     printf("Orientation: %d\n", map->GetOrientation());
-    if (!map->GetBackgroundColor().empty())
+    if (!map->GetBackgroundColor().IsTransparent())
         printf("Background Color (hex): %s\n",
-               map->GetBackgroundColor().c_str());
+               map->GetBackgroundColor().ToString().c_str());
     printf("Render Order: %d\n", map->GetRenderOrder());
     if (map->GetStaggerAxis())
         printf("Stagger Axis: %d\n", map->GetStaggerAxis());
@@ -134,9 +134,9 @@ int main(int argc, char * argv[])
         printf("Image Width: %d\n", tileset->GetImage()->GetWidth());
         printf("Image Height: %d\n", tileset->GetImage()->GetHeight());
         printf("Image Source: %s\n", tileset->GetImage()->GetSource().c_str());
-        if (!tileset->GetImage()->GetTransparentColor().empty())
+        if (!tileset->GetImage()->GetTransparentColor().IsTransparent())
             printf("Transparent Color (hex): %s\n",
-                   tileset->GetImage()->GetTransparentColor().c_str());
+                   tileset->GetImage()->GetTransparentColor().ToString().c_str());
 
         if (tileset->GetTiles().size() > 0)
         {

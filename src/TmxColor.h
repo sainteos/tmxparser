@@ -76,6 +76,9 @@ namespace Tmx
         /// Get the blue component of the color.
         uint8_t GetBlue() const;
 
+        /// Return true if the color is fully transparent (ie alpha value is 0).
+        bool IsTransparent() const;
+      
         /// Get the 32 bits integer representing the color. The 8 highest bits are for the alpha channel, then the red, the green and the blue.
         uint32_t ToInt() const { return color; }
 

@@ -57,7 +57,7 @@ namespace Tmx
 
         if (objectGroupElem->Attribute("color"))
         {
-            color = objectGroupElem->Attribute("color");
+            color = Tmx::Color(objectGroupElem->Attribute("color"));
         }
         
         objectGroupElem->QueryFloatAttribute("opacity", &opacity);

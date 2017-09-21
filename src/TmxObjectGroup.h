@@ -63,13 +63,13 @@ namespace Tmx
         int GetNumObjects() const { return objects.size(); }
 
         /// Get the color used to display the objects in this group.
-        const std::string &GetColor() const { return color; }
+        Tmx::Color GetColor() const { return color; }
 
         /// Get the whole list of objects.
         const std::vector< Tmx::Object* > &GetObjects() const { return objects; }
 
     private:
-        std::string color;
+        Tmx::Color color;
 
         std::vector< Tmx::Object* > objects;
     };
