@@ -29,28 +29,27 @@
 #include "TmxLayer.h"
 #include "TmxPropertySet.h"
 
-//class TiXmlNode;
-
 namespace Tmx 
 {
     class Map;
     class Image;
 
     //-------------------------------------------------------------------------
-    // A class used for holding information about a background image.
-    // This class has a property set.
+    /// A class used for holding information about a background image.
+    /// This class has a property set.
     //-------------------------------------------------------------------------
     class ImageLayer : public Tmx::Layer
     {
     public:
+        /// Construct an ImageLayer on the given map.
         ImageLayer(const Tmx::Map *_map);
         ~ImageLayer();
 
-        // Parse a ImageLayer element.
+        /// Parse a ImageLayer element.
         void Parse(const tinyxml2::XMLNode *imageLayerNode);
 
-        // Returns a variable containing information 
-        // about the image of the ImageLayer.
+        /// Returns a variable containing information
+        /// about the image of the ImageLayer.
         const Tmx::Image* GetImage() const { return image; }
 
     private:

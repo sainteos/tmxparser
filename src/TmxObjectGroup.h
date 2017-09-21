@@ -42,28 +42,30 @@ namespace Tmx
     class Object;
     
     //-------------------------------------------------------------------------
-    // A class used for holding a list of objects.
-    // This class has a property set.
+    /// A class used for holding a list of objects.
+    /// This class has a property set.
     //-------------------------------------------------------------------------
     class ObjectGroup : public Tmx::Layer
     {
     public:
+        /// Construct a new ObjectGroup
         ObjectGroup(const Tmx::Map *_map);
+
         ~ObjectGroup();
 
-        // Parse an objectgroup node.
+        /// Parse an objectgroup node.
         void Parse(const tinyxml2::XMLNode *objectGroupNode);
 
-        // Get a single object.
+        /// Get a single object.
         const Tmx::Object *GetObject(int index) const { return objects.at(index); }
 
-        // Get the number of objects in the list.
+        /// Get the number of objects in the list.
         int GetNumObjects() const { return objects.size(); }
 
-        // Get the color used to display the objects in this group.
+        /// Get the color used to display the objects in this group.
         const std::string &GetColor() const { return color; }
 
-        // Get the whole list of objects.
+        /// Get the whole list of objects.
         const std::vector< Tmx::Object* > &GetObjects() const { return objects; }
 
     private:

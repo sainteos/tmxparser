@@ -48,7 +48,7 @@ namespace Tmx
     };
 
     //-------------------------------------------------------------------------
-    // Base class for other layer types.
+    /// Base class for other layer types.
     //-------------------------------------------------------------------------
     class Layer 
     {
@@ -57,51 +57,56 @@ namespace Tmx
         Layer(const Layer &_layer);
 
     public:
-        Layer(const Tmx::Map *_map, const std::string _name, const int _x, const int _y, const int _width, const int _height, const float _opacity, const bool _visible, const LayerType _layerType);
+        /// Construct a new Layer.
+        Layer(const Tmx::Map *_map, const std::string _name, const int _x, const int _y,
+              const int _width, const int _height, const float _opacity, const bool _visible, const LayerType _layerType);
+
         virtual ~Layer();
 
-        // Parse a layer element.
+        /// Parse a layer element.
         virtual void Parse(const tinyxml2::XMLNode *layerNode) = 0;
 
-        // Get the pointer to the parent map.
+        /// Get the pointer to the parent map.
         const Tmx::Map *mapGetMap() const { return map; }
 
-        // Get the name of the layer.
+        /// Get the name of the layer.
         const std::string &GetName() const { return name; }
 
-        // Get the value of the x attribute of the layer. Means different things for different layer types.
+        /// Get the value of the x attribute of the layer. Means different things for different layer types.
         int GetX() const { return x; }
 
-        // Get the value of the y attribute of the layer. Means different things for different layer types.
+        /// Get the value of the y attribute of the layer. Means different things for different layer types.
         int GetY() const { return y; }
 
-        // Get the width of the layer, in tiles. Only used in tile layers.
+        /// Get the width of the layer, in tiles. Only used in tile layers.
         int GetWidth() const { return width; }
 
-        // Get the height of the layer, in tiles. Only used in tile layers.
+        /// Get the height of the layer, in tiles. Only used in tile layers.
         int GetHeight() const { return height; }
 
+        /// Get the opacity of the layer.
         float GetOpacity() const { return opacity; }
 
-        // Get the visibility of the layer
+        /// Get the visibility of the layer
         bool IsVisible() const { return visible; }
 
-        // Get the property set.
+        /// Get the property set.
         const Tmx::PropertySet &GetProperties() const { return properties; }
 
-        // Get the zorder of the layer.
+        /// Get the zorder of the layer.
         int GetZOrder() const { return zOrder; }
 
-        // Set the zorder of the layer.
+        /// Set the zorder of the layer.
         void SetZOrder( int z ) { zOrder = z; }
 
-        // Get the parse order of the layer.
+        /// Get the parse order of the layer.
         int GetParseOrder() const { return parseOrder; }
 
-        // Get the type of the layer.
+        /// Get the type of the layer.
         Tmx::LayerType GetLayerType() const { return layerType; }
 
     protected:
+        /// @cond INTERNAL
         const Tmx::Map *map;
 
         std::string name;
@@ -121,5 +126,6 @@ namespace Tmx
         Tmx::PropertySet properties;
 
         static int nextParseOrder;
+        /// @endcond
     };
 }
