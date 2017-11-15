@@ -22,7 +22,7 @@ This project is forked from https://code.google.com/p/tmx-parser/ because:
 
 ## Features
 
- * Conformity with the [TMX specification page](https://github.com/bjorn/tiled/wiki/TMX-Map-Format).
+ * Conformity with the [TMX specification page](http://doc.mapeditor.org/en/latest/reference/tmx-map-format/).
  * Decodes and decompresses tile data.
  * Can parse properties as both integers, real numbers and literals (strings).
  * Can parse the map file when stored in memory.
