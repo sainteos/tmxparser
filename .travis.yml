@@ -1,0 +1,27 @@
+language: cpp
+compiler: clang
+sudo: true
+branches:
+  only: ci
+
+os:
+  - osx
+  - linux
+
+before_install:
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq -y update fi
+  - if [ $TRAVIS_OS_NAME] = osx]; then brew update fi
+
+install:
+  - if [ $TRAVIS_OS_NAME = linux ]; then sh build_scripts/linux_build fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then sh build_scripts/osx_build fi
+
+script:
+  - mkdir build && cd build
+  - cmake ..
+  - make
+
+after_script:
+  - ls
+  - mkdir artifacts && mkdir ./artifacts/include && mkdir ./artifacts/lib
+  - mv *.h ./artifacts/include/
