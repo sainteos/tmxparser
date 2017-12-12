@@ -1,4 +1,5 @@
 brew install zlib
+brew install doxygen
 cd ~ && git clone https://github.com/leethomason/tinyxml2.git && cd tinyxml2 && \
     git checkout tags/5.0.1
 make

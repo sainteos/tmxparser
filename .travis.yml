@@ -21,7 +21,7 @@ script:
   - cmake ..
   - make
   - ls
-  - mv run_tests ../test/ && cd ../test/ && ./run_tests
+  - mv run_tests ../test/ && cd ../test/ && ./run_tests && cd ../build/
 
 after_success:
   - ls
@@ -29,3 +29,7 @@ after_success:
   - mv *.h ./artifacts/include/
   - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
+
+after_script:
+  - cd ..
+  - doxygen . 
