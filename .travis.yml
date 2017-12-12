@@ -20,13 +20,11 @@ script:
   - mkdir build && cd build
   - cmake ..
   - make
+  - cd ../test && ./run_tests && cd ../build
 
 after_success:
   - ls
   - mkdir artifacts && mkdir ./artifacts/include && mkdir ./artifacts/lib
   - mv *.h ./artifacts/include/
   - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
-  - if [ $TRAVIS_OS_NAME = osx ]; then mv *.dylib ./artifacts/lib/; fi
-
-before_deploy:
-  - cd ../test && ./run_tests
+  - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
