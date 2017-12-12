@@ -1,2 +1,2 @@
-brew install tinyxml2
+brew install tinyxml2@5.0.1
 brew install zlib
