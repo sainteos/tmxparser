@@ -20,7 +20,8 @@ script:
   - mkdir build && cd build
   - cmake ..
   - make
-  - ./run_tests
+  - ls
+  - mv run_tests ../test/ && cd ../test/ && ./run_tests
 
 after_success:
   - ls
