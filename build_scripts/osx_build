@@ -2,5 +2,6 @@ brew install zlib
 cd ~ && git clone https://github.com/leethomason/tinyxml2.git && cd tinyxml2 && \
     git checkout tags/5.0.1
 make
-export PATH=$PATH:$(pwd)
+cp libtinyxml2.a /usr/local/lib/
+cp tinyxml2.h /usr/local/include/
 cd ~
