@@ -21,7 +21,10 @@ script:
   - cmake ..
   - make
 
-after_script:
+after_success:
   - ls
   - mkdir artifacts && mkdir ./artifacts/include && mkdir ./artifacts/lib
   - mv *.h ./artifacts/include/
+
+before_deploy:
+  - cd ../test && ./run_tests
