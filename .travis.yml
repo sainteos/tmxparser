@@ -31,5 +31,5 @@ after_success:
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
 
 after_script:
-  - cd ..
-  - doxygen . 
+  - ls
+  - git clone $DOCS_REPO
