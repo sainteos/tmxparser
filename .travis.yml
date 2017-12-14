@@ -11,6 +11,9 @@ os:
 before_install:
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq -y update; fi
   - if [ $TRAVIS_OS_NAME = osx]; then brew update; fi
+  - openssl aes-256-cbc -K $encrypted_04e9769beb1e_key -iv $encrypted_04e9769beb1e_iv -in deploy-key.enc -out deploy-key -d
+  - git config user.name "DocBot"
+  - git config user.email "adaleigh.martin@gmail.com"
 
 install:
   - if [ $TRAVIS_OS_NAME = linux ]; then sh build_scripts/linux_build; fi
@@ -31,9 +34,9 @@ after_success:
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
 
 after_script:
-  - echo $DOCS_REPO_PRIVATE_KEY >> ~/.ssh/id_rsa
   - git clone $DOCS_REPO
   - rm -rf $DOCS_REPO/*
   - mv doc/* $DOCS_REPO/
   - cd $DOCS_REPO
-  - git push
+  - git commit -a -m "Documentation update!"
+  - git push origin master
