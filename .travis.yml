@@ -37,9 +37,9 @@ after_success:
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
 
 after_script:
-  - if [ $TRAVIS_OS_NAME = linux ]; git clone $DOCS_REPO
-  - if [ $TRAVIS_OS_NAME = linux ]; cd $REPO_NAME && rm -rf *
-  - if [ $TRAVIS_OS_NAME = linux ]; mv ../doc/html/* .
-  - if [ $TRAVIS_OS_NAME = linux ]; git add *
-  - if [ $TRAVIS_OS_NAME = linux ]; git commit -m "Documentation update!"
-  - if [ $TRAVIS_OS_NAME = linux ]; git push origin master
+  - if [ $TRAVIS_OS_NAME = linux ]; git clone $DOCS_REPO; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; cd $REPO_NAME && rm -rf *; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; mv ../doc/html/* .; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; git add *; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; git commit -m "Documentation update!"; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; git push origin master; fi
