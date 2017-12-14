@@ -31,5 +31,8 @@ after_success:
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
 
 after_script:
-  - ls
+  - echo $DOCS_REPO_PRIVATE_KEY >> ~/.ssh/id_rsa
   - git clone $DOCS_REPO
+  - mv doc/* $DOCS_REPO/
+  - cd $DOCS_REPO
+  - git push
