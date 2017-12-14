@@ -12,6 +12,9 @@ before_install:
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq -y update; fi
   - if [ $TRAVIS_OS_NAME = osx]; then brew update; fi
   - openssl aes-256-cbc -K $encrypted_04e9769beb1e_key -iv $encrypted_04e9769beb1e_iv -in deploy-key.enc -out deploy-key -d
+  - chmod 600 deploy-key
+  - eval `ssh-agent -s`
+  - ssh-add deploy-key
   - git config user.name "DocBot"
   - git config user.email "adaleigh.martin@gmail.com"
 
