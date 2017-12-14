@@ -40,8 +40,7 @@ after_script:
   - git clone $DOCS_REPO
   - ls
   - cd $REPO_NAME && rm -rf *
-  - ls
   - mv ../doc/* .
-  - ls
-  - git commit -a -m "Documentation update!"
+  - git add *
+  - git commit -m "Documentation update!"
   - git push origin master
