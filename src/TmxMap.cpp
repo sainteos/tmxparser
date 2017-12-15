@@ -38,9 +38,9 @@
 using std::vector;
 using std::string;
 
-namespace Tmx 
+namespace Tmx
 {
-    Map::Map() 
+    Map::Map()
         : file_name()
         , file_path()
         , background_color()
@@ -58,20 +58,20 @@ namespace Tmx
         , layers()
         , tile_layers()
         , object_groups()
-        , tilesets() 
+        , tilesets()
         , has_error(false)
         , error_code(0)
         , error_text()
     {}
 
-    Map::~Map() 
+    Map::~Map()
     {
         // Iterate through all of the object groups and delete each of them.
         vector< ObjectGroup* >::iterator ogIter;
-        for (ogIter = object_groups.begin(); ogIter != object_groups.end(); ++ogIter) 
+        for (ogIter = object_groups.begin(); ogIter != object_groups.end(); ++ogIter)
         {
             ObjectGroup *objectGroup = (*ogIter);
-            
+
             if (objectGroup)
             {
                 delete objectGroup;
@@ -81,11 +81,11 @@ namespace Tmx
 
         // Iterate through all of the tile layers and delete each of them.
         vector< TileLayer* >::iterator tlIter;
-        for (tlIter = tile_layers.begin(); tlIter != tile_layers.end(); ++tlIter) 
+        for (tlIter = tile_layers.begin(); tlIter != tile_layers.end(); ++tlIter)
         {
             TileLayer *layer = (*tlIter);
 
-            if (layer) 
+            if (layer)
             {
                 delete layer;
                 layer = NULL;
@@ -94,11 +94,11 @@ namespace Tmx
 
         // Iterate through all of the image layers and delete each of them.
         vector< ImageLayer* >::iterator ilIter;
-        for (ilIter = image_layers.begin(); ilIter != image_layers.end(); ++ilIter) 
+        for (ilIter = image_layers.begin(); ilIter != image_layers.end(); ++ilIter)
         {
             ImageLayer *layer = (*ilIter);
 
-            if (layer) 
+            if (layer)
             {
                 delete layer;
                 layer = NULL;
@@ -107,11 +107,11 @@ namespace Tmx
 
         // Iterate through all of the tilesets and delete each of them.
         vector< Tileset* >::iterator tsIter;
-        for (tsIter = tilesets.begin(); tsIter != tilesets.end(); ++tsIter) 
+        for (tsIter = tilesets.begin(); tsIter != tilesets.end(); ++tsIter)
         {
             Tileset *tileset = (*tsIter);
-            
-            if (tileset) 
+
+            if (tileset)
             {
                 delete tileset;
                 tileset = NULL;
@@ -119,18 +119,18 @@ namespace Tmx
         }
     }
 
-    void Map::ParseFile(const string &fileName) 
+    void Map::ParseFile(const string &fileName)
     {
         file_name = fileName;
 
         int lastSlash = fileName.find_last_of("/");
 
         // Get the directory of the file using substring.
-        if (lastSlash > 0) 
+        if (lastSlash > 0)
         {
             file_path = fileName.substr(0, lastSlash + 1);
-        } 
-        else 
+        }
+        else
         {
             file_path = "";
         }
@@ -144,7 +144,7 @@ namespace Tmx
         {
             has_error = true;
             error_code = TMX_PARSING_ERROR;
-            error_text = doc.GetErrorStr1();
+            error_text = doc.ErrorStr();
             return;
         }
 
@@ -152,18 +152,18 @@ namespace Tmx
         Parse( mapNode );
     }
 
-    void Map::ParseText(const string &text) 
+    void Map::ParseText(const string &text)
     {
         // Create a tiny xml document and use it to parse the text.
         tinyxml2::XMLDocument doc;
         doc.Parse(text.c_str());
-    
+
         // Check for parsing errors.
-        if (doc.Error()) 
+        if (doc.Error())
         {
             has_error = true;
             error_code = TMX_PARSING_ERROR;
-            error_text = doc.GetErrorStr1();
+            error_text = doc.ErrorStr();
             return;
         }
 
@@ -176,29 +176,29 @@ namespace Tmx
         // Clean up the flags from the gid (thanks marwes91).
         gid &= ~(FlippedHorizontallyFlag | FlippedVerticallyFlag | FlippedDiagonallyFlag);
 
-        for (int i = tilesets.size() - 1; i > -1; --i) 
+        for (int i = tilesets.size() - 1; i > -1; --i)
         {
             // If the gid beyond the tileset gid return its index.
-            if (gid >= tilesets[i]->GetFirstGid()) 
+            if (gid >= tilesets[i]->GetFirstGid())
             {
                 return i;
             }
         }
-        
+
         return -1;
     }
 
-    const Tileset *Map::FindTileset(int gid) const 
+    const Tileset *Map::FindTileset(int gid) const
     {
-        for (int i = tilesets.size() - 1; i > -1; --i) 
+        for (int i = tilesets.size() - 1; i > -1; --i)
         {
             // If the gid beyond the tileset gid return it.
-            if (gid >= tilesets[i]->GetFirstGid()) 
+            if (gid >= tilesets[i]->GetFirstGid())
             {
                 return tilesets[i];
             }
         }
-        
+
         return NULL;
     }
 
@@ -225,7 +225,7 @@ namespace Tmx
         if (!orientationStr.compare("orthogonal"))
         {
             orientation = TMX_MO_ORTHOGONAL;
-        } 
+        }
         else if (!orientationStr.compare("isometric"))
         {
             orientation = TMX_MO_ISOMETRIC;
@@ -243,22 +243,22 @@ namespace Tmx
         if (mapElem->Attribute("renderorder"))
         {
             std::string renderorderStr = mapElem->Attribute("renderorder");
-            if (!renderorderStr.compare("right-down")) 
+            if (!renderorderStr.compare("right-down"))
             {
                 render_order = TMX_RIGHT_DOWN;
-            } 
-            else if (!renderorderStr.compare("right-up")) 
+            }
+            else if (!renderorderStr.compare("right-up"))
             {
                 render_order = TMX_RIGHT_UP;
             }
-            else if (!renderorderStr.compare("left-down")) 
+            else if (!renderorderStr.compare("left-down"))
             {
                 render_order = TMX_LEFT_DOWN;
             }
-            else if (!renderorderStr.compare("left-down")) 
+            else if (!renderorderStr.compare("left-down"))
             {
                 render_order = TMX_LEFT_UP;
-            }        
+            }
         }
 
         // Read the stagger axis
@@ -302,7 +302,7 @@ namespace Tmx
             // Read the map properties.
             if( strcmp( node->Value(), "properties" ) == 0 )
             {
-                properties.Parse(node);         
+                properties.Parse(node);
             }
 
             // Iterate through all of the tileset elements.
@@ -316,7 +316,7 @@ namespace Tmx
                 tilesets.push_back(tileset);
             }
 
-            // Iterate through all of the "layer" (tile layer) elements.           
+            // Iterate through all of the "layer" (tile layer) elements.
             if( strcmp( node->Value(), "layer" ) == 0 )
             {
                 // Allocate a new tile layer and parse it.
@@ -328,7 +328,7 @@ namespace Tmx
                 layers.push_back(tileLayer);
             }
 
-            // Iterate through all of the "imagelayer" (image layer) elements.            
+            // Iterate through all of the "imagelayer" (image layer) elements.
             if( strcmp( node->Value(), "imagelayer" ) == 0 )
             {
                 // Allocate a new image layer and parse it.
@@ -346,7 +346,7 @@ namespace Tmx
                 // Allocate a new object group and parse it.
                 ObjectGroup *objectGroup = new ObjectGroup(this);
                 objectGroup->Parse(node);
-        
+
                 // Add the object group to the lists.
                 object_groups.push_back(objectGroup);
                 layers.push_back(objectGroup);
