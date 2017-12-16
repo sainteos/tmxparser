@@ -51,6 +51,9 @@ namespace Tmx
         /// Construct a new ObjectGroup
         ObjectGroup(const Tmx::Map *_map);
 
+				/// Construct a new ObjectGroup used by a Tile
+				ObjectGroup(const Tmx::Tile *_tile);
+				
         ~ObjectGroup();
 
         /// Parse an objectgroup node.
@@ -67,10 +70,14 @@ namespace Tmx
 
         /// Get the whole list of objects.
         const std::vector< Tmx::Object* > &GetObjects() const { return objects; }
+				
+				/// Get the property set.
+				const Tmx::PropertySet &GetProperties() const { return properties; }
 
     private:
         Tmx::Color color;
 
         std::vector< Tmx::Object* > objects;
+				Tmx::PropertySet properties;
     };
 }

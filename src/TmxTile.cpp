@@ -33,11 +33,11 @@
 namespace Tmx
 {
     Tile::Tile() :
-            id(0), properties(), isAnimated(false),hasObjects(false), totalDuration(0), image(NULL)
+            id(0), properties(), isAnimated(false), hasObjects(false), hasObjectGroup(false), objectGroup(NULL), totalDuration(0), image(NULL)
     {
     }
     Tile::Tile(int id) :
-            id(id), properties(), isAnimated(false),hasObjects(false), totalDuration(0), image(NULL)
+            id(id), properties(), isAnimated(false), hasObjects(false), hasObjectGroup(false), objectGroup(NULL), totalDuration(0), image(NULL)
     {
     }
 
@@ -48,6 +48,11 @@ namespace Tmx
             delete image;
             image = NULL;
         }
+				if (objectGroup)
+				{
+					delete objectGroup;
+					objectGroup = NULL;
+				}
     }
 
     void Tile::Parse(const tinyxml2::XMLNode *tileNode)
@@ -95,27 +100,17 @@ namespace Tmx
 
             totalDuration = durationSum;
         }
-
-        const tinyxml2::XMLNode *collisionNode = tileNode->FirstChildElement(
+				
+        const tinyxml2::XMLNode *objectGroupNode = tileNode->FirstChildElement(
                 "objectgroup");
-        if (collisionNode)
+        if (objectGroupNode)
         {
-            const tinyxml2::XMLNode *objectNode =
-                    collisionNode->FirstChildElement("object");
-            hasObjects = true;
-
-            while (objectNode != NULL)
-            {
-                const tinyxml2::XMLElement *objectElement =
-                        objectNode->ToElement();
-
-                Object *object = new Object();
-                object->Parse(objectElement);
-
-                objects.push_back(object);
-
-                objectNode = objectNode->NextSiblingElement("object");
-            }
+						hasObjectGroup = true;
+						//let's only create objectGroup if it's needed, save memory
+						objectGroup = new ObjectGroup(this);
+						objectGroup->Parse(objectGroupNode);
+						if (objectGroup->GetNumObjects() > 0) hasObjects = true;
+						
         }
 
         const tinyxml2::XMLNode *imageNode = tileNode->FirstChildElement("image");
