@@ -27,6 +27,8 @@
 
 #include "TmxPropertySet.h"
 #include "TmxImage.h"
+#include "TmxObjectGroup.h"
+#include <stdexcept>
 
 namespace tinyxml2
 {
@@ -98,11 +100,25 @@ namespace Tmx
         {
             return properties;
         }
-
-        /// Get set of Collision Objects
+				
+				//// Get the object group, which contains additional tile properties
+				const Tmx::ObjectGroup *GetObjectGroup() const
+				{
+						return objectGroup;
+				}
+				
+				//// Get the object group's properties, convenience function
+				const Tmx::PropertySet &GetObjectGroupProperties() const
+				{
+						if (!objectGroup) throw std::runtime_error ("Tile has no ObjectGroup on attempt to get ObjectGroup properties.  Cannot return null ref.");
+						return objectGroup->GetProperties();
+				}
+				
+        /// Get set of Collision Objects, convenience function
         std::vector<Tmx::Object*> GetObjects() const
         {
-            return objects;
+						if (!objectGroup) throw std::out_of_range ("Tile has no objectGroup");
+            return objectGroup->GetObjects();
         }
 
         /// Returns true if tile has Collision Objects
@@ -114,13 +130,15 @@ namespace Tmx
         /// Get a single object.
         const Tmx::Object *GetObject(int index) const
         {
-            return objects.at(index);
+						if (!objectGroup) throw std::out_of_range ("Tile has no objectGroup");
+            return objectGroup->GetObject(index);
         }
 
         /// Get the number of objects in the list.
         int GetNumObjects() const
         {
-            return objects.size();
+						if (!objectGroup) throw std::out_of_range ("Tile has no objectGroup");
+            return objectGroup->GetNumObjects();
         }
 
     private:
@@ -130,7 +148,8 @@ namespace Tmx
 
         bool isAnimated;
         bool hasObjects;
-        std::vector<Tmx::Object*> objects;
+				bool hasObjectGroup;
+				Tmx::ObjectGroup *objectGroup;
         unsigned int totalDuration;
         std::vector<AnimationFrame> frames;
         Tmx::Image* image;

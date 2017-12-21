@@ -39,6 +39,12 @@ namespace Tmx
         , objects()
     {}
 
+		ObjectGroup::ObjectGroup(const Tmx::Tile *_tile)
+        : Layer(_tile, std::string(), 0, 0, 0, 0, 1.0f, true, TMX_LAYERTYPE_OBJECTGROUP)
+        , color()
+        , objects()
+    {}
+			
     ObjectGroup::~ObjectGroup() 
     {
         for(std::size_t i = 0; i < objects.size(); i++)
@@ -52,8 +58,8 @@ namespace Tmx
     {
         const tinyxml2::XMLElement *objectGroupElem = objectGroupNode->ToElement();
 
-        // Read the object group attributes.
-        name = objectGroupElem->Attribute("name");
+        // Read the object group attributes, set to unknown if not defined in XML
+				objectGroupElem->Attribute("name") != NULL ? name = objectGroupElem->Attribute("name"): name = "unknown";
 
         if (objectGroupElem->Attribute("color"))
         {
