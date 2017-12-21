@@ -47,7 +47,7 @@ after_success:
   - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
   #Grab Verson from latest tag
-  - export VERSION=`git describe --tags $(git rev-list --tags --max-count=1)`
+  - export VERSION=`git describe --tags --abbrev=0`
   #Tar Build Artifacts
   - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
   - ls
