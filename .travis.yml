@@ -9,34 +9,43 @@ os:
   - linux
 
 before_install:
+  #Update package managers
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq -y update; fi
   - if [ $TRAVIS_OS_NAME = osx]; then brew update; fi
+  #Setup Git Deploy Key
   - openssl aes-256-cbc -K $encrypted_04e9769beb1e_key -iv $encrypted_04e9769beb1e_iv -in deploy-key.enc -out deploy-key -d
   - chmod 600 deploy-key
   - eval `ssh-agent -s`
   - ssh-add deploy-key
-  - git config user.name "DocBot"
+  #Setup Git User
+  - git config user.name "TmxparserBuildBot"
   - git config user.email "adaleigh.martin@gmail.com"
 
 install:
-  - if [ $TRAVIS_OS_NAME = linux ]; then sh build_scripts/linux_build; fi
-  - if [ $TRAVIS_OS_NAME = osx ]; then sh build_scripts/osx_build; fi
+  #Install Libraries
+  - if [ $TRAVIS_OS_NAME = linux ]; then sh install_scripts/linux_install; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then sh install_scripts/osx_install; fi
 
 script:
+  #Build
   - mkdir build && cd build
   - cmake ..
   - make
-  - ls
-  - mv run_tests ../test/ && cd ../test/ && ./run_tests && cd ../build/
+  #Test Runner expects to be in the test folder, move it and run it
+  - mv run_tests ../test/
+  - cd ../test/
+  - ./run_tests
+  #Move back to build folder after tests
+  - cd ../build/
 
 after_success:
-  - ls
+  #Consolidate Build Artifacts
   - mkdir artifacts && mkdir ./artifacts/include && mkdir ./artifacts/lib
   - mv *.h ./artifacts/include/
   - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
 
-after_script:
+  #Push off newly generated documentation, only need to do for one OS
   - if [ $TRAVIS_OS_NAME = linux ]; then git clone $DOCS_REPO; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then cd $REPO_NAME && rm -rf *; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then mv ../doc/html/* .; fi
