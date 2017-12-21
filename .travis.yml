@@ -3,10 +3,15 @@ compiler: clang
 sudo: true
 branches:
   only: ci
+git:
+  depth: false
 
 os:
   - osx
   - linux
+
+env:
+  - VERSION=$(git describe --always --tags --abbrev=0)
 
 before_install:
   #Update package managers
@@ -47,7 +52,7 @@ after_success:
   - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
   #Tar Build Artifacts
-  - tar -zcvf tmxparser-$(git describe --tags --abbrev=0)-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
+  - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
   - ls
 
   #Push off newly generated documentation, only need to do for one OS
