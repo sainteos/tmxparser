@@ -8,9 +8,6 @@ os:
   - osx
   - linux
 
-env:
-  - VERSION=($(git describe --tags $(git rev-list --tags --max-count=1)))
-
 before_install:
   #Update package managers
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq -y update; fi
@@ -49,6 +46,8 @@ after_success:
   - mv *.h ./artifacts/include/
   - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
+  #Grab Verson from latest tag
+  - VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
   #Tar Build Artifacts
   - tar -zcvf tmxparser-($VERSION)-b($TRAVIS_BUILD_NUMBER).tar.gz artifacts
   - ls
