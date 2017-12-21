@@ -8,6 +8,9 @@ os:
   - osx
   - linux
 
+env:
+  - VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
+
 before_install:
   #Update package managers
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq -y update; fi
@@ -20,6 +23,8 @@ before_install:
   #Setup Git User
   - git config user.name "TmxparserBuildBot"
   - git config user.email "adaleigh.martin@gmail.com"
+  - echo "Building Version $VERSION"
+  - echo "Build Number $TRAVIS_BUILD_NUMBER"
 
 install:
   #Install Libraries
@@ -44,6 +49,9 @@ after_success:
   - mv *.h ./artifacts/include/
   - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
+  #Tar Build Artifacts
+  - tar -zcvf tmxparser-$(VERSION)-b$(TRAVIS_BUILD_NUMBER).tar.gz artifacts
+  - ls
 
   #Push off newly generated documentation, only need to do for one OS
   - if [ $TRAVIS_OS_NAME = linux ]; then git clone $DOCS_REPO; fi
@@ -52,3 +60,5 @@ after_success:
   - if [ $TRAVIS_OS_NAME = linux ]; then git add *; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then git commit -m "Documentation update!"; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then git push origin master; fi
+
+  #Push off newly generated build artifacts to git-lfs
