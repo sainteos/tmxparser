@@ -56,7 +56,7 @@ after_success:
   #Push off Build Artifacts to git build repo (git-lfs)
   - git clone $BUILD_REPO
   #Oauth
-  - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc; fi
+  - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
   - git lfs pull
   - cd $BUILD_REPO
   - git checkout $TRAVIS_OS_NAME
