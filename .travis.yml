@@ -65,7 +65,7 @@ after_success:
   #Find current number of builds in this branch
   - export NUMBER_OF_BUILDS=`find . -mindepth 1 -type f -name "*.tar.gz" -printf x | wc -c`
   #Remove old builds over the amount allowed plus one for the new build
-  - find . -name '*.tar.gz' -type f -print0 | xargs -0 ls -tr | head -n `echo "$NUMBER_OF_BUILDS-$BUILDS_TO_KEEP-1" | bc` | xargs rm
+  - find . -name '*.tar.gz' -type f -print0 | xargs -0 ls -tr | head -n $(echo "$NUMBER_OF_BUILDS-$BUILDS_TO_KEEP-1" | bc) | xargs rm
   - mv ../tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz .
   - git add tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz
   - git commit -m "Build success for $TRAVIS_OS_NAME, version $VERSION, build $TRAVIS_BUILD_NUMBER."
