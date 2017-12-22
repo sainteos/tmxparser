@@ -52,7 +52,6 @@ after_success:
   #Tar Build Artifacts
   - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
   
-deploy:
   #Push off Build Artifacts to git build repo (git-lfs)
   - git clone $BUILD_REPO
      #Oauth
