@@ -2,7 +2,7 @@ language: cpp
 compiler: clang
 sudo: true
 branches:
-  only: ci
+  only: master
 git:
   depth: false
 
@@ -51,7 +51,7 @@ after_success:
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
   #Tar Build Artifacts
   - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
-  
+
   #Push off Build Artifacts to git build repo (git-lfs)
   - git clone $BUILD_REPO
      #Oauth
