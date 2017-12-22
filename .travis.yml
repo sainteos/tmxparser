@@ -10,11 +10,8 @@ os:
   - osx
   - linux
 
-env:
-  - VERSION=$(git describe --always --tags --abbrev=0)
-  - BUILDS_TO_KEEP=1
-
 before_install:
+  - export VERSION=$(git describe --always --tags --abbrev=0)
   #Update package managers
   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq -y update; fi
   - if [ $TRAVIS_OS_NAME = osx]; then brew update; fi
