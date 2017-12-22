@@ -55,10 +55,10 @@ after_success:
   - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
   #Push off Build Artifacts to git build repo (git-lfs)
   - git clone $BUILD_REPO
-  #Oauth
+     #Oauth
   - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
+  - cd $BUILD_REPO_NAME
   - git lfs pull
-  - cd $BUILD_REPO
   - git checkout $TRAVIS_OS_NAME
   - mv ../tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz .
   - git add tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz
@@ -68,7 +68,7 @@ after_success:
 
   #Push off newly generated documentation, only need to do for one OS
   - if [ $TRAVIS_OS_NAME = linux ]; then git clone $DOCS_REPO; fi
-  - if [ $TRAVIS_OS_NAME = linux ]; then cd $REPO_NAME && rm -rf *; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then cd $DOCS_REPO_NAME && rm -rf *; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then mv ../doc/html/* .; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then git add *; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then git commit -m "Documentation update!"; fi
