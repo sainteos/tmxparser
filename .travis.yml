@@ -53,7 +53,18 @@ after_success:
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
   #Tar Build Artifacts
   - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
-  - ls
+  #Push off Build Artifacts to git build repo (git-lfs)
+  - git clone $BUILD_REPO
+  #Oauth
+  - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc; fi
+  - git lfs pull
+  - cd $BUILD_REPO
+  - git checkout $TRAVIS_OS_NAME
+  - mv ../tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz .
+  - git add tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz
+  - git commit -m "Build success for $TRAVIS_OS_NAME, version $VERSION, build $TRAVIS_BUILD_NUMBER."
+  - git push origin $TRAVIS_OS_NAME
+  - cd ..
 
   #Push off newly generated documentation, only need to do for one OS
   - if [ $TRAVIS_OS_NAME = linux ]; then git clone $DOCS_REPO; fi
