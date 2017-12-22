@@ -51,6 +51,8 @@ after_success:
   - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
   #Tar Build Artifacts
   - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
+  
+deploy:
   #Push off Build Artifacts to git build repo (git-lfs)
   - git clone $BUILD_REPO
      #Oauth
@@ -76,5 +78,3 @@ after_success:
   - if [ $TRAVIS_OS_NAME = linux ]; then git add *; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then git commit -m "Documentation update!"; fi
   - if [ $TRAVIS_OS_NAME = linux ]; then git push origin master; fi
-
-  #Push off newly generated build artifacts to git-lfs
