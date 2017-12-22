@@ -6,6 +6,5 @@ cd ~ && git clone https://github.com/leethomason/tinyxml2.git && cd tinyxml2 && 
     git checkout tags/6.0.0
 cmake .
 make
-sudo mv libtinyxml2.so /usr/local/lib/
-sudo mv tinyxml2.h /usr/local/include/
+make install
 cd ~
