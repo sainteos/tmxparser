@@ -27,6 +27,7 @@
 //-----------------------------------------------------------------------------
 #include "TmxColor.h"
 #include <cstdio>
+#include <cstdlib>
 
 namespace Tmx
 {
