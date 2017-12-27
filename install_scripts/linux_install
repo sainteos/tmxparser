@@ -1,0 +1,10 @@
+sudo apt-get install zlib1g
+sudo apt-get install zlib1g-dev
+sudo apt-get install doxygen
+
+cd ~ && git clone https://github.com/leethomason/tinyxml2.git && cd tinyxml2 && \
+    git checkout tags/6.0.0
+cmake .
+make
+sudo make install
+cd ~

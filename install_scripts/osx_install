@@ -1,0 +1,4 @@
+brew install zlib
+brew install doxygen
+brew install git-lfs
+brew install tinyxml2

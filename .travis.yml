@@ -1,0 +1,79 @@
+language: cpp
+compiler: clang
+sudo: true
+branches:
+  only: master
+git:
+  depth: false
+
+os:
+  - osx
+  - linux
+
+before_install:
+  - export VERSION=$(git describe --always --tags --abbrev=0)
+  #Update package managers
+  - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get -qq -y update; fi
+  - if [ $TRAVIS_OS_NAME = osx]; then brew update; fi
+  #Setup Git Deploy Key
+  - openssl aes-256-cbc -K $encrypted_04e9769beb1e_key -iv $encrypted_04e9769beb1e_iv -in deploy-key.enc -out deploy-key -d
+  - chmod 600 deploy-key
+  - eval `ssh-agent -s`
+  - ssh-add deploy-key
+  #Setup Git User
+  - git config user.name "TmxparserBuildBot"
+  - git config user.email "adaleigh.martin@gmail.com"
+  - echo "Building Version $VERSION"
+  - echo "Build Number $TRAVIS_BUILD_NUMBER"
+
+install:
+  #Install Libraries
+  - if [ $TRAVIS_OS_NAME = linux ]; then sh install_scripts/linux_install; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then sh install_scripts/osx_install; fi
+
+script:
+  #Build
+  - mkdir build && cd build
+  - cmake ..
+  - make
+  #Test Runner expects to be in the test folder, move it and run it
+  - mv run_tests ../test/
+  - cd ../test/
+  - ./run_tests
+  #Move back to build folder after tests
+  - cd ../build/
+
+after_success:
+  #Consolidate Build Artifacts
+  - mkdir artifacts && mkdir ./artifacts/include && mkdir ./artifacts/lib
+  - mv *.h ./artifacts/include/
+  - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
+  - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
+  #Tar Build Artifacts
+  - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
+
+  #Push off Build Artifacts to git build repo (git-lfs)
+  - git clone $BUILD_REPO
+     #Oauth
+  - echo -e "machine github.com\n  login $GITHUB_TOKEN" >> ~/.netrc
+  - cd $BUILD_REPO_NAME
+  - git lfs pull
+  #Checkout to appropriate OS
+  - git checkout $TRAVIS_OS_NAME
+  #Find current number of builds in this branch
+  - export NUMBER_OF_BUILDS=`find . -mindepth 1 -type f -name "*.tar.gz" -printf x | wc -c`
+  #Remove old builds over the amount allowed plus one for the new build
+  - find . -name '*.tar.gz' -type f -print0 | xargs -0 ls -tr | head -n $(echo "$NUMBER_OF_BUILDS-$BUILDS_TO_KEEP+1" | bc) | xargs rm
+  - mv ../tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz .
+  - git add tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz
+  - git commit -a -m "Build success for $TRAVIS_OS_NAME, version $VERSION, build $TRAVIS_BUILD_NUMBER."
+  - git push origin $TRAVIS_OS_NAME
+  - cd ..
+
+  #Push off newly generated documentation, only need to do for one OS
+  - if [ $TRAVIS_OS_NAME = linux ]; then git clone $DOCS_REPO; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then cd $DOCS_REPO_NAME && rm -rf *; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then mv ../doc/html/* .; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then git add *; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then git commit -m "Documentation update!"; fi
+  - if [ $TRAVIS_OS_NAME = linux ]; then git push origin master; fi
