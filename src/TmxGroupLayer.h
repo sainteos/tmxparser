@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Copyright (c) 2010-2014, Tamir Atias
+// Copyright (c) 2018, Adaleigh Martin
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -21,59 +21,56 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //-----------------------------------------------------------------------------
-#include <tinyxml2.h>
-#include <cstdlib>
-#include <cassert> //RJCB
+#pragma once
+
+#include <string>
+#include <vector>
 
 #include "TmxLayer.h"
-#include "TmxImageLayer.h"
-#include "TmxImage.h"
-
-using std::vector;
-using std::string;
+#include "TmxPropertySet.h"
 
 namespace Tmx
 {
-    ImageLayer::ImageLayer(const Tmx::Map *_map)
-        : Layer(_map, std::string(), 0, 0, 0, 0, 1.0f, true, TMX_LAYERTYPE_IMAGE_LAYER)
-        , image(NULL)
+    class Map;
+
+    //-------------------------------------------------------------------------
+    /// A class used for holding groups of layers to create a layer heirarchy.
+    /// This class has a property set.
+    //-------------------------------------------------------------------------
+    class GroupLayer : public Tmx::Layer
     {
-    }
+    public:
+        /// Construct an GroupLayer on the given map.
+        GroupLayer(const Tmx::Map *_map);
+        ~GroupLayer();
 
-    ImageLayer::~ImageLayer()
-    {
-        delete image;
-    }
+        /// Parse a GroupLayer element.
+        void Parse(const tinyxml2::XMLNode *groupLayerNode);
 
-    void ImageLayer::Parse(const tinyxml2::XMLNode *imageLayerNode)
-    {
-        const tinyxml2::XMLElement *imageLayerElem = imageLayerNode->ToElement();
+        /// Adds a child Layer to the group.
+        void AddChild(Tmx::Layer* childLayer);
 
-        // Read all the attributes into local variables.
-        name = imageLayerElem->Attribute("name");
+        Tmx::Layer* GetChild(const int index) const;
+        
+        /// Returns a variable containing information
+        /// about the image of the ImageLayer.
+        const std::vector<Tmx::Layer*> GetChildren() const noexcept;
 
-        imageLayerElem->QueryIntAttribute("x", &x);
-        imageLayerElem->QueryIntAttribute("y", &y);
+        int GetNumChildren() const noexcept;
 
-        imageLayerElem->QueryFloatAttribute("opacity", &opacity);
-        imageLayerElem->QueryBoolAttribute("visible", &visible);
+        /// Sets the offset for this GroupLayer
+        void SetOffset(const int offsetX, const int offsetY);
 
-        // Parse the image if there is one.
-        const tinyxml2::XMLNode *imageNode = imageLayerElem->FirstChildElement("image");
+        /// Returns the x offset.
+        int GetOffsetX() const noexcept;
 
-        if (imageNode)
-        {
-            image = new Image();
-            image->Parse(imageNode);
-        }
+        /// Returns the y offset.
+        int GetOffsetY() const noexcept;
 
-        // Parse the properties if any.
-        const tinyxml2::XMLNode *propertiesNode = imageLayerElem->FirstChildElement("properties");
+    private:
+        std::vector<Tmx::Layer*> children;
 
-        if (propertiesNode)
-        {
-            properties.Parse(propertiesNode);
-        }
-    }
-
+        int offsetX;
+        int offsetY;
+    };
 }

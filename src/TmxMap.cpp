@@ -34,6 +34,7 @@
 #include "TmxTileLayer.h"
 #include "TmxObjectGroup.h"
 #include "TmxImageLayer.h"
+#include "TmxGroupLayer.h"
 
 using std::vector;
 using std::string;
@@ -58,6 +59,7 @@ namespace Tmx
         , layers()
         , tile_layers()
         , object_groups()
+        , group_layers()
         , tilesets()
         , has_error(false)
         , error_code(0)
@@ -115,6 +117,16 @@ namespace Tmx
             {
                 delete tileset;
                 tileset = NULL;
+            }
+        }
+
+        vector< GroupLayer* >::iterator glIter;
+        for (glIter = group_layers.begin(); glIter != group_layers.end(); ++glIter)
+        {
+            GroupLayer *grouplayer = (*glIter);
+            if(grouplayer) {
+              delete grouplayer;
+              grouplayer = NULL;
             }
         }
     }
@@ -350,6 +362,16 @@ namespace Tmx
                 // Add the object group to the lists.
                 object_groups.push_back(objectGroup);
                 layers.push_back(objectGroup);
+            }
+
+            if( strcmp( node->Value(), "group") == 0 )
+            {
+                GroupLayer *groupLayer = new GroupLayer(this);
+                groupLayer->Parse(node);
+
+                // Add the group layer to the lists.
+                group_layers.push_back(groupLayer);
+                layers.push_back(groupLayer);
             }
 
             node = node->NextSibling();

@@ -241,7 +241,7 @@ int main(int argc, char * argv[])
                 {
                     // Get the tile's id and gid.
                     printf("%03d(%03d)", tileLayer->GetTileId(x, y), tileLayer->GetTileGid(x, y));
-                
+
                     // Find a tileset for that id.
                     //const Tmx::Tileset *tileset = map->FindTileset(layer->GetTileId(x, y));
                     if (tileLayer->IsTileFlippedHorizontally(x, y))
@@ -324,6 +324,33 @@ int main(int argc, char * argv[])
                             point.y);
                 }
             }
+        }
+    }
+
+    // Iterate through all of the group layers.
+    for(int i = 0; i < map->GetNumGroupLayers(); ++i) {
+        printf("                                    \n");
+        printf("====================================\n");
+        printf("Group Layer : %02d/%s \n", i, map->GetGroupLayer(i)->GetName().c_str());
+        printf("====================================\n");
+        // Get a group layer.
+        const Tmx::GroupLayer *groupLayer = map->GetGroupLayer(i);
+
+        printf("Offset X: %d", groupLayer->GetOffsetX());
+        printf("Offset Y: %d", groupLayer->GetOffsetY());
+        printf("Number of Children: %d", groupLayer->GetNumChildren());
+
+        for(int j = 0; j < groupLayer->GetNumChildren(); j++) {
+          const Tmx::Layer *childLayer = groupLayer->GetChild(j);
+          printf("Child Layer Name: %s\n", childLayer->GetName().c_str());
+          printf("Child Layer Type: %02d\n", childLayer->GetLayerType());
+
+          if(childLayer->GetLayerType() == Tmx::TMX_LAYERTYPE_GROUP_LAYER) {
+            const Tmx::GroupLayer *childGroupLayer = static_cast<const Tmx::GroupLayer*>(childLayer);
+            printf("  Child group layer number of children: %d\n", childGroupLayer->GetNumChildren());
+            printf("  Child group layer first child name: %s\n", childGroupLayer->GetChild(0)->GetName().c_str());
+            printf("  Child group layer first child type: %d\n", childGroupLayer->GetChild(0)->GetLayerType());
+          }
         }
     }
 

@@ -32,18 +32,19 @@
 
 #include "TmxPropertySet.h"
 
-namespace Tmx 
+namespace Tmx
 {
     class Layer;
     class TileLayer;
     class ImageLayer;
     class ObjectGroup;
+    class GroupLayer;
     class Tileset;
 
     //-------------------------------------------------------------------------
     /// Error in handling of the Map class.
     //-------------------------------------------------------------------------
-    enum MapError 
+    enum MapError
     {
         /// A file could not be opened. (usually due to permission problems)
         TMX_COULDNT_OPEN = 0x01,
@@ -51,7 +52,7 @@ namespace Tmx
         /// There was an error in parsing the TMX file.
         /// This is being caused by TinyXML parsing problems.
         TMX_PARSING_ERROR = 0x02,
-        
+
         /// The size of the file is invalid.
         TMX_INVALID_FILE_SIZE = 0x04
     };
@@ -59,7 +60,7 @@ namespace Tmx
     //-------------------------------------------------------------------------
     /// The way the map is viewed.
     //-------------------------------------------------------------------------
-    enum MapOrientation 
+    enum MapOrientation
     {
         /// This map is an orthogonal map.
         TMX_MO_ORTHOGONAL = 0x01,
@@ -111,7 +112,7 @@ namespace Tmx
     /// It has all of the information in regard to the TMX file.
     /// This class has a property set.
     //-------------------------------------------------------------------------
-    class Map 
+    class Map
     {
     private:
         // Prevent copy constructor.
@@ -206,6 +207,10 @@ namespace Tmx
         /// Get the whole collection of image layers.
         const std::vector< Tmx::ImageLayer* > &GetImageLayers() const { return image_layers; }
 
+        const Tmx::GroupLayer *GetGroupLayer(int index) const { return group_layers.at(index); }
+        int GetNumGroupLayers() const { return group_layers.size(); }
+        const std::vector< Tmx::GroupLayer* > &GetGroupLayers() const { return group_layers; }
+
         /// Find the tileset index for a tileset using a tile gid.
         int FindTilesetIndex(int gid) const;
 
@@ -256,6 +261,7 @@ namespace Tmx
         std::vector< Tmx::TileLayer* > tile_layers;
         std::vector< Tmx::ImageLayer* > image_layers;
         std::vector< Tmx::ObjectGroup* > object_groups;
+        std::vector< Tmx::GroupLayer* > group_layers;
         std::vector< Tmx::Tileset* > tilesets;
 
         bool has_error;

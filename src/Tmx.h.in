@@ -48,3 +48,4 @@
 #include "TmxPropertySet.h"
 #include "TmxUtil.h"
 #include "TmxImageLayer.h"
+#include "TmxGroupLayer.h"

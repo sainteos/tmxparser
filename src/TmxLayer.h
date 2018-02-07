@@ -36,7 +36,7 @@ namespace tinyxml2 {
     class XMLNode;
 }
 
-namespace Tmx 
+namespace Tmx
 {
     class Map;
 		class Tile;
@@ -44,13 +44,14 @@ namespace Tmx
     {
         TMX_LAYERTYPE_TILE        = 0X01,
         TMX_LAYERTYPE_OBJECTGROUP = 0X02,
-        TMX_LAYERTYPE_IMAGE_LAYER = 0X04
+        TMX_LAYERTYPE_IMAGE_LAYER = 0X04,
+        TMX_LAYERTYPE_GROUP_LAYER = 0X08
     };
 
     //-------------------------------------------------------------------------
     /// Base class for other layer types.
     //-------------------------------------------------------------------------
-    class Layer 
+    class Layer
     {
     private:
         // Prevent copy constructor.
@@ -60,11 +61,11 @@ namespace Tmx
         /// Construct a new Layer used by a map's objectgroup
         Layer(const Tmx::Map *_map, const std::string _name, const int _x, const int _y,
               const int _width, const int _height, const float _opacity, const bool _visible, const LayerType _layerType);
-							
+
 				/// Construct a new layer used by a tile's objectgroup
 				Layer(const Tmx::Tile *_tile, const std::string _name, const int _x, const int _y,
               const int _width, const int _height, const float _opacity, const bool _visible, const LayerType _layerType);
-							
+
         virtual ~Layer();
 
         /// Parse a layer element.
@@ -114,12 +115,12 @@ namespace Tmx
         const Tmx::Map *map;
 				const Tmx::Tile *tile;
         std::string name;
-        
+
         int x;
         int y;
         int width;
         int height;
-    
+
         float opacity;
         bool visible;
         int zOrder;

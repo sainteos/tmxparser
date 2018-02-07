@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="4">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="4">
  <properties>
   <property name="BigInteger" type="int" value="999999999"/>
   <property name="EmptyProperty" value=""/>
@@ -116,6 +116,22 @@
    </animation>
   </tile>
  </tileset>
+ <group name="Testing Group Layer" offsetx="11" offsety="2">
+  <layer name="Testing Child Tile Layer" width="10" height="10">
+   <data encoding="base64" compression="zlib">
+   eJxjYBgFgwkAAAGQAAE=
+  </data>
+  </layer>
+  <objectgroup name="Testing Child Object Group"/>
+  <imagelayer name="Testing Child Image Layer"/>
+  <group name="Testing Child Group Layer">
+   <layer name="Testing Child Child Layer" width="10" height="10">
+    <data encoding="base64" compression="zlib">
+   eJxjYBgFgwkAAAGQAAE=
+  </data>
+   </layer>
+  </group>
+ </group>
  <layer name="Testing Name 1" width="10" height="10">
   <data encoding="base64" compression="zlib">
    eJzTY2BokGNgYFBgYDgAokfxwGIAR7UNCw==
