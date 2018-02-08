@@ -301,6 +301,11 @@ int main(int argc, char * argv[])
             printf("Object Size: (%03d, %03d)\n", object->GetWidth(),
                     object->GetHeight());
 
+            if(object->GetGid() != 0) {
+              printf("Object(tile) gid: %d\n", object->GetGid());
+              printf("Object(tile) type: %s\n", object->GetType().c_str());
+            }
+
             // Print Polygon points.
             const Tmx::Polygon *polygon = object->GetPolygon();
             if (polygon != 0)

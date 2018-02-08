@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="4">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="5">
  <properties>
   <property name="BigInteger" type="int" value="999999999"/>
   <property name="EmptyProperty" value=""/>
@@ -172,5 +172,6 @@
   <object id="3" x="228" y="88">
    <polyline points="0,0 54,95 -3,183 -131,201"/>
   </object>
+  <object id="4" type="ObjectType" gid="30" x="99" y="254" width="32" height="32"/>
  </objectgroup>
 </map>

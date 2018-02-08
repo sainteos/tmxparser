@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="ObjectType" color="#a0a0a4">
+  <property name="Property" type="int" default="314159"/>
+ </objecttype>
+</objecttypes>
