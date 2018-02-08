@@ -329,6 +329,23 @@ int main(int argc, char * argv[])
                             point.y);
                 }
             }
+
+            // Print Text information
+            const Tmx::Text *text = object->GetText();
+            if(text != 0)
+            {
+                printf("--Object Text--\n");
+                printf("Font family: %s\n", text->GetFontFamily().c_str());
+                printf("Pixel size: %d\n", text->GetPixelSize());
+                printf("Wraps: %d\n", text->Wraps());
+                printf("Bold: %d, Italic: %d, Underline: %d, Strikeout: %d\n", text->IsBold(), text->IsItalic(),
+                                                                             text->IsUnderline(), text->IsStrikeout());
+                printf("Kerning: %d\n", text->UseKerning());
+                printf("Horizontal ALignment: %d\n", text->GetHorizontalAlignment());
+                printf("Vertical Alignment: %d\n", text->GetVerticalAlignment());
+                printf("Color: %d, %d, %d, %d", text->GetColor()->GetRed(), text->GetColor()->GetGreen(),
+                                                text->GetColor()->GetBlue(), text->GetColor()->GetAlpha());
+            }
         }
     }
 

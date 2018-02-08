@@ -31,10 +31,11 @@
 #include "TmxPolygon.h"
 #include "TmxPolyline.h"
 #include "TmxEllipse.h"
+#include "TmxText.h"
 
-namespace Tmx 
+namespace Tmx
 {
-    Object::Object() 
+    Object::Object()
         : name()
         , type()
         , x(0)
@@ -48,10 +49,11 @@ namespace Tmx
         , ellipse(0)
         , polygon(0)
         , polyline(0)
-        , properties() 
+        , text(0)
+        , properties()
     {}
 
-    Object::~Object() 
+    Object::~Object()
     {
         if (ellipse != 0)
         {
@@ -68,16 +70,21 @@ namespace Tmx
             delete polyline;
             polyline = 0;
         }
+        if (text != 0)
+        {
+            delete text;
+            text = 0;
+        }
     }
 
-    void Object::Parse(const tinyxml2::XMLNode *objectNode) 
+    void Object::Parse(const tinyxml2::XMLNode *objectNode)
     {
         const tinyxml2::XMLElement *objectElem = objectNode->ToElement();
 
         // Read the attributes of the object.
         const char *tempName = objectElem->Attribute("name");
         const char *tempType = objectElem->Attribute("type");
-        
+
         if (tempName) name = tempName;
         if (tempType) type = tempType;
 
@@ -97,7 +104,7 @@ namespace Tmx
             if (ellipse != 0)
                 delete ellipse;
 
-            ellipse = new Ellipse(x,y,width,height);            
+            ellipse = new Ellipse(x,y,width,height);
         }
 
         // Read the Polygon and Polyline of the object if there are any.
@@ -119,10 +126,18 @@ namespace Tmx
             polyline = new Polyline();
             polyline->Parse(polylineNode);
         }
+        const tinyxml2::XMLNode *textNode = objectNode->FirstChildElement("text");
+        if (textNode)
+        {
+            if(text != 0)
+                delete text;
+            text = new Text();
+            text->Parse(textNode);
+        }
 
         // Read the properties of the object.
         const tinyxml2::XMLNode *propertiesNode = objectNode->FirstChildElement("properties");
-        if (propertiesNode) 
+        if (propertiesNode)
         {
             properties.Parse(propertiesNode);
         }

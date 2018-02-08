@@ -41,7 +41,7 @@ if (NOT USE_MINIZ)
     list(APPEND ${LIB_CFLAGS} "-Werror")
 endif (NOT USE_MINIZ)
 
-set(EXAMPLE_CFLAGS "-std=c++11 -pedantic -Werror -Wall")
+set(EXAMPLE_CFLAGS "-std=c++11 -pedantic -Werror -Wall -g")
 #include_directories("${PROJECT_SOURCE_DIR}/include")
 
 add_library(tmxparser_static STATIC ${SOURCES} ${HEADERS})

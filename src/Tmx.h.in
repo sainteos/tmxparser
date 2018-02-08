@@ -45,6 +45,7 @@
 #include "TmxEllipse.h"
 #include "TmxPolygon.h"
 #include "TmxPolyline.h"
+#include "TmxText.h"
 #include "TmxPropertySet.h"
 #include "TmxUtil.h"
 #include "TmxImageLayer.h"

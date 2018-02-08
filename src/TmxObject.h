@@ -35,16 +35,17 @@ namespace tinyxml2 {
     class XMLNode;
 }
 
-namespace Tmx 
+namespace Tmx
 {
     class Ellipse;
     class Polygon;
     class Polyline;
+    class Text;
 
     //-------------------------------------------------------------------------
     /// Class used for representing a single object from the objectgroup.
     //-------------------------------------------------------------------------
-    class Object 
+    class Object
     {
     public:
         Object();
@@ -52,10 +53,10 @@ namespace Tmx
 
         /// Parse an object node.
         void Parse(const tinyxml2::XMLNode *objectNode);
-    
+
         /// Get the name of the object.
         const std::string &GetName() const { return name; }
-        
+
         /// Get the type of the object.
         const std::string &GetType() const { return type; }
 
@@ -64,10 +65,10 @@ namespace Tmx
 
         /// Get the top side of the object, in pixels.
         int GetY() const { return y; }
-        
+
         /// Get the width of the object, in pixels.
         int GetWidth() const { return width; }
-        
+
         /// Get the height of the object, in pixels.
         int GetHeight() const { return height; }
 
@@ -92,6 +93,9 @@ namespace Tmx
         /// Get the Polyline.
         const Tmx::Polyline *GetPolyline() const { return polyline; }
 
+        /// Get the Text.
+        const Tmx::Text *GetText() const { return text; }
+
         /// Get the property set.
         const Tmx::PropertySet &GetProperties() const { return properties; }
 
@@ -112,6 +116,7 @@ namespace Tmx
         Tmx::Ellipse *ellipse;
         Tmx::Polygon *polygon;
         Tmx::Polyline *polyline;
+        Tmx::Text *text;
 
         Tmx::PropertySet properties;
     };
