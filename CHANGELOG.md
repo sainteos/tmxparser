@@ -52,6 +52,7 @@
    - Implement Group Layers as specified by TMX v1.0
    - Test for object types
    - Implement Text Object (TmxText) and corresponding test.
+   - Update Tile with optional Type
 
 ### 2.0.1
 

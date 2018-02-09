@@ -176,7 +176,9 @@ int main(int argc, char * argv[])
                 printf(
                         "Tile has objects.\n");
 
-
+                if(tile->GetType() != "")
+                    printf("Tile has type: %s\n", tile->GetType().c_str());
+                    
                 // Iterate through all Collision objects in the tile.
                 for (int j = 0; j < tile->GetNumObjects(); ++j)
                 {

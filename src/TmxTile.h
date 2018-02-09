@@ -29,6 +29,7 @@
 #include "TmxImage.h"
 #include "TmxObjectGroup.h"
 #include <stdexcept>
+#include <string>
 
 namespace tinyxml2
 {
@@ -89,6 +90,12 @@ namespace Tmx
             return image;
         }
 
+        /// Returns the object type of the tile.
+        std::string GetType() const
+        {
+            return type;
+        }
+
         /// Returns the frames of the animation.
         const std::vector<AnimationFrame> &GetFrames() const
         {
@@ -100,20 +107,20 @@ namespace Tmx
         {
             return properties;
         }
-				
+
 				//// Get the object group, which contains additional tile properties
 				const Tmx::ObjectGroup *GetObjectGroup() const
 				{
 						return objectGroup;
 				}
-				
+
 				//// Get the object group's properties, convenience function
 				const Tmx::PropertySet &GetObjectGroupProperties() const
 				{
 						if (!objectGroup) throw std::runtime_error ("Tile has no ObjectGroup on attempt to get ObjectGroup properties.  Cannot return null ref.");
 						return objectGroup->GetProperties();
 				}
-				
+
         /// Get set of Collision Objects, convenience function
         std::vector<Tmx::Object*> GetObjects() const
         {
@@ -153,6 +160,7 @@ namespace Tmx
         unsigned int totalDuration;
         std::vector<AnimationFrame> frames;
         Tmx::Image* image;
+        std::string type;
     };
 
     //-------------------------------------------------------------------------
