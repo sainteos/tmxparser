@@ -14,12 +14,13 @@ An example file is provided to understand how to use the library.
 
 ## Features
 
- * Conformity with the [TMX specification page](http://doc.mapeditor.org/en/latest/reference/tmx-map-format/). (Current Version Support is 0.18)
+ * Conformity with the [TMX specification page](http://doc.mapeditor.org/en/latest/reference/tmx-map-format/). (Current Version Support is 1.0)
  * Decodes and decompresses tile data.
- * Can parse properties as both integers, real numbers and literals (strings).
+ * Can parse properties as integers, real numbers, and literals (strings).
  * Can parse the map file when stored in memory.
  * Does not rely on any graphics library.
  * Animated tile support.
+ * Group Layer support.
 
 ## Dependencies
 
