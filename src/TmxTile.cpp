@@ -33,11 +33,11 @@
 namespace Tmx
 {
     Tile::Tile() :
-            id(0), properties(), isAnimated(false), hasObjects(false), hasObjectGroup(false), objectGroup(NULL), totalDuration(0), image(NULL)
+            id(0), properties(), isAnimated(false), hasObjects(false), hasObjectGroup(false), objectGroup(NULL), totalDuration(0), image(NULL), type()
     {
     }
     Tile::Tile(int id) :
-            id(id), properties(), isAnimated(false), hasObjects(false), hasObjectGroup(false), objectGroup(NULL), totalDuration(0), image(NULL)
+            id(id), properties(), isAnimated(false), hasObjects(false), hasObjectGroup(false), objectGroup(NULL), totalDuration(0), image(NULL), type()
     {
     }
 
@@ -61,6 +61,12 @@ namespace Tmx
 
         // Parse the attributes.
         id = tileElem->IntAttribute("id");
+
+        // Parse tile type if it has one.
+        if(tileElem->FindAttribute("type"))
+        {
+            type = std::string(tileElem->Attribute("type"));
+        }
 
         // Parse the properties if any.
         const tinyxml2::XMLNode *propertiesNode = tileNode->FirstChildElement(
@@ -100,7 +106,7 @@ namespace Tmx
 
             totalDuration = durationSum;
         }
-				
+
         const tinyxml2::XMLNode *objectGroupNode = tileNode->FirstChildElement(
                 "objectgroup");
         if (objectGroupNode)
@@ -110,7 +116,7 @@ namespace Tmx
 						objectGroup = new ObjectGroup(this);
 						objectGroup->Parse(objectGroupNode);
 						if (objectGroup->GetNumObjects() > 0) hasObjects = true;
-						
+
         }
 
         const tinyxml2::XMLNode *imageNode = tileNode->FirstChildElement("image");

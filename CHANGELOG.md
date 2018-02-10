@@ -1,6 +1,6 @@
 # Changelog
 
-### Next release
+### 2.1.0
 
  * georgerbr:
    - Make tileset parsing not depend on optional attrs of <image>
@@ -40,6 +40,19 @@
 
  * Tardo:
    - Get tile by index
+
+ * dylanetaft
+   - TinyXML2 6.x GetErrStr1 -> ErrorStr
+   - Support for Object Group in Tile
+
+ * Adaleigh Martin (sainteos):
+   - Add cstdlib include for TmxColor for std::strtol, Clarify C++11 Requirement
+   - Travis-CI Integration
+   - Denote TMX v0.18 version support, tinyxml2 version requirement, and Test Running Instructions
+   - Implement Group Layers as specified by TMX v1.0
+   - Test for object types
+   - Implement Text Object (TmxText) and corresponding test.
+   - Update Tile with optional Type
 
 ### 2.0.1
 
