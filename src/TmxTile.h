@@ -84,7 +84,7 @@ namespace Tmx
             return totalDuration;
         }
 
-        /// Retrurns the tile image if defined.
+        /// Returns the tile image if defined.
         const Tmx::Image* GetImage() const
         {
             return image;
