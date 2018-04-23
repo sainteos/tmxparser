@@ -75,7 +75,7 @@ namespace Tmx
         PropertyType GetType() const { return type; }
 
         /// Check if the property is of a certain type.
-        bool IsOfType(PropertyType type) const { return GetType() == type; }
+        bool IsOfType(PropertyType propertyType) const { return GetType() == propertyType; }
 
         /// Return the value of the property.
         const std::string &GetValue() const { return value; }
