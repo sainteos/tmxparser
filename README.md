@@ -28,7 +28,7 @@ An example file is provided to understand how to use the library.
  * TinyXML2 >= 6.0.0
 
 ## Installation
-
+tmxparser uses CMake, and the standard CMake build flow works as you'd expect. It's also alternatively available in [vcpkg](https://github.com/Microsoft/vcpkg).
 ```
 mkdir build
 cd build
