@@ -32,23 +32,29 @@ install:
   - if [ $TRAVIS_OS_NAME = osx ]; then sh install_scripts/osx_install; fi
 
 script:
-  #Build
-  - mkdir build && cd build
-  - cmake ..
+  #Build shared libs
+  - mkdir build-shared && cd build-shared
+  - cmake .. -DBUILD_TESTS=ON -DBUILD_DOCS=ON -DBUILD_SHARED_LIBS=ON -BUILD_TINYXML2=ON -DCMAKE_INSTALL_PREFIX="./install"
   - make
   #Test Runner expects to be in the test folder, move it and run it
-  - mv run_tests ../test/
-  - cd ../test/
   - ./run_tests
   #Move back to build folder after tests
-  - cd ../build/
+
+  #Build static libs
+  - cd ..
+  - mkdir build-static && cd build-static
+  - cmake .. -DBUILD_TESTS=ON -DBUILD_DOCS=ON -DBUILD_SHARED_LIBS=OFF -BUILD_TINYXML2=ON -DCMAKE_INSTALL_PREFIX="./install"
+  - make
+  #Test Runner expects to be in the test folder, move it and run it
+  - ./run_tests
+  #Move back
+  cd ..
 
 after_success:
   #Consolidate Build Artifacts
-  - mkdir artifacts && mkdir ./artifacts/include && mkdir ./artifacts/lib
-  - mv *.h ./artifacts/include/
-  - if [ $TRAVIS_OS_NAME = linux ]; then mv *.a ./artifacts/lib/ && mv *.so ./artifacts/lib/; fi
-  - if [ $TRAVIS_OS_NAME = osx ]; then mv *.a ./artifacts/lib/ && *.dylib ./artifacts/lib/; fi
+  - mkdir -p ./artifacts/shared && mkdir ./artifacts/static
+  - mv build-shared/install/* ./artifacts/shared/
+  - mv build-static/install/* ./artifacts/static/
   #Tar Build Artifacts
   - tar -zcvf tmxparser-$VERSION-b$TRAVIS_BUILD_NUMBER.tar.gz artifacts
 
