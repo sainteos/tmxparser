@@ -25,7 +25,7 @@ option(BUILD_TESTS  "Build tests. (default: OFF)" OFF)
 option(BUILD_DOCS  "Build documentation. (default: OFF)" OFF)
 
 #Dependencies Settings
-include(${CMAKE_SOURCE_DIR}/cmake/deps.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/deps.cmake)
 
 find_package(tinyxml2 REQUIRED)
 
