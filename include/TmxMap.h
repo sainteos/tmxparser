@@ -84,7 +84,7 @@ namespace Tmx
         TMX_RIGHT_DOWN = 0x01,
         TMX_RIGHT_UP = 0x02,
         TMX_LEFT_DOWN = 0x03,
-        TMX_LEFT_UP= 0x03
+        TMX_LEFT_UP= 0x04
     };
 
     //-------------------------------------------------------------------------
