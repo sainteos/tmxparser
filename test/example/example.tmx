@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="6">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="32" tileheight="32" infinite="0" nextobjectid="11">
  <properties>
   <property name="BigInteger" type="int" value="999999999"/>
   <property name="EmptyProperty" value=""/>
@@ -122,7 +122,11 @@
    eJxjYBgFgwkAAAGQAAE=
   </data>
   </layer>
-  <objectgroup name="Testing Child Object Group"/>
+  <objectgroup name="Testing Child Object Group">
+   <object id="9" name="Text Test" x="89.2266" y="244.578" width="89.5469" height="18.8438">
+    <text wrap="1">Hello World</text>
+   </object>
+  </objectgroup>
   <imagelayer name="Testing Child Image Layer"/>
   <group name="Testing Child Group Layer">
    <layer name="Testing Child Child Layer" width="10" height="10">
@@ -169,7 +173,7 @@
   <object id="2" x="114" y="176">
    <polygon points="0,0 51,-24 60,33"/>
   </object>
-  <object id="3" x="228" y="88">
+  <object id="3" x="228" y="88" visible="0">
    <polyline points="0,0 54,95 -3,183 -131,201"/>
   </object>
   <object id="4" type="ObjectType" gid="30" x="99" y="254" width="32" height="32"/>

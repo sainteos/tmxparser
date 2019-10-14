@@ -66,6 +66,7 @@ namespace Tmx
         Text();
         ~Text();
 
+        std::string GetContents() const noexcept { return contents; }
         std::string GetFontFamily() const noexcept { return font_family; }
         int GetPixelSize() const noexcept { return pixel_size; }
         bool Wraps() const noexcept { return wrap; }
@@ -82,6 +83,7 @@ namespace Tmx
         void Parse(const tinyxml2::XMLNode *textNode);
 
     private:
+        std::string contents;
         std::string font_family;
         int pixel_size;
         bool wrap;

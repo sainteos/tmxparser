@@ -178,7 +178,7 @@ int main(int argc, char * argv[])
 
                 if(tile->GetType() != "")
                     printf("Tile has type: %s\n", tile->GetType().c_str());
-                    
+
                 // Iterate through all Collision objects in the tile.
                 for (int j = 0; j < tile->GetNumObjects(); ++j)
                 {
@@ -338,6 +338,7 @@ int main(int argc, char * argv[])
             if(text != 0)
             {
                 printf("--Object Text--\n");
+                printf("Text contents: %s\n", text->GetContents().c_str());
                 printf("Font family: %s\n", text->GetFontFamily().c_str());
                 printf("Pixel size: %d\n", text->GetPixelSize());
                 printf("Wraps: %d\n", text->Wraps());

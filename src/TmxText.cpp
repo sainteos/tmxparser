@@ -33,7 +33,7 @@
 namespace Tmx
 {
     Text::Text()
-    : font_family("sans-serif"), pixel_size(16), wrap(false), color(nullptr), bold(false),
+    : contents(""), font_family("sans-serif"), pixel_size(16), wrap(false), color(nullptr), bold(false),
       italic(false), underline(false), strikeout(false), kerning(true),
       horizontal_alignment(LEFT), vertical_alignment(TOP)
     {
@@ -52,6 +52,7 @@ namespace Tmx
     {
         auto textElement = textNode->ToElement();
 
+        contents = std::string(textElement->GetText() ? textElement->GetText() : "");
         if(textElement->FindAttribute("fontfamily"))
             font_family = std::string(textElement->Attribute("fontfamily"));
         textElement->QueryIntAttribute("pixelsize", &pixel_size);
