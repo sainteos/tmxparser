@@ -102,10 +102,7 @@ target_include_directories(tmxparser PUBLIC
 
 target_compile_options(tmxparser
   PRIVATE -pedantic
-  PRIVATE -Wall
-  PRIVATE -Werror=strict-prototypes
-  PRIVATE -Werror=old-style-definition
-  PRIVATE -Werror=missing-prototypes)
+  PRIVATE -Wall)
 if(NOT USE_MINIZ)
   target_compile_options(tmxparser
     PRIVATE -Werror)
